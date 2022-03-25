@@ -1,0 +1,25 @@
+@import 'src/styles';
+
+.button {
+  @extend .p-s3;
+
+  font-size: em(16);
+  width: em(48);
+  height: em(48);
+  background: $MAIN;
+  border: em(1) solid $BORDER;
+  box-sizing: border-box;
+  box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.square {
+    border-radius: em(5);
+  }
+
+  &.circle {
+    border-radius: em(48);
+  }
+}

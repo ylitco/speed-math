@@ -1,0 +1,28 @@
+@import 'src/styles';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+
+  .title {
+    @extend .mx-auto;
+
+    font-style: normal;
+    font-size: em(18);
+    line-height: em(40, 18);
+    letter-spacing: .15em;
+    color: $TITLE;
+    opacity: .5;
+    font-weight: 300;
+
+    &.primary {
+      font-weight: 500;
+    }
+  }
+
+  .action {
+    width: em(48);
+  }
+}
