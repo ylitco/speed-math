@@ -1,0 +1,20 @@
+@import 'src/styles';
+
+.description {
+  @extend .p-m1;
+
+  overflow: hidden;
+  border: em(1) solid $BORDER;
+  box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;
+  border-radius: em(30);
+
+  .content {
+    white-space: pre-wrap;
+    font-size: em(20);
+    font-weight: 300;
+    line-height: em(27, 20);
+    overflow-y: scroll;
+
+    color: $TEXT;
+  }
+}

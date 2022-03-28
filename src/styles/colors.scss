@@ -2,8 +2,10 @@
   --main: #EAEDFB;
   --border: rgba(255, 255, 255, .4);
   --title: #959595;
+  --text: #515871;
 }
 
 $MAIN: var(--main);
 $BORDER: var(--border);
 $TITLE: var(--title);
+$TEXT: var(--text);
