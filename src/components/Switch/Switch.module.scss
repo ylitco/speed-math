@@ -1,0 +1,38 @@
+@import 'src/styles';
+
+.switch {
+  width: 100%;
+
+  .label {
+    @extend .mb-m1;
+
+    font-weight: 200;
+    font-size: em(18);
+    line-height: em(40, 18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: $TITLE;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    .item {
+      display: flex;
+      align-items: center;
+      flex: 1 1 100%;
+      justify-content: center;
+      cursor: pointer;
+
+      &.active {
+        background: $BORDER;
+      }
+    }
+  }
+}
