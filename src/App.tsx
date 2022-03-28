@@ -13,7 +13,7 @@ import { GameSettings } from 'src/views/GameSettings/GameSettings';
 import { Game } from 'src/views/Game/Game';
 import { Statistics } from 'src/views/Statistics/Statistics';
 import { Explanation } from 'src/views/Explanation/Explanation';
-import { Header } from 'src/components/Header/Header';
+import { Header } from 'src/views/Header/Header';
 import { Overview } from 'src/views/Overview/Overview';
 
 function App() {
