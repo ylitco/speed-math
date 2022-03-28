@@ -22,4 +22,10 @@
   &.circle {
     border-radius: em(48);
   }
+
+  &.limpid {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
 }

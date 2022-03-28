@@ -7,7 +7,11 @@ export const Button: FC<IButtonProps> = (props) => {
   const { type = BUTTON_TYPE.SQUARE } = props;
 
   return (
-    <button data-name={props.name} className={cn(styles.button, styles[type])} onClick={props.onClick}>
+    <button
+      className={cn(props.className, styles.button, styles[type])}
+      data-name={props.name}
+      onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

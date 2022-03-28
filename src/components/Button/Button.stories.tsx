@@ -4,6 +4,7 @@ import { Button } from './Button';
 import { Settings as SettingsIcon } from 'src/icons/Settings/Settings';
 import { Back as BackIcon } from 'src/icons/Back/Back';
 import { Info as InfoIcon } from 'src/icons/Info/Info';
+import { Close as CloseIcon } from 'src/icons/Close/Close';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 
 export default {
@@ -34,4 +35,10 @@ export const Info = Template.bind({});
 Info.args = {
   children: <InfoIcon />,
   type: BUTTON_TYPE.CIRCLE,
+};
+
+export const Close = Template.bind({});
+Close.args = {
+  children: <CloseIcon />,
+  type: BUTTON_TYPE.LIMPID,
 };
