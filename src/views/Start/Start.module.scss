@@ -1,0 +1,23 @@
+@import 'src/styles';
+
+.menu {
+  @extend .my-auto;
+}
+
+.hint {
+  @extend .my-auto;
+
+  font-weight: 500;
+  font-size: em(12);
+  line-height: em(40, 12);
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+
+  color: $PLACEHOLDER;
+
+  opacity: .5;
+}
