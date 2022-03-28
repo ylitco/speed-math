@@ -1,0 +1,25 @@
+import React, { FC } from 'react';
+
+export const TimerIcon: FC = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g opacity="0.5" filter="url(#filter0_i_1281_5854)">
+        <path d="M9.27273 1.875H14.7273C15.2294 1.875 15.6364 1.45528 15.6364 0.9375C15.6364 0.419719 15.2294 0 14.7273 0H9.27273C8.77064 0 8.36364 0.419719 8.36364 0.9375C8.36364 1.45528 8.77064 1.875 9.27273 1.875Z" fill="#C9CDE1"/>
+        <path d="M14.5714 9.71003L11.3574 13.0246C11.0023 13.3907 11.0023 13.9842 11.3573 14.3504C11.7124 14.7166 12.288 14.7164 12.643 14.3504L15.8571 11.0358C16.2121 10.6697 16.2122 10.0762 15.8571 9.71003C15.5021 9.34394 14.9265 9.34398 14.5714 9.71003Z" fill="#C9CDE1"/>
+        <path d="M12 3.375C6.47332 3.375 2 7.98731 2 13.6875C2 19.3869 6.4725 24 12 24C17.5268 24 22 19.3876 22 13.6875C22 7.98811 17.5275 3.375 12 3.375ZM12 22.125C7.48855 22.125 3.81818 18.3399 3.81818 13.6875C3.81818 9.03506 7.48855 5.25 12 5.25C16.5115 5.25 20.1818 9.03506 20.1818 13.6875C20.1818 18.3399 16.5115 22.125 12 22.125Z" fill="#C9CDE1"/>
+      </g>
+      <defs>
+        <filter id="filter0_i_1281_5854" x="2" y="0" width="21" height="26" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+          <feOffset dx="1" dy="2"/>
+          <feGaussianBlur stdDeviation="1"/>
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.629306 0 0 0 0 0.65547 0 0 0 0 0.766667 0 0 0 1 0"/>
+          <feBlend mode="normal" in2="shape" result="effect1_innerShadow_1281_5854"/>
+        </filter>
+      </defs>
+    </svg>
+  );
+};
