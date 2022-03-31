@@ -1,0 +1,35 @@
+@import "src/styles";
+.view {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  gap: em(4);
+
+  .verification,
+  .input {
+    grid-column-start: 1;
+    grid-column-end: 5;
+  }
+
+  .time,
+  .quantity,
+  .language {
+    display: grid;
+    grid-auto-rows: minmax(em(40), auto);
+    gap: em(4);
+  }
+
+  .time {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+
+    .label {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+
+}
