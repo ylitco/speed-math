@@ -1,0 +1,53 @@
+.view {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  justify-items: center;
+
+  .easy {
+    grid-column-start: 3;
+    grid-column-end: 6;
+  }
+
+  .medium {
+    grid-column-start: 6;
+    grid-column-end: 9;
+  }
+
+  .hard {
+    grid-column-start: 9;
+    grid-column-end: 13;
+  }
+
+  .row {
+    display: grid;
+    grid-column-start: 1;
+    grid-column-end: 13;
+    grid-template-columns: subgrid;
+    justify-items: center;
+
+    .number {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    .easy {
+      grid-column-start: 3;
+      grid-column-end: 6;
+    }
+
+    .hard {
+      grid-column-start: 9;
+      grid-column-end: 12;
+    }
+  }
+
+  .modes {
+    grid-column-start: 1;
+    grid-column-end: 10;
+  }
+
+  .play {
+    grid-column-start: 11;
+    grid-column-end: 13;
+  }
+}
