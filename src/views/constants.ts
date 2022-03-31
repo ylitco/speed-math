@@ -1,6 +1,6 @@
 import { TViewSettings } from 'src/views/types';
-import { Settings as SettingsIcon } from 'src/icons/Settings/Settings';
-import { Info as InfoIcon } from 'src/icons/Info/Info';
+import { SettingsIcon } from 'src/icons/Settings/Settings';
+import { InfoIcon } from 'src/icons/Info/Info';
 
 export const VIEW = {
   START: 'start',

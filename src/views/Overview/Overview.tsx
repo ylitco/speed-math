@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'src/components/Button/Button';
-import { Close as CloseIcon } from 'src/icons/Close/Close';
+import { CloseIcon } from 'src/icons/Close/Close';
 
 import { BUTTON_TYPE } from 'src/components/Button/types';
 

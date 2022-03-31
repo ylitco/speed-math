@@ -1,10 +1,10 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Button } from './Button';
-import { Settings as SettingsIcon } from 'src/icons/Settings/Settings';
-import { Back as BackIcon } from 'src/icons/Back/Back';
-import { Info as InfoIcon } from 'src/icons/Info/Info';
-import { Close as CloseIcon } from 'src/icons/Close/Close';
+import { SettingsIcon } from 'src/icons/Settings/Settings';
+import { BackIcon } from 'src/icons/Back/Back';
+import { InfoIcon } from 'src/icons/Info/Info';
+import { CloseIcon } from 'src/icons/Close/Close';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 
 export default {

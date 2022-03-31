@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from 'src/components/Button/Button';
-import { Back as BackIcon } from 'src/icons/Back/Back';
+import { BackIcon } from 'src/icons/Back/Back';
 
 import { usePrevious } from 'src/hooks';
 
