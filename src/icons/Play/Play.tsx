@@ -1,8 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, HTMLAttributes } from 'react';
 
-export const PlayIcon: FC = () => {
+export const PlayIcon: FC<HTMLAttributes<HTMLElement>> = (props) => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={props.className}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g opacity="0.5" filter="url(#filter0_i_1281_5865)">
         <path d="M21 12.3923L3 22.7846L3 2L21 12.3923Z" fill="#C9CDE1"/>
       </g>
