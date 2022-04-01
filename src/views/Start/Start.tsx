@@ -6,7 +6,6 @@ import { Wheel } from 'src/components/Wheel/Wheel';
 import { VIEW } from 'src/views/constants';
 
 import { IEventMetaObject } from 'src/types';
-import { TWheelValue } from 'src/components/Wheel/types';
 
 import styles from '../views.module.scss';
 import localStyles from './Start.module.scss';
@@ -29,7 +28,7 @@ export const Start: FC = () => {
     </main>
   );
 
-  function _handleSelect(e: IEventMetaObject<TWheelValue>) {
+  function _handleSelect(e: IEventMetaObject<string>) {
     navigate(`/${e.value}`);
   }
 };

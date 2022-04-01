@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { Wheel } from 'src/components/Wheel/Wheel';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { IEventMetaObject } from 'src/types';
-import { TWheelValue } from 'src/components/Wheel/types';
 
 export default {
   title: 'Components/Wheel',
@@ -18,7 +17,7 @@ const Template: ComponentStory<typeof Wheel> = (_args) => {
     <Wheel value={_value} onSelect={handleSelect} {...args} />
   );
 
-  function _handleSelect(e: IEventMetaObject<TWheelValue>) {
+  function _handleSelect(e: IEventMetaObject<string>) {
     _setValue(e.value);
   }
 };
