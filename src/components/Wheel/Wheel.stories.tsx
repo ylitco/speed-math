@@ -34,18 +34,18 @@ Default.args = {
 
 export const Minutes = Template.bind({});
 Minutes.args = {
-  options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, i])),
-  value: 0,
+  options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`])),
+  value: '0',
 };
 
 export const Seconds = Template.bind({});
 Seconds.args = {
-  options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, i])),
-  value: 0,
+  options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`])),
+  value: '0',
 };
 
 export const Count = Template.bind({});
 Count.args = {
-  options: Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, i + 1])),
-  value: 20,
+  options: Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`])),
+  value: '20',
 };
