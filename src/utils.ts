@@ -18,3 +18,7 @@ export function createEventMetaObject<T>(
     ...mixMeta,
   };
 }
+
+export function copy(object: Record<string, any>) {
+  return JSON.parse(JSON.stringify(object));
+}
