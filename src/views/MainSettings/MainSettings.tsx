@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useContext } from 'react';
 import cn from 'classnames';
 
 import { Switch } from 'src/components/Switch/Switch';
@@ -7,114 +7,107 @@ import { TimerIcon } from 'src/icons/Timer/ComplexTimer';
 import { WorldIcon } from 'src/icons/World/World';
 import { NIcon } from 'src/icons/N/N';
 
-import { TWheelValue } from 'src/components/Wheel/types';
+import { StateContext } from 'src/state';
+import {
+  INPUT_MODE,
+  CHECKING_MODE,
+  MINUTES,
+  SECONDS,
+  REPS,
+  LANG,
+} from 'src/state/constants';
+import {
+  IState,
+  TCheckingMode,
+  TInputMode,
+  TMinutes,
+  TSeconds,
+  TReps,
+  TLang,
+} from 'src/state/types'
 import { IEventMetaObject } from 'src/types';
 
 import styles from '../views.module.scss';
 import localStyles from './MainSettings.module.scss';
 
-const VERIFICATION_MODE = {
-  HAND: 'hand',
-  AUTO: 'auto',
+const CHECKING_OPTIONS = {
+  [CHECKING_MODE.HAND]: 'Manual',
+  [CHECKING_MODE.AUTO]: 'Automatic',
 };
 
-const INPUT_MODE = {
-  LTR: 'ltr',
-  RTL: 'rtl',
-};
-
-const DEFAULT_VERIFICATION_MODE = VERIFICATION_MODE.AUTO;
-
-const DEFAULT_INPUT_MODE = INPUT_MODE.RTL;
-
-const VERIFICATION = {
-  [VERIFICATION_MODE.HAND]: 'Manual',
-  [VERIFICATION_MODE.AUTO]: 'Automatic',
-};
-
-const INPUT = {
+const INPUT_OPTIONS = {
   [INPUT_MODE.LTR]: 'From left to right',
   [INPUT_MODE.RTL]: 'From right to left',
 };
 
-const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, i]));
-const DEFAULT_MINUTES = 5;
-const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, i]));
-const DEFAULT_SECONDS = 0;
-const QUANTITY = Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, i + 1]));
-const DEFAULT_QUANTITY = 20;
-const LANGUAGE = {
-  RU: 'ru',
-  EN: 'en',
-  HI: 'hi',
-};
-const DEFAULT_LANGUAGE = LANGUAGE.EN;
-const LANGUAGES = {
-  [LANGUAGE.RU]: 'RU',
-  [LANGUAGE.EN]: 'EN',
-  [LANGUAGE.HI]: 'HI',
-};
-
 export const MainSettings: FC = () => {
-  const [verificationMode, setVerificationMode] = useState(DEFAULT_VERIFICATION_MODE);
-  const [inputMode, setInputMode] = useState(DEFAULT_INPUT_MODE);
-  const [minutes, setMinutes] = useState(DEFAULT_MINUTES);
-  const [seconds, setSeconds] = useState(DEFAULT_SECONDS);
-  const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
-  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-  const handleVerificationModeChange = useCallback(_handleVerificationModeChange, []);
-  const handleInputModeChange = useCallback(_handleInputModeChange, []);
+  const state = useContext<IState | null>(StateContext) as IState;
+  const { checkingMode, inputMode, minutes, seconds, reps, lang } = state.settings.global;
+  const { setCheckingMode, setInputMode, setMinutes, setSeconds, setReps, setLang } = state;
+  const handleCheckingModeChange = useCallback((e: IEventMetaObject<TCheckingMode>) => {
+    setCheckingMode(e.value);
+  }, [setCheckingMode]);
+  const handleInputModeChange = useCallback((e: IEventMetaObject<TInputMode>) => {
+    setInputMode(e.value);
+  }, [setInputMode]);
+  const handleMinutesChange = useCallback((e: IEventMetaObject<TMinutes>) => {
+    setMinutes(e.value);
+  }, [setMinutes]);
+  const handleSecondsChange = useCallback((e: IEventMetaObject<TSeconds>) => {
+    setSeconds(e.value);
+  }, [setSeconds]);
+  const handleRepsChange = useCallback((e: IEventMetaObject<TReps>) => {
+    setReps(e.value);
+  }, [setReps]);
+  const handleLangChange = useCallback((e: IEventMetaObject<TLang>) => {
+    setLang(e.value);
+  }, [setLang]);
+
   return (
     <main className={cn(styles.view, localStyles.view)}>
       <Switch
-        className={localStyles.verification}
-        label="Verification Mode"
-        options={VERIFICATION}
-        value={verificationMode}
-        onChange={handleVerificationModeChange}
+        className={localStyles.checkingModeSwitcher}
+        label="Checking Mode"
+        options={CHECKING_OPTIONS}
+        value={checkingMode}
+        onChange={handleCheckingModeChange}
       />
       <Switch
-        className={localStyles.input}
+        className={localStyles.inputModeSwitcher}
         label="Input Mode"
-        options={INPUT}
+        options={INPUT_OPTIONS}
         value={inputMode}
         onChange={handleInputModeChange}
       />
       <label className={localStyles.time}>
         <TimerIcon className={localStyles.label} />
         <Wheel
-          className={localStyles.minutes}
           options={MINUTES}
           value={minutes}
-          onSelect={(e: IEventMetaObject<TWheelValue>) => setMinutes(e.value as number)}
+          onSelect={handleMinutesChange}
         />
         <Wheel
-          className={localStyles.seconds}
           options={SECONDS}
           value={seconds}
-          onSelect={(e: IEventMetaObject<TWheelValue>) => setSeconds(e.value as number)}
+          onSelect={handleSecondsChange}
         />
       </label>
-      <label className={localStyles.quantity}>
+      <label className={localStyles.reps}>
         <NIcon />
-        <Wheel options={QUANTITY} value={quantity} onSelect={(e: IEventMetaObject<TWheelValue>) => setQuantity(e.value as number)} />
+        <Wheel
+          options={REPS}
+          value={reps}
+          onSelect={handleRepsChange}
+        />
       </label>
-      <label className={localStyles.language}>
+      <label className={localStyles.lang}>
         <WorldIcon />
         <Wheel
-          options={LANGUAGES}
-          value={language}
-          onSelect={(e: IEventMetaObject<TWheelValue>) => setLanguage(e.value as string)}
+          options={LANG}
+          value={lang}
+          onSelect={handleLangChange}
         />
       </label>
     </main>
   );
-
-  function _handleVerificationModeChange(e: IEventMetaObject<string>) {
-    setVerificationMode(e.value);
-  }
-
-  function _handleInputModeChange(e: IEventMetaObject<string>) {
-    setInputMode(e.value);
-  }
 };

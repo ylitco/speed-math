@@ -6,15 +6,15 @@
   align-items: start;
   gap: em(4);
 
-  .verification,
-  .input {
+  .checkingModeSwitcher,
+  .inputModeSwitcher {
     grid-column-start: 1;
     grid-column-end: 5;
   }
 
   .time,
-  .quantity,
-  .language {
+  .reps,
+  .lang {
     display: grid;
     grid-auto-rows: minmax(em(40), auto);
     gap: em(4);
