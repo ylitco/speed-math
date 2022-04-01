@@ -1,4 +1,5 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import styles from '../views.module.scss';
 import localStyles from './GameSettings.module.scss';
@@ -10,23 +11,41 @@ import { QuantityIcon } from 'src/icons/Quantity/Quantity';
 import { InfinityIcon } from 'src/icons/Infinity/Infinity';
 import { IEventMetaObject } from 'src/types';
 import { PlayIcon } from 'src/icons/Play/Play';
+import { StateContext } from 'src/state'
+import { IState, TExercises, TGameMode } from 'src/state/types';
+import { EXERCISES, DIFFICULTIES, GAME_MODE } from 'src/state/constants';
 
-const MODES = [3, 4, 5, 6, 7, 8, 9, 11, 12, 'N'];
+const GAME_MODE_OPTIONS = {
+  [GAME_MODE.TIME]: <TimerIcon />,
+  [GAME_MODE.REPS]: <QuantityIcon />,
+  [GAME_MODE.FREE]: <InfinityIcon />,
+};
 
 export const GameSettings: FC = () => {
-  const [mode, setMode] = useState('time');
-  const [practice, setPractice] = useState<Record<string, string>>({});
-  const handleModeChange = useCallback(_handleModeChange, []);
-  const handleDifficultyChange = useCallback(_handleDifficultyChange, []);
-  const handlePlayClick = useCallback(_handlePlayClick, [mode, practice]);
+  const state = useContext<IState | null>(StateContext) as IState;
+  const navigate = useNavigate();
+  const { gameMode, exercises } = state.settings.local;
+  const { setExerciseDifficulty, setGameMode } = state;
+  const handleGameModeChange = useCallback((e: IEventMetaObject<TGameMode>) => {
+    setGameMode(e.value);
+  }, [setGameMode]);
+  const handleExerciseDifficultyChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setExerciseDifficulty({ [e.target.name]: e.target.value });
+  }, [setExerciseDifficulty]);
+  const handlePlayClick = useCallback(() => {
+    navigate('/game');
+    console.log(
+      gameMode,
+      exercises,
+    );
+  }, [gameMode, exercises, navigate]);
 
   return (
     <main className={cn(styles.view, localStyles.view)}>
       <b className={localStyles.easy}>easy</b>
       <b className={localStyles.medium}>medium</b>
       <b className={localStyles.hard}>hard</b>
-      {MODES.map((_mode: string | number) => {
-        const mode = _mode.toString();
+      {Object.keys(EXERCISES).map((mode: TExercises) => {
         return (
           <div className={localStyles.row} key={mode}>
             <div className={localStyles.number}>
@@ -37,8 +56,8 @@ export const GameSettings: FC = () => {
                 type='radio'
                 name={mode}
                 value="easy"
-                checked={practice[mode] === 'easy'}
-                onChange={(e) => handleDifficultyChange(e.target.value, mode)}
+                checked={exercises[mode] === DIFFICULTIES.EASY}
+                onChange={handleExerciseDifficultyChange}
               />
             </div>
             <div className={localStyles.medium}>
@@ -46,8 +65,8 @@ export const GameSettings: FC = () => {
                 type='radio'
                 name={mode}
                 value="medium"
-                checked={practice[mode] === 'medium'}
-                onChange={(e) => handleDifficultyChange(e.target.value, mode)}
+                checked={exercises[mode] === DIFFICULTIES.MEDIUM}
+                onChange={handleExerciseDifficultyChange}
               />
             </div>
             <div className={localStyles.hard}>
@@ -55,8 +74,8 @@ export const GameSettings: FC = () => {
                 type='radio'
                 name={mode}
                 value="hard"
-                checked={practice[mode] === 'hard'}
-                onChange={(e) => handleDifficultyChange(e.target.value, mode)}
+                checked={exercises[mode] === DIFFICULTIES.HARD}
+                onChange={handleExerciseDifficultyChange}
               />
             </div>
             <InfoIcon />
@@ -65,34 +84,13 @@ export const GameSettings: FC = () => {
       })}
       <Switch
         className={localStyles.modes}
-        options={{
-          time: <TimerIcon />,
-          quantity: <QuantityIcon />,
-          unlimited: <InfinityIcon />,
-        }}
-        value={mode}
-        onChange={handleModeChange}
+        options={GAME_MODE_OPTIONS}
+        value={gameMode}
+        onChange={handleGameModeChange}
       />
       <Button className={localStyles.play} onClick={handlePlayClick}>
         <PlayIcon />
       </Button>
     </main>
   );
-
-  function _handleModeChange(e: IEventMetaObject<string>) {
-    setMode(e.value);
-  }
-
-  function _handleDifficultyChange(value: string, mode: string) {
-    setPractice((prevPractice) => {
-      return { ...prevPractice, [mode]: value };
-    });
-  }
-
-  function _handlePlayClick() {
-    console.log(
-      mode,
-      practice,
-    );
-  }
 };
