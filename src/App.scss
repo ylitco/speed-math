@@ -3,8 +3,22 @@
 #root {
   @extend .p-m1;
 
-  height: 100%;
+  position: relative;
+  width: inherit;
+  height: inherit;
   display: flex;
   flex-direction: column;
   background: $MAIN;
+}
+
+@media (orientation: portrait) {
+  #root {
+    aspect-ratio: 6 / 13;
+  }
+}
+
+@media (orientation: landscape) {
+  #root {
+    aspect-ratio: 13 / 6;
+  }
 }

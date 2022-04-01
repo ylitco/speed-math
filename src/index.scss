@@ -8,7 +8,28 @@
 
 html,
 body {
+  width: 100%;
   height: 100%;
+}
+
+@media (orientation: portrait) {
+  html,
+  body {
+    min-width: em(360);
+    max-width: em(428);
+    min-height: em(667);
+    max-height: em(926);
+  }
+}
+
+@media (orientation: landscape) {
+  html,
+  body {
+    min-height: em(360);
+    max-height: em(428);
+    min-width: em(667);
+    max-width: em(926);
+  }
 }
 
 body {
