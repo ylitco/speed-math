@@ -1,56 +1,13 @@
-import { TViewSettings } from 'src/views/types';
-import { SettingsIcon } from 'src/icons/Settings/Settings';
-import { InfoIcon } from 'src/icons/Info/Info';
-
 export const VIEW = {
   START: 'start',
   OVERVIEW: 'overview',
-  MAIN_SETTINGS: 'main-settings',
+  GLOBAL_SETTINGS: 'global-settings',
   ABOUT: 'about',
-  GAME_SETTINGS: 'game-settings',
-  GAME: 'game',
+  LOCAL_SETTINGS: 'local-settings',
+  WORKOUT: 'workout',
+  TIME_WORKOUT: 'time',
+  REPS_WORKOUT: 'reps',
+  FREE_WORKOUT: 'free',
   STATISTICS: 'statistics',
   EXPLANATION: 'explanation',
 } as const;
-
-export const SETTINGS = {
-  [VIEW.START]: {
-    action: {
-      Icon: SettingsIcon,
-      link: '/' + VIEW.MAIN_SETTINGS,
-    }
-  },
-  [VIEW.OVERVIEW]: {
-    action: null,
-  },
-  [VIEW.MAIN_SETTINGS]: {
-    action: null,
-  },
-  [VIEW.ABOUT]: {
-    action: {
-      Icon: SettingsIcon,
-      link: '/' + VIEW.MAIN_SETTINGS,
-    }
-  },
-  [VIEW.GAME_SETTINGS]: {
-    action: {
-      Icon: SettingsIcon,
-      link: '/' + VIEW.MAIN_SETTINGS,
-    }
-  },
-  [VIEW.GAME]: {
-    action: {
-      Icon: InfoIcon,
-      link: '/' + VIEW.EXPLANATION,
-    }
-  },
-  [VIEW.STATISTICS]: {
-    action: {
-      Icon: InfoIcon,
-      link: '/' + VIEW.EXPLANATION
-    }
-  },
-  [VIEW.EXPLANATION]: {
-    action: null,
-  },
-} as TViewSettings;

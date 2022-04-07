@@ -1,36 +1,30 @@
 export const CHECKING_MODE = {
   HAND: 'hand',
   AUTO: 'auto',
-};
+} as const;
 
 export const INPUT_MODE = {
   LTR: 'ltr',
   RTL: 'rtl',
-};
-
-export const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
-
-export const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
-
-export const REPS = Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`]))
+} as const;
 
 export const LANG = {
   RU: 'RU',
   EN: 'EN',
   HI: 'HI',
-};
+} as const;
 
 export const GAME_MODE = {
   TIME: 'time',
   REPS: 'reps',
   FREE: 'free',
-};
+} as const;
 
 export const DIFFICULTIES = {
   EASY: 'easy',
   MEDIUM: 'medium',
   HARD: 'hard',
-};
+} as const;
 
 export const EXERCISES = {
   '3': '3',
@@ -43,4 +37,10 @@ export const EXERCISES = {
   '11': '11',
   '12': '12',
   'N': 'N',
-};
+} as const;
+
+export const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
+
+export const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
+
+export const REPS = Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`]));

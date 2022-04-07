@@ -1,7 +1,10 @@
 import React, { FC, HTMLAttributes, useMemo, useReducer } from 'react';
 import {
-  iAction,
+  IAction,
+  IPausedOnTime,
+  IRepsWorkout,
   IState,
+  ITimeWorkout,
   TCheckingMode,
   TDifficulties,
   TExercises,
@@ -9,10 +12,13 @@ import {
   TInputMode,
   TLang,
   TMinutes,
+  TPausedOnReps,
   TReps,
   TSeconds,
+  TTrainingPlan,
 } from 'src/state/types';
-import { copy } from 'src/utils';
+import { copy, getFirstFactor, getSecondFactor } from 'src/utils';
+import { ACTIONS } from './actions';
 import {
   CHECKING_MODE,
   DIFFICULTIES,
@@ -30,9 +36,9 @@ const INITIAL_STATE = {
     global: {
       checkingMode: CHECKING_MODE.AUTO,
       inputMode: INPUT_MODE.RTL,
-      minutes: MINUTES[5],
-      seconds: SECONDS[0],
-      reps: REPS[20],
+      minutes: MINUTES[0],
+      seconds: SECONDS[5],
+      reps: REPS[2],
       lang: LANG.EN,
     },
     local: {
@@ -51,60 +57,109 @@ const INITIAL_STATE = {
       },
     },
   },
+  workout: null,
 } as IState;
 
-const ACTIONS = {
-  SET_CHECKING_MODE: 'SET_CHECKING_MODE',
-  SET_INPUT_MODE: 'SET_INPUT_MODE',
-  SET_MINUTES: 'SET_MINUTES',
-  SET_SECONDS: 'SET_SECONDS',
-  SET_REPS: 'SET_REPS',
-  SET_LANG: 'SET_LANG',
-  SET_GAME_MODE: 'SET_GAME_MODE',
-  SET_EXERCISES_DIFFICULTIES: 'SET_EXERCISES_DIFFICULTIES',
-};
-
-const reducer = (state: typeof INITIAL_STATE, action: iAction) => {
+const reducer = (state: IState, action: IAction) => {
   switch (action.type) {
     case ACTIONS.SET_CHECKING_MODE:
       state.settings.global.checkingMode = action.data.mode;
+
       return copy(state);
     case ACTIONS.SET_INPUT_MODE:
       state.settings.global.inputMode = action.data.mode;
+
       return copy(state);
     case ACTIONS.SET_MINUTES:
       state.settings.global.minutes = action.data.minutes;
+
       return copy(state);
     case ACTIONS.SET_SECONDS:
       state.settings.global.seconds = action.data.seconds;
+
       return copy(state);
     case ACTIONS.SET_REPS:
       state.settings.global.reps = action.data.reps;
+
       return copy(state);
     case ACTIONS.SET_LANG:
       state.settings.global.lang = action.data.lang;
+
       return copy(state);
     case ACTIONS.SET_GAME_MODE:
       state.settings.local.gameMode = action.data.mode;
+
       return copy(state);
     case ACTIONS.SET_EXERCISES_DIFFICULTIES:
       state.settings.local.exercises = {
         ...state.settings.local.exercises,
         ...action.data.exercise,
       };
+
+      return copy(state);
+    case ACTIONS.SET_GAME:
+      state.workout = action.data.workout;
+
+      return copy(state);
+    case ACTIONS.START_GAME: {
+      const reps = createReps(state.settings.local.exercises);
+
+      state.workout = { ...reps };
+
+      return copy(state);
+    }
+    case ACTIONS.CREATE_REP: {
+      const reps = createReps(state.settings.local.exercises);
+
+      state.workout = { ...state.workout, ...reps };
+
+      return copy(state);
+    }
+    case ACTIONS.PAUSE_GAME:
+      if (selectWorkoutMode() === GAME_MODE.TIME) {
+        const workout = state.workout as ITimeWorkout;
+
+        workout.pausedOn = action.data.pausedOn;
+      }
+      if (selectWorkoutMode() === GAME_MODE.REPS) {
+        const workout = state.workout as IRepsWorkout;
+
+        workout.pausedOn = action.data.pausedOn;
+      }
+      if (selectWorkoutMode() === GAME_MODE.FREE) {
+        // @todo pause free mode
+      }
       return copy(state);
     default:
       return state;
   }
+
+  function selectWorkoutMode(): TGameMode {
+    return state.settings.local.gameMode; // @todo rename -> workoutMode
+  }
 };
 
-export const StateContext = React.createContext<IState | null>(null);
+function createReps(trainingPlan: TTrainingPlan) {
+  const firstFactor = getFirstFactor(trainingPlan);
+  const exercise = `${firstFactor}` as TExercises;
+  const secondFactor = getSecondFactor(firstFactor, trainingPlan);
+  const complexity = trainingPlan[exercise] || trainingPlan[EXERCISES.N];
+
+  return {
+    firstFactor,
+    secondFactor,
+    complexity,
+  };
+}
+
+export const StateContext = React.createContext<IState>(INITIAL_STATE);
 
 export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const store = useMemo(() => {
     return {
       settings: state.settings,
+      workout: state.workout,
       setCheckingMode: (mode: TCheckingMode) => {
         dispatch({ type: ACTIONS.SET_CHECKING_MODE, data: { mode } });
       },
@@ -128,6 +183,18 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
       },
       setExerciseDifficulty: (exercise: Record<TExercises, TDifficulties>) => {
         dispatch({ type: ACTIONS.SET_EXERCISES_DIFFICULTIES, data: { exercise }});
+      },
+      startWorkout: () => {
+        dispatch({ type: ACTIONS.START_GAME, data: {} });
+      },
+      nextReps: () => {
+        dispatch({ type: ACTIONS.CREATE_REP, data: {} });
+      },
+      pauseWorkout: (pausedOn: IPausedOnTime | TPausedOnReps) => {
+        dispatch({ type: ACTIONS.PAUSE_GAME , data: { pausedOn } });
+      },
+      finishWorkout: () => {
+        dispatch({ type: ACTIONS.SET_GAME, data: { game: null } });
       },
     } as IState;
   }, [state]);

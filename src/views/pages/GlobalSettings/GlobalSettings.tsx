@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useContext } from 'react';
-import cn from 'classnames';
-
+import { Header } from 'src/components/Header/Header';
+import { Content } from 'src/components/Content/Content';
+import { BackButton } from 'src/views/components/BackButton';
 import { Switch } from 'src/components/Switch/Switch';
 import { Wheel } from 'src/components/Wheel/Wheel';
 import { TimerIcon } from 'src/icons/Timer/ComplexTimer';
@@ -17,7 +18,6 @@ import {
   LANG,
 } from 'src/state/constants';
 import {
-  IState,
   TCheckingMode,
   TInputMode,
   TMinutes,
@@ -27,8 +27,7 @@ import {
 } from 'src/state/types'
 import { IEventMetaObject } from 'src/types';
 
-import styles from '../views.module.scss';
-import localStyles from './MainSettings.module.scss';
+import styles from './GlobalSettings.module.scss';
 
 const CHECKING_OPTIONS = {
   [CHECKING_MODE.HAND]: 'Manual',
@@ -40,8 +39,8 @@ const INPUT_OPTIONS = {
   [INPUT_MODE.RTL]: 'From right to left',
 };
 
-export const MainSettings: FC = () => {
-  const state = useContext<IState | null>(StateContext) as IState;
+export const GlobalSettings: FC = () => {
+  const state = useContext(StateContext);
   const { checkingMode, inputMode, minutes, seconds, reps, lang } = state.settings.global;
   const { setCheckingMode, setInputMode, setMinutes, setSeconds, setReps, setLang } = state;
   const handleCheckingModeChange = useCallback((e: IEventMetaObject<TCheckingMode>) => {
@@ -64,50 +63,53 @@ export const MainSettings: FC = () => {
   }, [setLang]);
 
   return (
-    <main className={cn(styles.view, localStyles.view)}>
-      <Switch
-        className={localStyles.checkingModeSwitcher}
-        label="Checking Mode"
-        options={CHECKING_OPTIONS}
-        value={checkingMode}
-        onChange={handleCheckingModeChange}
-      />
-      <Switch
-        className={localStyles.inputModeSwitcher}
-        label="Input Mode"
-        options={INPUT_OPTIONS}
-        value={inputMode}
-        onChange={handleInputModeChange}
-      />
-      <label className={localStyles.time}>
-        <TimerIcon className={localStyles.label} />
-        <Wheel
-          options={MINUTES}
-          value={minutes}
-          onSelect={handleMinutesChange}
+    <>
+      <Header renderMinorAction={BackButton}>Settings</Header>
+      <Content className={styles.view}>
+        <Switch
+          className={styles.checkingModeSwitcher}
+          label="Checking Mode"
+          options={CHECKING_OPTIONS}
+          value={checkingMode}
+          onChange={handleCheckingModeChange}
         />
-        <Wheel
-          options={SECONDS}
-          value={seconds}
-          onSelect={handleSecondsChange}
+        <Switch
+          className={styles.inputModeSwitcher}
+          label="Input Mode"
+          options={INPUT_OPTIONS}
+          value={inputMode}
+          onChange={handleInputModeChange}
         />
-      </label>
-      <label className={localStyles.reps}>
-        <NIcon />
-        <Wheel
-          options={REPS}
-          value={reps}
-          onSelect={handleRepsChange}
-        />
-      </label>
-      <label className={localStyles.lang}>
-        <WorldIcon />
-        <Wheel
-          options={LANG}
-          value={lang}
-          onSelect={handleLangChange}
-        />
-      </label>
-    </main>
+        <label className={styles.time}>
+          <TimerIcon className={styles.label} />
+          <Wheel
+            options={MINUTES}
+            value={minutes}
+            onSelect={handleMinutesChange}
+          />
+          <Wheel
+            options={SECONDS}
+            value={seconds}
+            onSelect={handleSecondsChange}
+          />
+        </label>
+        <label className={styles.reps}>
+          <NIcon />
+          <Wheel
+            options={REPS}
+            value={reps}
+            onSelect={handleRepsChange}
+          />
+        </label>
+        <label className={styles.lang}>
+          <WorldIcon />
+          <Wheel
+            options={LANG}
+            value={lang}
+            onSelect={handleLangChange}
+          />
+        </label>
+      </Content>
+    </>
   );
 };

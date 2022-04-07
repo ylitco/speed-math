@@ -4,7 +4,7 @@ import { IWheelProps } from 'src/components/Wheel/types';
 import { createEventMetaObject } from 'src/utils';
 import styles from './Wheel.module.scss';
 
-export const Wheel: FC<IWheelProps> = (props) => {
+export const Wheel: FC<IWheelProps<any>> = (props) => {
   const { onSelect, options, value } = props;
   const handleChange = useCallback(_handleChange, [onSelect]);
   const handleClick = useCallback(_handleClick, [onSelect, value]);
