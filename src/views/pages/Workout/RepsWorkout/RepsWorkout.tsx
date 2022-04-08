@@ -8,20 +8,23 @@ import { VIEW } from 'src/views/constants';
 import { getUrl } from 'src/utils';
 
 export const RepsWorkout: FC = () => {
-  const { workout, settings: { global: { reps: totalReps } } } = useContext(StateContext);
+  const state = useContext(StateContext);
+  const { workout, settings: { global: { reps: totalReps } } } = state;
   const { pausedOn } = workout as IRepsWorkout;
   const navigate = useNavigate();
   const initReps = pausedOn ? +pausedOn : +REPS[1];
   const [reps, setReps] = useState<number>(initReps);
+  const stopWorkout = useCallback(state.stopWorkout, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCheck = useCallback(() => {
     if (reps === +totalReps) {
-      return navigate(getUrl(VIEW.STATISTICS));
+      stopWorkout();
+      return navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
     }
     setReps((prevReps) => {
       return prevReps + 1;
     });
-  },[reps, totalReps, navigate]);
+  },[reps, totalReps, stopWorkout, navigate]);
 
   return (
     <BaseWorkout title={`${reps} - ${totalReps}`} onCheck={handleCheck} />

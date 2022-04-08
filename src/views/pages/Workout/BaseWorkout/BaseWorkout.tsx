@@ -12,10 +12,10 @@ import { WorkoutNotStartedError } from 'src/utils';
 
 export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const { onCheck } = props;
-  const { workout, nextReps } = useContext(StateContext);
+  const { workout, nextReps, pushAnswer } = useContext(StateContext);
 
   if (workout === null) {
-    throw new WorkoutNotStartedError('Game is not started');
+    throw new WorkoutNotStartedError('Open workout page when workout is not started');
   }
 
   const { firstFactor, secondFactor, complexity } = workout;
@@ -27,9 +27,10 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   }, []);
   const handleCheckClick = useCallback(() => {
     setResult(answer === firstFactor * secondFactor);
+    pushAnswer(answer === firstFactor * secondFactor);
     setAnswer(null);
 
-  }, [answer, firstFactor, secondFactor]);
+  }, [answer, firstFactor, pushAnswer, secondFactor]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>;

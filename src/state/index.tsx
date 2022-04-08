@@ -17,7 +17,7 @@ import {
   TSeconds,
   TTrainingPlan,
 } from 'src/state/types';
-import { copy, getFirstFactor, getSecondFactor } from 'src/utils';
+import { copy, getFirstFactor, getSecondFactor, WorkoutNotStartedError } from 'src/utils';
 import { ACTIONS } from './actions';
 import {
   CHECKING_MODE,
@@ -79,9 +79,11 @@ const reducer = (state: IState, action: IAction) => {
 
       return copy(state);
     case ACTIONS.SET_REPS:
-      state.settings.global.reps = action.data.reps;
+      const newState = copy(state);
 
-      return copy(state);
+      newState.settings.global.reps = action.data.reps;
+
+      return newState;
     case ACTIONS.SET_LANG:
       state.settings.global.lang = action.data.lang;
 
@@ -102,18 +104,38 @@ const reducer = (state: IState, action: IAction) => {
 
       return copy(state);
     case ACTIONS.START_GAME: {
+      const newState = copy(state);
       const reps = createReps(state.settings.local.exercises);
 
-      state.workout = { ...reps };
+      newState.workout = { ...reps, answers: { correct: 0, wrong: 0 }, startAt: new Date().getTime() };
 
-      return copy(state);
+      return newState;
     }
     case ACTIONS.CREATE_REP: {
+      if (state.workout === null) {
+        throw new WorkoutNotStartedError('Create reps when workout is not started');
+      }
+
       const reps = createReps(state.settings.local.exercises);
 
       state.workout = { ...state.workout, ...reps };
 
       return copy(state);
+    }
+    case ACTIONS.PUSH_ANSWER: {
+      const newState = copy(state);
+
+      if (newState.workout === null) {
+        throw new WorkoutNotStartedError('Push answer when workout is not started');
+      }
+
+      if (action.data.answer) {
+        newState.workout.answers.correct += 1
+      } else {
+        newState.workout.answers.wrong += 1;
+      }
+
+      return newState;
     }
     case ACTIONS.PAUSE_GAME:
       if (selectWorkoutMode() === GAME_MODE.TIME) {
@@ -130,6 +152,13 @@ const reducer = (state: IState, action: IAction) => {
         // @todo pause free mode
       }
       return copy(state);
+    case ACTIONS.STOP_WORKOUT: {
+      const newState = copy(state);
+
+      newState.workout.finishAt = new Date().getTime();
+
+      return newState;
+    }
     default:
       return state;
   }
@@ -172,8 +201,8 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
       setSeconds: (seconds: TSeconds) => {
         dispatch({ type: ACTIONS.SET_SECONDS, data: { seconds } });
       },
-      setReps: (number: TReps) => {
-        dispatch({ type: ACTIONS.SET_REPS, data: { number } });
+      setReps: (reps: TReps) => {
+        dispatch({ type: ACTIONS.SET_REPS, data: { reps } });
       },
       setLang: (lang: TLang) => {
         dispatch({ type: ACTIONS.SET_LANG, data: { lang } });
@@ -190,8 +219,14 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
       nextReps: () => {
         dispatch({ type: ACTIONS.CREATE_REP, data: {} });
       },
+      pushAnswer: (answer: boolean) => {
+        dispatch({ type: ACTIONS.PUSH_ANSWER, data: { answer }});
+      },
       pauseWorkout: (pausedOn: IPausedOnTime | TPausedOnReps) => {
-        dispatch({ type: ACTIONS.PAUSE_GAME , data: { pausedOn } });
+        dispatch({ type: ACTIONS.PAUSE_GAME, data: { pausedOn } });
+      },
+      stopWorkout: () => {
+        dispatch({ type: ACTIONS.STOP_WORKOUT, data: {} });
       },
       finishWorkout: () => {
         dispatch({ type: ACTIONS.SET_GAME, data: { game: null } });

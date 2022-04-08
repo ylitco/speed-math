@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { BaseWorkout } from 'src/views/pages/Workout/BaseWorkout/BaseWorkout';
 import { StateContext } from 'src/state';
 import { ITimeWorkout } from 'src/state/types';
@@ -8,16 +8,19 @@ import { getUrl } from 'src/utils';
 
 export const TimeWorkout: FC = () => {
   const navigate = useNavigate();
-  const { workout, settings: { global: { minutes: totalMinutes, seconds: totalSeconds } } } = useContext(StateContext);
+  const state = useContext(StateContext)
+  const { workout, settings: { global: { minutes: totalMinutes, seconds: totalSeconds } } } = state;
   const { pausedOn } = workout as ITimeWorkout;
   const [timer, setTimer] = useState<{ minutes: number, seconds: number }>({ minutes: getMinutes(), seconds: getSeconds() });
+  const stopWorkout = useCallback(state.stopWorkout, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     let _timer = setTimeout(tick, 1000);
     function tick() {
       if (timer.minutes === 0 && timer.seconds === 1) {
         setTimeout(() => {
-          navigate(getUrl(VIEW.STATISTICS));
+          stopWorkout();
+          navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
         }, 1000);
       }
 
@@ -38,7 +41,7 @@ export const TimeWorkout: FC = () => {
     return () => {
       clearTimeout(_timer);
     }
-  }, [navigate, timer.minutes, timer.seconds]);
+  }, [navigate, stopWorkout, timer.minutes, timer.seconds]);
 
   return (
     <BaseWorkout title={`${printMinutes()}:${printSeconds()}`} />

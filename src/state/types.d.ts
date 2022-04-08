@@ -26,6 +26,12 @@ export interface IFreeWorkout {
   complexity: TDifficulties;
   firstFactor: number;
   secondFactor: number;
+  answers: {
+    correct: number;
+    wrong: number;
+  };
+  startAt: number;
+  finishAt: number;
 }
 
 export interface IPausedOnTime {
@@ -69,7 +75,9 @@ export interface IState {
   setExerciseDifficulty: (exerciseDifficulty: Record<TExercises, TDifficulties>) => void;
   startWorkout: () => void;
   nextReps: () => void;
+  pushAnswer: (answer: boolean) => void;
   pauseWorkout: (pausedOn: IPausedOnTime | IPausedOnReps) => void;
+  stopWorkout: () => void;
   finishWorkout: () => void;
 }
 
