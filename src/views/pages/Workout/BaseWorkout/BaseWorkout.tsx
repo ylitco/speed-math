@@ -1,17 +1,23 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
 import { Content } from 'src/components/Content/Content';
 import { Input } from 'src/components/Input/Input';
 import { Keyboard } from 'src/components/Keyboard/Keyboard';
-import { ExplainButton } from 'src/views/components/ExplainButton';
+import { Button } from 'src/components/Button/Button';
+import { InfoIcon } from 'src/icons/Info/Info';
 import { StateContext } from 'src/state';
 import { IEventMetaObject } from 'src/types';
 import { IBaseWorkout } from './types';
-import { WorkoutNotStartedError } from 'src/utils';
+import { TExercises } from 'src/state/types';
+import { BUTTON_TYPE } from 'src/components/Button/types';
+import { getUrl, WorkoutNotStartedError } from 'src/utils';
+import { EXERCISES } from 'src/state/constants';
+import { VIEW } from 'src/views/constants';
 
 export const BaseWorkout: FC<IBaseWorkout> = (props) => {
-  const { onCheck } = props;
+  const { onCheckStart, onCheckFinish } = props;
   const { workout, nextReps, pushAnswer } = useContext(StateContext);
 
   if (workout === null) {
@@ -21,34 +27,38 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const { firstFactor, secondFactor, complexity } = workout;
   const [answer, setAnswer] = useState<number | null>(null);
   const [result, setResult] = useState<boolean | null>(null);
+  const exercise = firstFactor > 12 ? EXERCISES.N : EXERCISES[`${firstFactor}` as TExercises];
 
   const handleKeyboardClick = useCallback((e: IEventMetaObject<number | null>) => {
     setAnswer(e.value);
   }, []);
   const handleCheckClick = useCallback(() => {
+    if (onCheckStart) {
+      onCheckStart();
+    }
+
     setResult(answer === firstFactor * secondFactor);
     pushAnswer(answer === firstFactor * secondFactor);
     setAnswer(null);
-
-  }, [answer, firstFactor, pushAnswer, secondFactor]);
+  }, [answer, firstFactor, onCheckStart, pushAnswer, secondFactor]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>;
     if (result !== null) {
       _timer = setTimeout(() => {
+        if (onCheckFinish) {
+          onCheckFinish();
+        }
+
         setResult(null);
         nextReps();
-
-        if (onCheck) {
-          onCheck();
-        }
       }, 500);
     }
 
     return () => {
       clearTimeout(_timer);
     }
-  }, [result, nextReps, onCheck]);
+  }, [result, nextReps, onCheckFinish]);
 
   return (
     <>
@@ -72,7 +82,11 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
 
   function renderExplainButton() {
     return (
-      <ExplainButton onClick={props.onExplain} />
+      <Link to={getUrl(`${VIEW.EXPLANATION}/${exercise}`)}>
+        <Button type={BUTTON_TYPE.CIRCLE} onClick={props?.onExplain}>
+          <InfoIcon />
+        </Button>
+      </Link>
     );
   }
 };

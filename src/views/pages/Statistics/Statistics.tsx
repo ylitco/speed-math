@@ -2,7 +2,6 @@ import React, { FC, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
-import { ExplainButton } from 'src/views/components/ExplainButton';
 import { Button } from 'src/components/Button/Button';
 import { Content } from 'src/components/Content/Content';
 import { StateContext } from 'src/state';
@@ -23,7 +22,7 @@ export const Statistics: FC = () => {
 
   return (
     <>
-      <Header renderMajorAction={ExplainButton} renderMinorAction={BackButton}>Result</Header>
+      <Header renderMinorAction={BackButton}>Result</Header>
       <Content>
         <h1>Statistics View</h1>
         <h2>{printAbsoluteResult()}</h2>
@@ -40,7 +39,8 @@ export const Statistics: FC = () => {
   }
 
   function printRelativeResult() {
-    const percent = answers.correct / (answers.correct + answers.wrong) * 100;
+    const total = answers.correct + answers.wrong;
+    const percent = total !== 0 ? answers.correct / total * 100 : 0;
 
     return percent.toFixed() + '%';
   }

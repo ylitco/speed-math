@@ -35,7 +35,7 @@ export const Views: FC = () => {
           <Route path={VIEW.FREE_WORKOUT} element={<FreeWorkout />} />
           <Route path={VIEW.STATISTICS} element={<Statistics />} />
         </Route>
-        <Route path={VIEW.EXPLANATION} element={<Explanation />} />
+        <Route path={`${VIEW.EXPLANATION}/:exercise`} element={<Explanation />} />
         <Route path="*" element={<Navigate to={VIEW.START} replace />} />
       </Routes>
     </ViewContext.Provider>

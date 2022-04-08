@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useCallback, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { Content } from 'src/components/Content/Content';
 import { SettingsButton } from 'src/views/components/SettingsButton';
@@ -14,7 +15,9 @@ import { StateContext } from 'src/state'
 import { IEventMetaObject } from 'src/types';
 import { TDifficulties, TExercises, TGameMode } from 'src/state/types';
 import { EXERCISES, DIFFICULTIES, GAME_MODE } from 'src/state/constants'; // @todo rename
+import { VIEW } from 'src/views/constants';
 import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
+import { getUrl } from 'src/utils';
 import styles from './LocalSettings.module.scss';
 
 const WORKOUT_MODE_OPTIONS = {
@@ -73,7 +76,9 @@ export const LocalSettings: FC = () => {
                   onChange={handleExerciseComplexityChange}
                 />
               </div>
-              <InfoIcon />
+              <Link to={getUrl(`${VIEW.EXPLANATION}/${mode}`)}>
+                <InfoIcon />
+              </Link>
             </div>
           );
         })}

@@ -229,7 +229,7 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
         dispatch({ type: ACTIONS.STOP_WORKOUT, data: {} });
       },
       finishWorkout: () => {
-        dispatch({ type: ACTIONS.SET_GAME, data: { game: null } });
+        dispatch({ type: ACTIONS.SET_GAME, data: { workout: null } });
       },
     } as IState;
   }, [state]);

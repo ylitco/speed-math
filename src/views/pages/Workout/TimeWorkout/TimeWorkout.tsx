@@ -9,19 +9,48 @@ import { getUrl } from 'src/utils';
 export const TimeWorkout: FC = () => {
   const navigate = useNavigate();
   const state = useContext(StateContext)
-  const { workout, settings: { global: { minutes: totalMinutes, seconds: totalSeconds } } } = state;
+  const { workout, pauseWorkout, settings: { global: { minutes: totalMinutes, seconds: totalSeconds } } } = state;
   const { pausedOn } = workout as ITimeWorkout;
   const [timer, setTimer] = useState<{ minutes: number, seconds: number }>({ minutes: getMinutes(), seconds: getSeconds() });
+  const [isCheck, setIsCheck] = useState(false);
+  const [timerOut, setTimerOut] = useState(false);
   const stopWorkout = useCallback(state.stopWorkout, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const handleExplain = useCallback(() => {
+    pauseWorkout(timer);
+  }, [pauseWorkout, timer]);
+  const handleCheckStart = useCallback(() => {
+    setIsCheck(true);
+  }, []);
+  const handleCheckFinish = useCallback(() => {
+    setIsCheck(false);
+  }, []);
+
+  useEffect(() => {
+    let _timer: ReturnType<typeof setTimeout>
+
+    if (timerOut) finish();
+
+    function finish() {
+      if (isCheck) {
+        _timer = setTimeout(finish);
+      } else {
+        stopWorkout();
+        navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
+      }
+    }
+
+    return () => {
+      clearTimeout(_timer);
+    }
+  }, [isCheck, timerOut, navigate, stopWorkout]);
 
   useEffect(() => {
     let _timer = setTimeout(tick, 1000);
     function tick() {
-      if (timer.minutes === 0 && timer.seconds === 1) {
-        setTimeout(() => {
-          stopWorkout();
-          navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
-        }, 1000);
+      if (timer.minutes === 0 && timer.seconds === 0) {
+        setTimerOut(true);
+
+        return;
       }
 
       setTimer((prevTimer) => {
@@ -44,7 +73,12 @@ export const TimeWorkout: FC = () => {
   }, [navigate, stopWorkout, timer.minutes, timer.seconds]);
 
   return (
-    <BaseWorkout title={`${printMinutes()}:${printSeconds()}`} />
+    <BaseWorkout
+      title={`${printMinutes()}:${printSeconds()}`}
+      onExplain={handleExplain}
+      onCheckStart={handleCheckStart}
+      onCheckFinish={handleCheckFinish}
+    />
   );
 
   function printMinutes() {

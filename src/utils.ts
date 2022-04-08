@@ -68,7 +68,7 @@ function getFactor (complexity: TDifficulties, isBase: boolean): number {
   return error('Unknown complexity');
 }
 
-function getRandom(min: number, max: number) {
+export function getRandom(min: number, max: number) {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
 
   return Math.round(rand);
