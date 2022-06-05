@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useCallback, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { Content } from 'src/components/Content/Content';
@@ -28,6 +29,7 @@ const WORKOUT_MODE_OPTIONS = {
 
 export const LocalSettings: FC = () => {
   const { settings: { local: { gameMode: workoutMode, exercises } }, setExerciseDifficulty: setExerciseComplexity, setGameMode: setWorkoutMode } = useContext(StateContext); // @todo rename
+  const { t } = useTranslation();
   const handleWorkoutModeChange = useCallback((e: IEventMetaObject<TGameMode>) => {
     setWorkoutMode(e.value);
   }, [setWorkoutMode]);
@@ -38,11 +40,11 @@ export const LocalSettings: FC = () => {
 
   return (
     <>
-      <Header renderMajorAction={SettingsButton} renderMinorAction={BackButton}>Practice</Header>
+      <Header renderMajorAction={SettingsButton} renderMinorAction={BackButton}>{t('localSettings.title')}</Header>
       <Content className={styles.view}>
-        <b className={styles.easy}>easy</b>
-        <b className={styles.medium}>medium</b>
-        <b className={styles.hard}>hard</b>
+        <b className={styles.easy}>{t('localSettings.easy')}</b>
+        <b className={styles.medium}>{t('localSettings.medium')}</b>
+        <b className={styles.hard}>{t('localSettings.hard')}</b>
         {Object.keys(EXERCISES).map((mode) => {
           return (
             <div className={styles.row} key={mode}>

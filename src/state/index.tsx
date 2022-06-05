@@ -10,7 +10,6 @@ import {
   TExercises,
   TGameMode,
   TInputMode,
-  TLang,
   TMinutes,
   TPausedOnReps,
   TReps,
@@ -25,7 +24,6 @@ import {
   EXERCISES,
   GAME_MODE,
   INPUT_MODE,
-  LANG,
   MINUTES,
   REPS,
   SECONDS,
@@ -39,7 +37,6 @@ const INITIAL_STATE = {
       minutes: MINUTES[0],
       seconds: SECONDS[5],
       reps: REPS[2],
-      lang: LANG.EN,
     },
     local: {
       gameMode: GAME_MODE.TIME,
@@ -84,10 +81,6 @@ const reducer = (state: IState, action: IAction) => {
       newState.settings.global.reps = action.data.reps;
 
       return newState;
-    case ACTIONS.SET_LANG:
-      state.settings.global.lang = action.data.lang;
-
-      return copy(state);
     case ACTIONS.SET_GAME_MODE:
       state.settings.local.gameMode = action.data.mode;
 
@@ -203,9 +196,6 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
       },
       setReps: (reps: TReps) => {
         dispatch({ type: ACTIONS.SET_REPS, data: { reps } });
-      },
-      setLang: (lang: TLang) => {
-        dispatch({ type: ACTIONS.SET_LANG, data: { lang } });
       },
       setGameMode: (mode: TGameMode) => {
         dispatch({ type: ACTIONS.SET_GAME_MODE, data: { mode }});

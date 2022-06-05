@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
 import { Button } from 'src/components/Button/Button';
@@ -13,6 +14,7 @@ import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
 export const Statistics: FC = () => {
   const navigate = useNavigate();
   const { workout, finishWorkout } = useContext(StateContext);
+  const { t } = useTranslation();
   const { answers, startAt, finishAt } = workout as IFreeWorkout;
   const handleWorkoutRestart = useStartWorkoutCallback();
   const handleWorkoutFinish = useCallback(() => {
@@ -22,9 +24,8 @@ export const Statistics: FC = () => {
 
   return (
     <>
-      <Header renderMinorAction={BackButton}>Result</Header>
+      <Header renderMinorAction={BackButton}>{t('statistics.title')}</Header>
       <Content>
-        <h1>Statistics View</h1>
         <h2>{printAbsoluteResult()}</h2>
         <h3>{printRelativeResult()}</h3>
         <h4>{printSpeedResult()}</h4>
@@ -49,6 +50,6 @@ export const Statistics: FC = () => {
     const duration = new Date(finishAt - startAt).getTime() / 1000;
     const problems = answers.correct * 60 / duration;
 
-    return `${problems.toFixed()} p/m`;
+    return `${problems.toFixed()} ${t('statistics.pm')}`;
   }
 };

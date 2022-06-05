@@ -1,4 +1,6 @@
-import React, { FC, useCallback, useContext } from 'react';
+import React, { FC, useCallback, useContext, useMemo } from 'react';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { Header } from 'src/components/Header/Header';
 import { Content } from 'src/components/Content/Content';
 import { BackButton } from 'src/views/components/BackButton';
@@ -7,7 +9,7 @@ import { Wheel } from 'src/components/Wheel/Wheel';
 import { TimerIcon } from 'src/icons/Timer/ComplexTimer';
 import { WorldIcon } from 'src/icons/World/World';
 import { NIcon } from 'src/icons/N/N';
-
+import LocaleContext from 'src/LocaleContext';
 import { StateContext } from 'src/state';
 import {
   INPUT_MODE,
@@ -29,20 +31,12 @@ import { IEventMetaObject } from 'src/types';
 
 import styles from './GlobalSettings.module.scss';
 
-const CHECKING_OPTIONS = {
-  [CHECKING_MODE.HAND]: 'Manual',
-  [CHECKING_MODE.AUTO]: 'Automatic',
-};
-
-const INPUT_OPTIONS = {
-  [INPUT_MODE.LTR]: 'From left to right',
-  [INPUT_MODE.RTL]: 'From right to left',
-};
-
 export const GlobalSettings: FC = () => {
   const state = useContext(StateContext);
-  const { checkingMode, inputMode, minutes, seconds, reps, lang } = state.settings.global;
-  const { setCheckingMode, setInputMode, setMinutes, setSeconds, setReps, setLang } = state;
+  const { locale } = useContext(LocaleContext);
+  const { t } = useTranslation();
+  const { checkingMode, inputMode, minutes, seconds, reps } = state.settings.global;
+  const { setCheckingMode, setInputMode, setMinutes, setSeconds, setReps } = state;
   const handleCheckingModeChange = useCallback((e: IEventMetaObject<TCheckingMode>) => {
     setCheckingMode(e.value);
   }, [setCheckingMode]);
@@ -59,23 +53,37 @@ export const GlobalSettings: FC = () => {
     setReps(e.value);
   }, [setReps]);
   const handleLangChange = useCallback((e: IEventMetaObject<TLang>) => {
-    setLang(e.value);
-  }, [setLang]);
+    if (locale !== e.value) {
+      i18n.changeLanguage(e.value);
+    }
+  }, [locale]);
+  const CHECKING_OPTIONS = useMemo(() => {
+    return {
+      [CHECKING_MODE.HAND]: t('globalSettings.checkingMode.manual'),
+      [CHECKING_MODE.AUTO]: t('globalSettings.checkingMode.automatic'),
+    };
+  }, [t]);
+  const INPUT_OPTIONS = useMemo(() => {
+    return {
+      [INPUT_MODE.LTR]: t('globalSettings.inputMode.ltr'),
+      [INPUT_MODE.RTL]: t('globalSettings.inputMode.rtl'),
+    };
+  }, [t]);
 
   return (
     <>
-      <Header renderMinorAction={BackButton}>Settings</Header>
+      <Header renderMinorAction={BackButton}>{t('globalSettings.title')}</Header>
       <Content className={styles.view}>
         <Switch
           className={styles.checkingModeSwitcher}
-          label="Checking Mode"
+          label={t('globalSettings.checkingMode.label')}
           options={CHECKING_OPTIONS}
           value={checkingMode}
           onChange={handleCheckingModeChange}
         />
         <Switch
           className={styles.inputModeSwitcher}
-          label="Input Mode"
+          label={t('globalSettings.inputMode.label')}
           options={INPUT_OPTIONS}
           value={inputMode}
           onChange={handleInputModeChange}
@@ -105,7 +113,7 @@ export const GlobalSettings: FC = () => {
           <WorldIcon />
           <Wheel
             options={LANG}
-            value={lang}
+            value={locale}
             onSelect={handleLangChange}
           />
         </label>

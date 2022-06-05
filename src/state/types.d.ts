@@ -57,7 +57,6 @@ export interface IState {
       minutes: TMinutes;
       seconds: TSeconds;
       reps: TReps;
-      lang: TLang;
     };
     local: {
       gameMode: TGameMode;
@@ -70,7 +69,6 @@ export interface IState {
   setMinutes: (minutes: TMinutes) => void;
   setSeconds: (seconds: TSeconds) => void;
   setReps: (reps: TReps) => void;
-  setLang: (lang: TLang) => void;
   setGameMode: (mode: TGameMode) => void;
   setExerciseDifficulty: (exerciseDifficulty: Record<TExercises, TDifficulties>) => void;
   startWorkout: () => void;
