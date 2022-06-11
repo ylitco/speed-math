@@ -5,6 +5,7 @@ import { StateProvider } from 'src/state';
 import LocaleContext from 'src/LocaleContext';
 import i18n from './i18n';
 import { Views } from './views/Views';
+import { Loader } from 'src/views/components/Loader/Loader';
 
 function App() {
   const [locale, setLocale] = useState(i18n.language);
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale } as { locale: string, setLocale: () => void }}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <StateProvider>
           <Router>
             <Views />

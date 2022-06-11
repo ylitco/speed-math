@@ -1,0 +1,18 @@
+@import 'src/styles';
+
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(em(4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 50%;
+    height: 50%;
+  }
+}
