@@ -12,26 +12,6 @@ body {
   height: 100%;
 }
 
-@media (orientation: portrait) {
-  html,
-  body {
-    min-width: em(360);
-    max-width: em(428);
-    min-height: em(667);
-    max-height: em(926);
-  }
-}
-
-@media (orientation: landscape) {
-  html,
-  body {
-    min-height: em(360);
-    max-height: em(428);
-    min-width: em(667);
-    max-width: em(926);
-  }
-}
-
 body {
   font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
