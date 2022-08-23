@@ -30,22 +30,26 @@ Default.args = {
     gameSettings: 'Take Exercise',
   },
   value: 'overview',
+  size: 'L',
 };
 
 export const Minutes = Template.bind({});
 Minutes.args = {
   options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`])),
   value: '0',
+  size: 'M',
 };
 
 export const Seconds = Template.bind({});
 Seconds.args = {
   options: Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`])),
   value: '0',
+  size: 'M',
 };
 
 export const Count = Template.bind({});
 Count.args = {
   options: Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`])),
   value: '20',
+  size: 'M',
 };

@@ -94,11 +94,13 @@ export const GlobalSettings: FC = () => {
             options={MINUTES}
             value={minutes}
             onSelect={handleMinutesChange}
+            size="M"
           />
           <Wheel
             options={SECONDS}
             value={seconds}
             onSelect={handleSecondsChange}
+            size="M"
           />
         </label>
         <label className={styles.reps}>
@@ -107,6 +109,7 @@ export const GlobalSettings: FC = () => {
             options={REPS}
             value={reps}
             onSelect={handleRepsChange}
+            size="M"
           />
         </label>
         <label className={styles.lang}>
@@ -115,6 +118,7 @@ export const GlobalSettings: FC = () => {
             options={LANG}
             value={locale}
             onSelect={handleLangChange}
+            size="M"
           />
         </label>
       </Content>

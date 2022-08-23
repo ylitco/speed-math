@@ -29,7 +29,7 @@ export const Start: FC = () => {
     <>
       <Header renderMajorAction={SettingsButton}><b>Speed Math</b></Header>
       <Content>
-        <Wheel className={localStyles.menu} options={OPTIONS} value={DEFAULT_OPTION} onSelect={handleSelect} />
+        <Wheel className={localStyles.menu} options={OPTIONS} value={DEFAULT_OPTION} onSelect={handleSelect} size="L" />
         <h2 className={localStyles.hint}>{t('start.placeholder')}</h2>
       </Content>
     </>
