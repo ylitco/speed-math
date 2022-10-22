@@ -88,39 +88,43 @@ export const GlobalSettings: FC = () => {
           value={inputMode}
           onChange={handleInputModeChange}
         />
-        <label className={styles.time}>
-          <TimerIcon className={styles.label} />
-          <Wheel
-            options={MINUTES}
-            value={minutes}
-            onSelect={handleMinutesChange}
-            size="M"
-          />
-          <Wheel
-            options={SECONDS}
-            value={seconds}
-            onSelect={handleSecondsChange}
-            size="M"
-          />
-        </label>
-        <label className={styles.reps}>
-          <NIcon />
-          <Wheel
-            options={REPS}
-            value={reps}
-            onSelect={handleRepsChange}
-            size="M"
-          />
-        </label>
-        <label className={styles.lang}>
-          <WorldIcon />
-          <Wheel
-            options={LANG}
-            value={locale}
-            onSelect={handleLangChange}
-            size="M"
-          />
-        </label>
+        <div className={styles.wheels}>
+          <label className={styles.time}>
+            <TimerIcon className={styles.label} />
+            <Wheel
+              options={MINUTES}
+              value={minutes}
+              onSelect={handleMinutesChange}
+              size="M"
+            />
+            <Wheel
+              options={SECONDS}
+              value={seconds}
+              onSelect={handleSecondsChange}
+              size="M"
+            />
+            <p className={styles.units}>м</p>
+            <p className={styles.units}>с</p>
+          </label>
+          <label className={styles.reps}>
+            <NIcon />
+            <Wheel
+              options={REPS}
+              value={reps}
+              onSelect={handleRepsChange}
+              size="M"
+            />
+          </label>
+          <label className={styles.lang}>
+            <WorldIcon />
+            <Wheel
+              options={LANG}
+              value={locale}
+              onSelect={handleLangChange}
+              size="M"
+            />
+          </label>
+        </div>
       </Content>
     </>
   );

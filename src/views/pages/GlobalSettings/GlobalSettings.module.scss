@@ -1,7 +1,6 @@
 @import "src/styles";
 .view {
-  display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(4, 1fr);
   align-items: start;
   gap: em(4);
@@ -17,7 +16,8 @@
   .lang {
     display: grid;
     grid-auto-rows: minmax(em(40), auto);
-    gap: em(4);
+    gap: em(8);
+    align-items: center;
   }
 
   .time {
@@ -32,4 +32,27 @@
     }
   }
 
+}
+
+.wheels {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-top: em(38);
+  gap: em(8);
+
+  svg {
+    width: 100%;
+  }
+}
+
+.units {
+  font-weight: 300;
+  font-size: em(14);
+  line-height: em(40, 14);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: $PLACEHOLDER;
 }
