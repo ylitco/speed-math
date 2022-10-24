@@ -25,7 +25,9 @@ export const Switch: FC<ISwitchProps> = (props) => {
               data-id={id}
               onClick={handleClick}
             >
-              {title}
+              {typeof title === 'function' ? title({
+                className: id === props.value ? 'sm-active' : '',
+              }) : title}
             </li>
           )
         })}

@@ -1,7 +1,7 @@
-import { HTMLAttributes, ReactElement } from 'react';
+import { HTMLAttributes, ReactElement, FC } from 'react';
 
 type TSwitchValue = string;
-type TSwitchTitle = string | ReactElement;
+type TSwitchTitle = string | ReactElement | FC<HTMLAttributes<HTMLOrSVGElement>>;
 
 export interface ISwitchProps extends HTMLAttributes<ReactElement> {
   options: Record<TSwitchValue, TSwitchTitle>;
