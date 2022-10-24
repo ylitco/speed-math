@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { BaseWorkout } from 'src/views/pages/Workout/BaseWorkout/BaseWorkout';
 import { StateContext } from 'src/state';
 import { ITimeWorkout } from 'src/state/types';
@@ -24,6 +24,11 @@ export const TimeWorkout: FC = () => {
   const handleCheckFinish = useCallback(() => {
     setIsCheck(false);
   }, []);
+  const progress = useMemo(() => {
+    const total = +totalMinutes * 60 + +totalSeconds;
+    const current = timer.minutes * 60 + timer.seconds;
+    return 100 - current * 100 / total;
+  }, [timer]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>
@@ -78,6 +83,7 @@ export const TimeWorkout: FC = () => {
       onExplain={handleExplain}
       onCheckStart={handleCheckStart}
       onCheckFinish={handleCheckFinish}
+      progress={progress}
     />
   );
 

@@ -1,0 +1,65 @@
+@import 'src/styles';
+
+.view {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.progressbar {
+  width: 100%;
+  box-sizing: border-box;
+  height: 8px;
+  background: #DFE4F7;
+  border: 1px solid #F5F7FF;
+  box-shadow: inset -5px -5px 10px #EFF2FF, inset 5px 5px 10px #BEAEE1;
+  border-radius: 151.5px;
+  margin-bottom: 32px;
+
+  .progressLine {
+    height: 6px;
+    background: #9241E2;
+    box-shadow: 0 0 4px #9241E2;
+    border-radius: 151.5px;
+  }
+}
+
+.firstFactor {
+  font-weight: 300;
+  font-size: em(32);
+  line-height: em(40, 32);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.15em;
+  color: #959595;
+  margin-bottom: 32px;
+}
+
+.secondFactor {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.15em;
+  color: #515871;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  margin-bottom: 32px;
+
+  &:before {
+    content: attr(data-content);
+    display: block;
+    position: absolute;
+    color: transparent;
+    text-shadow: 0 0 10px #DCDEE8;
+  }
+
+  &:after {
+    content: attr(data-content);
+    display: block;
+    position: absolute;
+    color: #515871;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  }
+}

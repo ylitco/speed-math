@@ -15,6 +15,7 @@ import { BUTTON_TYPE } from 'src/components/Button/types';
 import { getUrl, WorkoutNotStartedError } from 'src/utils';
 import { EXERCISES } from 'src/state/constants';
 import { VIEW } from 'src/views/constants';
+import styles from './BaseWorkout.module.scss';
 
 export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const { onCheckStart, onCheckFinish } = props;
@@ -63,9 +64,12 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   return (
     <>
       <Header renderMajorAction={renderExplainButton} renderMinorAction={BackButton}>{props.title}</Header>
-      <Content>
-        <h1>×{firstFactor}</h1>
-        <h1>{secondFactor}</h1>
+      <Content className={styles.view}>
+        <div className={styles.progressbar}>
+          <div className={styles.progressLine} style={{ width: `${props.progress}%` }} />
+        </div>
+        <h1 className={styles.firstFactor}>×{firstFactor}</h1>
+        <h1 className={styles.secondFactor} data-content={secondFactor}>{secondFactor}</h1>
         <Input firstFactor={firstFactor} secondFactor={secondFactor} answer={answer} />
         {result === null && (
           <Keyboard key={firstFactor * secondFactor} complexity={complexity} answer={answer} onClick={handleKeyboardClick} onCheck={handleCheckClick} />
