@@ -1,0 +1,17 @@
+@import 'src/styles';
+
+:global(.sm-active) {
+  .icon {
+    filter: url(#infinity_outer_shadow);
+    fill: #3B3D47;
+  }
+}
+
+.container {
+  margin-top: rem(5);
+}
+
+.icon {
+  filter: url(#infinity_inner_shadow);
+  fill: #C9CDE1;
+}
