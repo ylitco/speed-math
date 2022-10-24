@@ -7,4 +7,5 @@ export interface IWheelProps<T> extends HTMLAttributes<ReactElement> {
   onSelect: (e: IEventMetaObject<T>) => void;
   scale?: number;
   size: 'L' | 'M' | 'S';
+  selectType?: 'auto' | 'click';
 }

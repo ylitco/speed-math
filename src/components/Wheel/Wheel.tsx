@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, MouseEvent, useCallback, useState } from 'react';
+import React, { FC, MouseEvent, useCallback, useState } from 'react';
 import cn from 'classnames';
 import { IWheelProps } from 'src/components/Wheel/types';
 import { createEventMetaObject } from 'src/utils';
@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { Protector } from './components/Protector/Protector';
 
 export const Wheel: FC<IWheelProps<any>> = (props) => {
-  const { onSelect, options: _options, value } = props;
+  const { onSelect, options: _options, value, selectType = 'auto' } = props;
   const handleClick = useCallback(_handleClick, [onSelect, value]);
   const [activeValueIndex, setActiveValueIndex] = useState(Object.keys(_options).indexOf(value));
   const [touchIndex, setTouchIndex] = useState(0);
@@ -26,18 +26,20 @@ export const Wheel: FC<IWheelProps<any>> = (props) => {
 
     const delta = Math.floor(e.deltaY / 100);
 
-    setActiveValueIndex((activeIndex) => {
-      let newActiveIndex = activeIndex - delta;
+    let newActiveIndex = activeValueIndex - delta;
 
-      if (newActiveIndex < 0) {
-        newActiveIndex = lastValueIndex;
-      } else if (newActiveIndex > lastValueIndex) {
-        newActiveIndex = 0;
-      }
+    if (newActiveIndex < 0) {
+      newActiveIndex = lastValueIndex;
+    } else if (newActiveIndex > lastValueIndex) {
+      newActiveIndex = 0;
+    }
 
-      return newActiveIndex;
-    })
-  }, 100), []);
+    if (selectType === 'auto') {
+      onSelect(createEventMetaObject(options[newActiveIndex][0]));
+    }
+
+    setActiveValueIndex(newActiveIndex);
+  }, 100), [activeValueIndex, value]);
   const handleTouchMove = useCallback(_.throttle((e: any) => {
     const newTouchIndex = Math.ceil(e.targetTouches[0].clientY / 100);
     let delta = 0;
@@ -50,21 +52,27 @@ export const Wheel: FC<IWheelProps<any>> = (props) => {
 
     setTouchIndex(newTouchIndex);
 
-    setActiveValueIndex((activeIndex) => {
-      let newActiveIndex = activeIndex - delta;
+    let newActiveIndex = activeValueIndex - delta;
 
-      if (newActiveIndex < 0) {
-        newActiveIndex = lastValueIndex;
-      } else if (newActiveIndex > lastValueIndex) {
-        newActiveIndex = 0;
-      }
+    if (newActiveIndex < 0) {
+      newActiveIndex = lastValueIndex;
+    } else if (newActiveIndex > lastValueIndex) {
+      newActiveIndex = 0;
+    }
 
-      return newActiveIndex;
-    })
-  }, 300), []);
+    if (selectType === 'auto') {
+      onSelect(createEventMetaObject(options[newActiveIndex][0]));
+    }
+
+    setActiveValueIndex(newActiveIndex);
+  }, 300), [activeValueIndex]);
 
   return (
-    <div className={cn(props.className, styles.wheel, styles[props.size])} onWheel={handleWheel} onTouchMove={handleTouchMove}>
+    <div
+      className={cn(props.className, styles.wheel, styles[props.size])}
+      onWheel={handleWheel}
+      onTouchMove={handleTouchMove}
+    >
       <div className={cn(styles.border, styles.left)} />
       <div className={styles.list}>
         {renderItem(frame[0], 'prev')}
@@ -87,10 +95,6 @@ export const Wheel: FC<IWheelProps<any>> = (props) => {
         <Protector size={props.size} />
       </>
     );
-  }
-
-  function _handleChange(e: ChangeEvent<HTMLSelectElement>) {
-    onSelect(createEventMetaObject(e.target.value));
   }
 
   function _handleClick(e: MouseEvent<HTMLDivElement>) {
