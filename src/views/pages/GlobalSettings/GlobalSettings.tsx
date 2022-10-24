@@ -53,10 +53,8 @@ export const GlobalSettings: FC = () => {
     setReps(e.value);
   }, [setReps]);
   const handleLangChange = useCallback((e: IEventMetaObject<TLang>) => {
-    if (locale !== e.value) {
-      i18n.changeLanguage(e.value);
-    }
-  }, [locale]);
+    return i18n.changeLanguage(e.value);
+  }, []);
   const CHECKING_OPTIONS = useMemo(() => {
     return {
       [CHECKING_MODE.HAND]: t('globalSettings.checkingMode.manual'),

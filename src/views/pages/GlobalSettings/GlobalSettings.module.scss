@@ -1,8 +1,6 @@
 @import "src/styles";
 .view {
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(4, 1fr);
-  align-items: start;
+  align-items: flex-start;
   gap: em(4);
 
   .checkingModeSwitcher,
@@ -38,7 +36,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   margin-top: em(38);
   gap: em(8);
 
