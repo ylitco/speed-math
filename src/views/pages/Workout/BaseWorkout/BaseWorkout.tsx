@@ -13,13 +13,15 @@ import { IBaseWorkout } from './types';
 import { TExercises } from 'src/state/types';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 import { getUrl, WorkoutNotStartedError } from 'src/utils';
-import { EXERCISES } from 'src/state/constants';
+import { EXERCISES, INPUT_MODE } from 'src/state/constants';
 import { VIEW } from 'src/views/constants';
 import styles from './BaseWorkout.module.scss';
+import { Failure } from './components/Failure/Failure';
+import { Success } from './components/Success/Success';
 
 export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const { onCheckStart, onCheckFinish } = props;
-  const { workout, nextReps, pushAnswer } = useContext(StateContext);
+  const { workout, nextReps, pushAnswer, settings: { global: { inputMode } } } = useContext(StateContext);
 
   if (workout === null) {
     throw new WorkoutNotStartedError('Open workout page when workout is not started');
@@ -31,15 +33,21 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const exercise = firstFactor > 12 ? EXERCISES.N : EXERCISES[`${firstFactor}` as TExercises];
 
   const handleKeyboardClick = useCallback((e: IEventMetaObject<number | null>) => {
+    if (e.value && e.value.toString().length > (firstFactor * secondFactor).toString().length) return;
+
     setAnswer(e.value);
-  }, []);
+  }, [answer]);
   const handleCheckClick = useCallback(() => {
     if (onCheckStart) {
       onCheckStart();
     }
 
-    setResult(answer === firstFactor * secondFactor);
-    pushAnswer(answer === firstFactor * secondFactor);
+    const finalAnswer = inputMode === INPUT_MODE.LTR || answer === null ?
+      answer :
+      +answer.toString().split('').reverse().join('');
+
+    setResult(finalAnswer === firstFactor * secondFactor);
+    pushAnswer(finalAnswer === firstFactor * secondFactor);
     setAnswer(null);
   }, [answer, firstFactor, onCheckStart, pushAnswer, secondFactor]);
 
@@ -71,14 +79,23 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
         <h1 className={styles.firstFactor}>×{firstFactor}</h1>
         <h1 className={styles.secondFactor} data-content={secondFactor}>{secondFactor}</h1>
         <Input firstFactor={firstFactor} secondFactor={secondFactor} answer={answer} />
-        {result === null && (
-          <Keyboard key={firstFactor * secondFactor} complexity={complexity} answer={answer} onClick={handleKeyboardClick} onCheck={handleCheckClick} />
-        )}
-        {result === true && (
-          <div>Well Done!!!</div>
-        )}
-        {result === false && (
-          <div>Try Again!!!</div>
+        {result === null ? (
+          <Keyboard
+            className={styles.keyboard}
+            key={firstFactor * secondFactor}
+            complexity={complexity}
+            answer={answer}
+            onClick={handleKeyboardClick}
+            onCheck={handleCheckClick}
+          />
+        ) : (
+          <div className={styles.result}>
+            {result ? (
+              <Success />
+            ) : (
+              <Failure />
+            )}
+          </div>
         )}
       </Content>
     </>
