@@ -15,6 +15,7 @@ import { BackButton } from 'src/views/components/BackButton';
 import { StateContext } from 'src/state';
 import { getRandom } from 'src/utils';
 import styles from './Explanation.module.scss';
+import { Digit, Props as DigitProps } from './Digit/Digit';
 
 function useExample(factor: number | undefined) {
   const example = useRef(!factor ? getRandom(100, 999) : factor);
@@ -410,15 +411,25 @@ class Clarification {
     return this.canvas.querySelector('#result') as HTMLDivElement;
   }
 
+  MAP = ['focused', 'blurred', 'sibling', 'brained', 'evenodd'] as Array<DigitProps["type"]>;
+
   look = this.createStep(() => {
     ReactDOM.render(
       <>
         <div className={styles.factor}>
           {this.secondFactor.map((digit, index) => {
             return (
-              <div id={`digit-${index}`} key={`digit-${index}`} className={styles.digit}>
-                {digit}
-              </div>
+              <>
+                <Digit
+                  id={`digit-${index}`}
+                  key={`digit-${index}`}
+                  className={styles.digit}
+                  type={this.MAP[index]}
+                  inMind={index === 2 ? 2 : 0}
+                >
+                  {digit}
+                </Digit>
+              </>
             );
           })}
         </div>

@@ -18,16 +18,23 @@
     display: flex;
     top: 50%;
     transition: all ease-in-out 1s;
+    gap: 6px;
   }
 }
 
 .digit {
-  height: 30px;
-  width: 15px;
+  height: 40px;
+  width: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all ease-in-out 1s;
+
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 40px;
+  color: #9241E2;
+  border: 1px solid #FFFFFF;
 }
 
 .desc {
