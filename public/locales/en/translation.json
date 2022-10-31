@@ -27,6 +27,7 @@
   },
   "statistics": {
     "title": "Result",
+    "result": "Your result",
     "pm": "p/m"
   },
   "about": {

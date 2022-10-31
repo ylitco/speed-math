@@ -1,0 +1,38 @@
+.view {
+  justify-content: flex-start;
+}
+
+.resultLabel {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #959595;
+  margin-bottom: 8px;
+}
+
+.resultValue {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #959595;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  flex: 1 1 100%;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.pieChart {
+  flex: 0 0 auto;
+}

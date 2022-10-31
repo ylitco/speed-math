@@ -10,6 +10,11 @@ import { getUrl } from 'src/utils';
 import { IFreeWorkout } from 'src/state/types';
 import { VIEW } from 'src/views/constants';
 import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
+import { Statistics as StatisticsIcon } from './components/Statistics/Statistics';
+import styles from './Statistics.module.scss';
+import { BUTTON_TYPE } from 'src/components/Button/types';
+import { Repeat } from './icons/Repeat';
+import { Burger } from './icons/Burger';
 
 export const Statistics: FC = () => {
   const navigate = useNavigate();
@@ -25,25 +30,28 @@ export const Statistics: FC = () => {
   return (
     <>
       <Header renderMinorAction={BackButton}>{t('statistics.title')}</Header>
-      <Content>
-        <h2>{printAbsoluteResult()}</h2>
-        <h3>{printRelativeResult()}</h3>
-        <h4>{printSpeedResult()}</h4>
-        <Button onClick={handleWorkoutRestart}>Try Again</Button>
-        <Button onClick={handleWorkoutFinish}>Go to main menu</Button>
+      <Content className={styles.view}>
+        <h1 className={styles.resultLabel}>{t('statistics.result')}:</h1>
+        <h2 className={styles.resultValue}>{printSpeedResult()}</h2>
+        <StatisticsIcon
+          className={styles.pieChart}
+          correct={answers.correct}
+          total={answers.correct + answers.wrong}
+          percentage={getPercentage()}
+        />
+        <footer className={styles.actions}>
+          <Button onClick={handleWorkoutRestart} type={BUTTON_TYPE.CIRCLE}><Repeat /></Button>
+          <Button onClick={handleWorkoutFinish}><Burger /></Button>
+        </footer>
       </Content>
     </>
   );
 
-  function printAbsoluteResult() {
-    return `${answers.correct}/${answers.correct + answers.wrong}`;
-  }
-
-  function printRelativeResult() {
+  function getPercentage() {
     const total = answers.correct + answers.wrong;
     const percent = total !== 0 ? answers.correct / total * 100 : 0;
 
-    return percent.toFixed() + '%';
+    return +percent.toFixed();
   }
 
   function printSpeedResult() {
