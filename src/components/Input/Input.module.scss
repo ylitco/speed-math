@@ -1,0 +1,40 @@
+.input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.inputCell {
+  width: 35px;
+  height: 48px;
+  background: #E7EBFE;
+  border: 1px solid #F2F9FF;
+  box-shadow: inset 5px 5px 10px #CED0EC;
+  border-radius: 4px;
+  position: relative;
+
+  .outerShadow,
+  .stroke,
+  .innerGradient {
+    position: absolute;
+    top: 3px; right: 0; bottom: 0; left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  .outerShadow {
+    text-shadow: 0 0 4px #FFFFFF;
+  }
+
+  .stroke {
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  }
+
+  .innerGradient {
+    color: #3E414F ;
+  }
+}
