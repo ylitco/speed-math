@@ -1,3 +1,96 @@
+@import 'src/styles';
+
+.unit {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.focused {
+    .border {
+      opacity: 1;
+      font-size: em(48);
+      stroke: #fff;
+      transition: all ease-in-out .3s;
+    }
+
+    .digit {
+      filter: url(#onPaper);
+      opacity: 1;
+      fill: #9241E2;
+      font-size: em(48);
+      transition: all ease-in-out .3s;
+    }
+  }
+
+  &.blurred {
+    $opacity: .25;
+    .border {
+      opacity: $opacity;
+      font-size: em(48);
+      stroke: #fff;
+    }
+
+    .digit {
+      filter: url(#onPaper);
+      opacity: $opacity;
+      fill: #9241E2;
+      font-size: em(48);
+    }
+  }
+
+  &.sibling {
+    $opacity: .6;
+    .border {
+      opacity: $opacity;
+      font-size: em(48);
+      stroke: #fff;
+    }
+
+    .digit {
+      filter: url(#onPaper);
+      opacity: $opacity;
+      fill: #9241E2;
+      font-size: em(48);
+    }
+  }
+
+  &.brained {
+    $opacity: 1;
+    .border {
+      opacity: $opacity;
+      font-size: em(48);
+      stroke: #fff;
+    }
+
+    .digit {
+      filter: url(#inBrain);
+      opacity: $opacity;
+      fill: #d9ddee;
+      font-size: em(48);
+    }
+  }
+
+  &.evenodd {
+    $opacity: 1;
+    .border {
+      opacity: $opacity;
+      font-size: em(36);
+      stroke: #fff;
+    }
+
+    .digit {
+      filter: url(#inBrain);
+      opacity: $opacity;
+      fill: #d9ddee;
+      font-size: em(36);
+    }
+  }
+}
+
 .digit {
   font-weight: 700;
   text-anchor: middle;
@@ -19,12 +112,6 @@
   font-size: 16px;
   line-height: 40px;
   fill: #D9DDEE;
-}
-
-.unit {
-  display: flex;
-  position: relative;
-  flex-direction: column;
 }
 
 .digitInMind {

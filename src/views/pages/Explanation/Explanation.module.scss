@@ -1,24 +1,35 @@
+@import 'src/styles';
+
 .explanation {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  position: relative;
 
   > div {
-    flex: 1 1 auto;
     display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
-    transition: all ease-in-out 1s;
+    transition: flex ease-in-out 1s;
+
+    &.hidden {
+      flex: 0;
+    }
   }
 
   .factor {
-    position: absolute;
-    display: flex;
-    top: 50%;
-    transition: all ease-in-out 1s;
     gap: 6px;
+  }
+
+  .doStep {
+    text-align: center;
+  }
+
+  .keepInMind {
+    gap: em(8);
   }
 }
 
@@ -37,13 +48,25 @@
   border: 1px solid #FFFFFF;
 }
 
-.desc {
-  position: absolute;
-  top: 50%;
-  text-align: center;
+.parityLabel {
+  font-size: em(24);
+  color: #959595;
+  margin-top: em(4);
 }
 
-.result {
-  position: absolute;
-  top: 75%;
+.addToResult {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ten {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: em(6);
+}
+
+.minus {
+  margin: 0 em(20);
 }
