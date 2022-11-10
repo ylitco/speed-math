@@ -1,4 +1,5 @@
-import { RefObject } from "react";
+import { RefObject } from 'react';
+import { gsap } from 'gsap';
 import * as instructionsOf from './algorithms';
 import * as animationOf from './animations';
 
@@ -9,6 +10,8 @@ export default class CalcPresenter {
   _inAttention: null | number = null;
   inMind: null | number = null;
   answer: Array<number> = [];
+  mainDigit?: HTMLElement;
+  tl: gsap.core.Timeline = gsap.timeline();
 
   _doAfter: (() => void) | null = null;
 
@@ -41,6 +44,8 @@ export default class CalcPresenter {
   }
 
   public nextStep = () => {
+    if (this.tl.isActive()) return;
+
     if (this.steps.length - 1 === this.currentStep) {
       if (this.handlers.onFinish) {
         this.handlers.onFinish();
@@ -56,12 +61,24 @@ export default class CalcPresenter {
   private createStep(stepCb: (...args: any) => void) {
     return (...args: any) => {
       this.steps.push(() => {
+        if (this._doAfter !== null) {
+          console.debug(`before: ${stepCb.name}`)
+
+          this._doAfter();
+
+          this._doAfter = null;
+        }
+
         console.debug(stepCb.name);
         stepCb.bind(this)(args)
       });
 
       return this;
     };
+  }
+
+  afterStep(cb: () => void) {
+    this._doAfter = cb;
   }
 
   skip() {
@@ -106,44 +123,16 @@ export default class CalcPresenter {
     return this.canvas.querySelector('#keepInMind') as HTMLDivElement;
   }
 
-  _getBoxStartPoint(elem: HTMLElement) {
-    /**
-     * Возвращает позицию элемента в координатах полотна
-     */
-    const elemBoxRect = elem.getBoundingClientRect();
-
-    return {
-      top: elemBoxRect.top - this.canvas.offsetTop,
-      left: elemBoxRect.left - this.canvas.offsetLeft,
-    };
-  }
-
-  _calcOffset(elem: HTMLElement, destinationElem: HTMLElement, where: InsertPosition) {
-    const clone = elem.cloneNode(true) as HTMLElement;
-
-    clone.style.top = 'initial';
-    clone.style.left = 'initial';
-    clone.removeAttribute('style');
-
-    destinationElem.insertAdjacentElement(where, clone);
-
-    const cloneStartPoint = this._getBoxStartPoint(clone);
-
-    clone.remove();
-
-    return cloneStartPoint;
-  }
-
-  _clone(elem: HTMLElement) {
+  clone(elem: HTMLElement) {
     const clone = elem.cloneNode(true) as HTMLElement;
 
     clone.setAttribute('id', 'active-clone');
 
-    const cloneStartPoint = this._getBoxStartPoint(elem);
+    const cloneStartPoint = this.getElementPosition(elem);
 
     clone.style.position = 'absolute';
-    clone.style.left = cloneStartPoint.left + 'px';
-    clone.style.top = cloneStartPoint.top + 'px';
+    clone.style.left = cloneStartPoint.x + 'px';
+    clone.style.top = cloneStartPoint.y + 'px';
 
     this.canvas.insertAdjacentElement('beforeend', clone);
 
@@ -166,6 +155,22 @@ export default class CalcPresenter {
 
     return this;
   };
+
+  getElementPosition(elem: Element) {
+    const { left, top } = elem.getBoundingClientRect();
+
+    return { x: left - this.canvas.offsetLeft, y: top - this.canvas.offsetTop };
+  }
+
+  getDistanceBetweenElements(a: Element, b: Element) {
+    const aPosition = this.getElementPosition(a);
+    const bPosition = this.getElementPosition(b);
+
+    return {
+      x: aPosition.x - bPosition.x,
+      y: aPosition.y - bPosition.y,
+    };
+  }
 
   look = this.createStep(animationOf.look);
 

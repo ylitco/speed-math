@@ -12,12 +12,14 @@ export function look (this: CalcPresenter) {
   ReactDOM.render(
     <>
       <div id="factor" className={styles.factor}>
-        <Digit id='left' className={cn(digitStyles.brained, digitStyles.hidden)}>0</Digit>
-        {this.secondFactor.map((digit, index) => {
-          return (
-            <Digit id={`digit-${index}`} key={`digit-${index}`} className={cn(digitStyles.focused)}>{digit}</Digit>
-          );
-        })}
+        <Digit id="left-zero" className={cn(digitStyles.brained, digitStyles.hidden)}>0</Digit>
+        <div id="number" className={styles.number}>
+          {this.secondFactor.map((digit, index) => {
+            return (
+              <Digit id={`digit-${index}`} key={`digit-${index}`} className={cn(digitStyles.focused)}>{digit}</Digit>
+            );
+          })}
+        </div>
         <Digit id='right' className={cn(digitStyles.brained, digitStyles.hidden)}>0</Digit>
       </div>
       <div id="doStep" className={cn(styles.doStep, styles.hidden)} />

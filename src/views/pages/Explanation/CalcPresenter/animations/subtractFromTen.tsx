@@ -1,61 +1,85 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import cn from 'classnames';
 import { gsap } from 'gsap';
 import { Digit } from '../../Digit/Digit';
 import CalcPresenter from '../CalcPresenter';
 import styles from '../../Explanation.module.scss';
 import digitStyles from '../../Digit/Digit.module.scss';
 
+const EXPRESSION_ID = 'expression';
+const TEN_ID = 'ten';
+const MINUS_ID = 'minus';
+const PREV_RESULT_ID = 'pref-result';
+const RESULT_ID = 'result';
+
 export function subtractFromTen(this: CalcPresenter) {
-  if (typeof this._doAfter === 'function') this._doAfter();
+  if (!this.mainDigit) throw new Error();
 
-  const msg = `Вычитаем ${this.inAttention} из 10: 10 - ${this.inAttention} = ${10 - this.inAttention}`;
-
-  ReactDOM.render(
-    <>
-      <div id="ten" className={styles.ten}>
-        <Digit className={digitStyles.brained}>1</Digit>
-        <Digit className={digitStyles.brained}>0</Digit>
-      </div>
-      <Digit id="minus" className={cn(digitStyles.focused, styles.minus)}>-</Digit>
-    </>,
-    this.stepInstructionsArea,
-  );
-
-  const activeClone = this.canvas.querySelector('#active-clone') as HTMLElement;
-  const activeCloneBoxBefore = this._getBoxStartPoint(activeClone);
-  const activeCloneOffset = this._calcOffset(activeClone, this.stepInstructionsArea, 'beforeend')
-
-  const ten = this.stepInstructionsArea.querySelector('#ten') as HTMLElement;
-  const minus = this.stepInstructionsArea.querySelector('#minus') as HTMLElement;
-  const tenStartPointBefore = this._getBoxStartPoint(ten);
-  const minusStartPointBefore = this._getBoxStartPoint(minus);
-
-  const tempActiveClone = activeClone.cloneNode(true) as HTMLElement;
-  tempActiveClone.removeAttribute('style');
-  this.stepInstructionsArea.insertAdjacentElement('beforeend', tempActiveClone)
-
-  const tenStartPointAfter = this._getBoxStartPoint(ten);
-  const minusStartPointAfter = this._getBoxStartPoint(minus);
-
-  tempActiveClone.remove();
-
-  const tenOffset = -1 * (tenStartPointBefore.left - tenStartPointAfter.left);
-  const minusOffset = -1 * (minusStartPointBefore.left - minusStartPointAfter.left);
+  this.mainDigit = this.clone(this.mainDigit);
 
   const tl = gsap.timeline();
 
-  gsap.to(activeClone, { left: activeCloneOffset.left });
-  tl.fromTo(ten, { xPercent: -100, opacity: 0 }, { xPercent: 0, x: tenOffset, opacity: 1 });
-  // gsap.fromTo(activeClone, { xPercent: 100 }, { xPercent: 0, left: activeCloneOffset.left });
-  tl.fromTo(minus, { yPercent: 100, opacity: 0 }, { yPercent: 0, x: minusOffset, opacity: 1, onComplete: () => {
-      gsap.fromTo(ten, { xPercent: 0, x: tenOffset, opacity: 1}, { xPercent: 100, opacity: 0 });
-      gsap.fromTo(minus, { x: minusOffset, opacity: 1 }, { x: 0, opacity: 0 });
-      gsap.fromTo(activeClone, { left: activeCloneOffset.left, opacity: 1 }, { left: activeCloneBoxBefore.left, opacity: 0 });
-    } });
-  // gsap.to(ten, { x: tenOffset });
+  console.info(`Вычитаем ${this.inAttention} из 10: 10 - ${this.inAttention} = ${10 - this.inAttention}`);
 
+  ReactDOM.unmountComponentAtNode(this.stepInstructionsArea);
+
+  ReactDOM.render(
+    <div id={EXPRESSION_ID} className={styles.tenMinusDigit}>
+      <div id={TEN_ID} className={styles.ten}>
+        <Digit className={digitStyles.brained}>1</Digit>
+        <Digit className={digitStyles.brained}>0</Digit>
+      </div>
+      <Digit id={MINUS_ID} className={digitStyles.focused}>-</Digit>
+      <Digit id={PREV_RESULT_ID} className={digitStyles.focused}>n</Digit>
+    </div>,
+    this.stepInstructionsArea,
+  );
+
+  const focusedDigitEndPosition = this.getElementPosition(this.stepInstructionsArea.querySelector('#' + PREV_RESULT_ID)!);
+  const tenElem = this.clone(this.stepInstructionsArea.querySelector('#' + TEN_ID)!);
+  const minusElem = this.clone(this.stepInstructionsArea.querySelector('#' + MINUS_ID)!);
+
+  ReactDOM.unmountComponentAtNode(this.stepInstructionsArea);
+
+  const CALCULATION_LABEL = 'calculation';
+
+  tl.fromTo(tenElem, { xPercent: -100, opacity: 0 }, { xPercent: 0, opacity: 1 })
+    .to(this.mainDigit, { left: focusedDigitEndPosition.x, top: focusedDigitEndPosition.y }, 0)
+    .from(minusElem, { yPercent: 100, opacity: 0 })
+    .addLabel(CALCULATION_LABEL);
+
+  ReactDOM.render(
+    this.inAttention === 0 ? (
+     <div id={RESULT_ID} className={styles.tenMinusDigitResult}>
+       <Digit className={digitStyles.focused}>1</Digit>
+       <Digit className={digitStyles.focused}>0</Digit>
+     </div>
+    ) : (
+      <Digit id={RESULT_ID} className={digitStyles.focused}>{10 - this.inAttention}</Digit>
+    ),
+    this.stepInstructionsArea,
+  );
+
+  const resultElem = this.stepInstructionsArea.querySelector<HTMLElement>('#' + RESULT_ID)!;
+  const centerPosition = this.getElementPosition(resultElem);
+  const resultCloneElem = this.clone(resultElem);
+
+  ReactDOM.unmountComponentAtNode(this.stepInstructionsArea);
+
+  tl.to(tenElem, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
+    .to(minusElem, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
+    .to(this.mainDigit, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
+    .from(resultCloneElem, {
+      opacity: 0,
+      onComplete: () => {
+        tenElem.remove();
+        minusElem.remove();
+      },
+    });
+
+  this.mainDigit = resultCloneElem;
 
   this.inAttention = 10 - this.inAttention;
+
+  this.tl.add(tl);
 }

@@ -1,8 +1,13 @@
 import CalcPresenter from '../CalcPresenter';
-import styles from '../../Explanation.module.scss';
+import { gsap } from 'gsap';
 
 export function remember(this: CalcPresenter) {
-  this.stepInstructionsArea.classList.remove(styles.hidden);
-  this.mindArea.classList.remove(styles.hidden);
-  this.resultArea.classList.remove(styles.hidden);
+  const LABEL = 'start-remember';
+  const tl = gsap.timeline();
+
+  tl.to(this.stepInstructionsArea, { flex: 1 }, LABEL)
+    .to(this.mindArea, { flex: 1 }, LABEL)
+    .to(this.resultArea, { flex: 1 }, LABEL);
+
+  this.tl.add(tl);
 }

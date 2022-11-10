@@ -60,13 +60,28 @@
   align-items: center;
 }
 
-.ten {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: em(6);
-}
+
 
 .minus {
   margin: 0 em(20);
+}
+
+.tenMinusDigit {
+  display: flex;
+  gap: em(20);
+}
+
+.ten {
+  display: flex;
+  gap: em(6);
+}
+
+.tenMinusDigitResult {
+  display: flex;
+  gap: em(6);
+}
+
+.number {
+  display: flex;
+  gap: em(6);
 }

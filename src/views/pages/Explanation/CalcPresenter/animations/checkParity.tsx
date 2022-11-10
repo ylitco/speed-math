@@ -6,26 +6,36 @@ import CalcPresenter from '../CalcPresenter';
 import styles from '../../Explanation.module.scss';
 import digitStyles from '../../Digit/Digit.module.scss';
 
+const PARITY_ID = 'parity-label';
+const ADD_FIVE_ID = 'remember-add-five-if-odd';
+
 export function checkParity(this: CalcPresenter) {
-  let msg;
-  if (this.inAttention % 2 === 0) {
+  ReactDOM.unmountComponentAtNode(this.mindArea);
+
+  const isEven = this.inAttention % 2 === 0;
+
+  if (isEven) {
+    console.info(`Отмечаем что число ${this.inAttention} чётное`);
+
+    this.parity = 'even';
+
     ReactDOM.render(
-      <div id="parityLabel" className={styles.parityLabel}>even</div>,
+      <div id={PARITY_ID} className={styles.parityLabel}>even</div>,
       this.mindArea,
     );
 
-    const parityLabel = this.canvas.querySelector('#parityLabel') as HTMLElement;
+    const parityElem = this.canvas.querySelector<HTMLElement>('#' + PARITY_ID)!;
 
-    gsap.from(parityLabel, { x: -300, opacity: 0 });
-
-    msg = `Отмечаем что число ${this.inAttention} чётное`;
-
-    this.parity = 'even';
+    this.tl.from(parityElem, { xPercent: -300, opacity: 0 });
   } else {
+    console.info(`Отмечаем что число ${this.inAttention} нечётное, нужно будет добавить 5`);
+
+    this.parity = 'odd';
+
     ReactDOM.render(
       <>
-        <div id="parityLabel" className={styles.parityLabel}>odd</div>
-        <div className={styles.addToResult}>
+        <div id={PARITY_ID} className={styles.parityLabel}>odd</div>
+        <div id={ADD_FIVE_ID} className={styles.addToResult}>
           <Digit id="plus" className={digitStyles.evenodd}>+</Digit>
           <Digit id="five" className={digitStyles.evenodd}>5</Digit>
         </div>
@@ -33,25 +43,36 @@ export function checkParity(this: CalcPresenter) {
       this.mindArea,
     );
 
-    const parityLabel = this.canvas.querySelector('#parityLabel') as HTMLElement;
-    const plus = this.canvas.querySelector('#plus') as HTMLElement;
-    const five = this.canvas.querySelector('#five') as HTMLElement;
+    const parityElem = this.canvas.querySelector<HTMLElement>('#' + PARITY_ID)!;
+    const addFiveElem = this.mindArea.querySelector<HTMLElement>('#' + ADD_FIVE_ID)!;
+    const plusElem = addFiveElem.querySelector<HTMLElement>('#plus')!;
+    const fiveElem = addFiveElem.querySelector<HTMLElement>('#five')!;
 
-    const tl = gsap.timeline();
-
-    tl.from(parityLabel, { x: -300, opacity: 0 });
-    tl.from(five, { x: 300, opacity: 0, width: 0 });
-    tl.from(plus, { yPercent: 100, opacity: 0, width: 0 });
-
-    msg = `Отмечаем что число ${this.inAttention} нечётное, нужно будет добавить 5`;
-    this.parity = 'odd';
+    this.tl.from(parityElem, { xPercent: -300, opacity: 0 })
+      .from(fiveElem, { x: 300, opacity: 0, width: 0 })
+      .from(plusElem, { yPercent: 100, opacity: 0, width: 0 });
   }
 
-  const parityLabel = this.canvas.querySelector('#parityLabel') as HTMLElement;
+  this.afterStep(() => {
+    const tl = gsap.timeline()
+    const parityElem = this.mindArea.querySelector<HTMLElement>('#' + PARITY_ID)!;
 
-  this._doAfter = () => {
-    gsap.to(parityLabel, { x: -300, opacity: 0 });
+    tl.to(parityElem, { xPercent: -300, opacity: 0 });
 
-    this._doAfter = null;
-  };
+    if (!isEven) {
+      const addFiveElem = this.mindArea.querySelector<HTMLElement>('#' + ADD_FIVE_ID)!;
+
+      parityElem.style.display = 'none';
+
+      const addFiveElemStartPoint = this.getElementPosition(addFiveElem);
+
+      parityElem.style.display = 'block';
+
+      const addFiveElemEndPoint = this.getElementPosition(addFiveElem);
+
+      tl.to(addFiveElem, { x: addFiveElemStartPoint.x - addFiveElemEndPoint.x }, 0);
+    }
+
+    this.tl.add(tl);
+  });
 }

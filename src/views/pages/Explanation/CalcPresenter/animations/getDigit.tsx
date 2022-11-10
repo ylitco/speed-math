@@ -1,5 +1,8 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
+import ReactDOM from "react-dom";
+import {Digit} from "../../Digit/Digit";
+import digitStyles from '../../Digit/Digit.module.scss';
 
 export function getDigit(this: CalcPresenter) {
   const digitElemId = this.currentDigitIndex < 0 ? '#left' : `#digit-${this.currentDigitIndex}`;
@@ -7,14 +10,23 @@ export function getDigit(this: CalcPresenter) {
 
   if (digitElem === null) throw new Error(`HTML element with ${digitElemId} id not found`);
 
-  const clone = this._clone(digitElem);
+  ReactDOM.render(
+    <div id="focused-digit">
+      <Digit className={digitStyles.focused}>{this.digit}</Digit>
+    </div>,
+    this.stepInstructionsArea,
+  )
 
-  const destPoint = this._calcOffset(clone, this.stepInstructionsArea, 'afterbegin');
+  const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>('#focused-digit')!;
+  const distance = this.getDistanceBetweenElements(digitElem, focusedDigitElem);
 
-  // gsap.to(clone, { duration: .5, x: destPoint.left, y: destPoint.top });
-  gsap.to(clone, { duration: .5, left: destPoint.left, top: destPoint.top });
+  const tl = gsap.timeline();
 
-  const msg = `Берём ${this.digit} во внимание`;
+  tl.from(focusedDigitElem, { x: distance.x, y: distance.y })
+
+  this.mainDigit = focusedDigitElem;
+
+  this.tl.add(tl);
 
   this.inAttention = this.digit;
 }
