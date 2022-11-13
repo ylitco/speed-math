@@ -1,21 +1,23 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-import ReactDOM from "react-dom";
-import {Digit} from "../../Digit/Digit";
-import digitStyles from '../../Digit/Digit.module.scss';
+import { LEFT_ZERO } from './const';
+import styles from '../../Explanation.module.scss';
 
 export function getDigit(this: CalcPresenter) {
-  const digitElemId = this.currentDigitIndex < 0 ? '#left' : `#digit-${this.currentDigitIndex}`;
+  const digitElemId = this.currentDigitIndex < 0 ? LEFT_ZERO.selector : `#digit-${this.currentDigitIndex}`;
   const digitElem = this.canvas.querySelector<HTMLElement>(digitElemId);
 
   if (digitElem === null) throw new Error(`HTML element with ${digitElemId} id not found`);
 
-  ReactDOM.render(
-    <div id="focused-digit">
-      <Digit className={digitStyles.focused}>{this.digit}</Digit>
-    </div>,
-    this.stepInstructionsArea,
-  )
+  const slot = document.createElement('div');
+  slot.classList.add(styles.slot);
+  slot.setAttribute('id', 'focused-digit');
+  const digit = document.createElement('div');
+  digit.innerHTML = this.digit.toString();
+  digit.dataset.content = this.digit.toString();
+  digit.classList.add(styles.digit)
+  slot.appendChild(digit);
+  this.stepInstructionsArea.insertAdjacentElement('afterbegin', slot);
 
   const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>('#focused-digit')!;
   const distance = this.getDistanceBetweenElements(digitElem, focusedDigitElem);

@@ -8,7 +8,7 @@ export interface Props extends HTMLAttributes<HTMLOrSVGElement> {
 
 export const Digit: FC<Props> = (props) => {
   return (
-    <div className={cn(styles.unit, styles.focused, props.className)} id={props.id}>
+    <div className={cn(styles.unit, styles.focused, props.className)} id={props.id} style={props.style}>
       {!!props.inMind && (
         <svg
           width="44"

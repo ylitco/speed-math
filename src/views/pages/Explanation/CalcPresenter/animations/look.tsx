@@ -2,25 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import cn from 'classnames';
 
-import { Digit } from '../../Digit/Digit';
 import CalcPresenter from '../CalcPresenter';
 
+import { LEFT_ZERO, RIGHT_ZERO } from './const';
 import styles from '../../Explanation.module.scss';
-import digitStyles from '../../Digit/Digit.module.scss';
 
 export function look (this: CalcPresenter) {
   ReactDOM.render(
     <>
       <div id="factor" className={styles.factor}>
-        <Digit id="left-zero" className={cn(digitStyles.brained, digitStyles.hidden)}>0</Digit>
+        <div id={LEFT_ZERO.id} className={cn(styles.slot, styles.zero)}>
+          <div className={cn(styles.digit, styles.secondary)} data-content={0}>
+            0
+          </div>
+        </div>
         <div id="number" className={styles.number}>
           {this.secondFactor.map((digit, index) => {
             return (
-              <Digit id={`digit-${index}`} key={`digit-${index}`} className={cn(digitStyles.focused)}>{digit}</Digit>
+              <div key={index} className={styles.slot} id={`digit-${index}`}>
+                <div className={styles.digit} data-content={digit}>
+                  {digit}
+                </div>
+              </div>
             );
           })}
         </div>
-        <Digit id='right' className={cn(digitStyles.brained, digitStyles.hidden)}>0</Digit>
+        <div id={RIGHT_ZERO.id} className={cn(styles.slot, styles.zero)}>
+          <div className={cn(styles.digit, styles.secondary)} data-content={0}>
+            0
+          </div>
+        </div>
       </div>
       <div id="doStep" className={cn(styles.doStep, styles.hidden)} />
       <div id="keepInMind" className={cn(styles.keepInMind, styles.hidden)} />

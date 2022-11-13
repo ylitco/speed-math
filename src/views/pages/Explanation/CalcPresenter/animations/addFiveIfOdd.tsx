@@ -7,9 +7,7 @@ export function addFiveIfOdd(this: CalcPresenter) {
     return;
   }
 
-  const msg = `Нечётное число, прибавляем 5: ${this.inAttention} + 5 = ${this.inAttention + 5}`;
-  console.log(msg)
-  this.stepInstructionsArea.innerHTML = msg;
+  console.info(`Нечётное число, прибавляем 5: ${this.inAttention} + 5 = ${this.inAttention + 5}`)
 
   this.inAttention += 5;
 }

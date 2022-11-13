@@ -16,6 +16,7 @@ export function subtractFromTen(this: CalcPresenter) {
   if (!this.mainDigit) throw new Error();
 
   this.mainDigit = this.clone(this.mainDigit);
+  const removeMainDigit = () => this.mainDigit?.remove();
 
   const tl = gsap.timeline();
 
@@ -37,7 +38,9 @@ export function subtractFromTen(this: CalcPresenter) {
 
   const focusedDigitEndPosition = this.getElementPosition(this.stepInstructionsArea.querySelector('#' + PREV_RESULT_ID)!);
   const tenElem = this.clone(this.stepInstructionsArea.querySelector('#' + TEN_ID)!);
+  const removeTen = () => tenElem.remove();
   const minusElem = this.clone(this.stepInstructionsArea.querySelector('#' + MINUS_ID)!);
+  const removeMinus = () => minusElem.remove();
 
   ReactDOM.unmountComponentAtNode(this.stepInstructionsArea);
 
@@ -66,18 +69,10 @@ export function subtractFromTen(this: CalcPresenter) {
 
   ReactDOM.unmountComponentAtNode(this.stepInstructionsArea);
 
-  tl.to(tenElem, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
-    .to(minusElem, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
-    .to(this.mainDigit, { left: centerPosition.x, opacity: 0 }, CALCULATION_LABEL)
-    .from(resultCloneElem, {
-      opacity: 0,
-      onComplete: () => {
-        tenElem.remove();
-        minusElem.remove();
-      },
-    });
-
-  this.mainDigit = resultCloneElem;
+  tl.to(tenElem, { left: centerPosition.x, opacity: 0, onComplete: removeTen }, CALCULATION_LABEL)
+    .to(minusElem, { left: centerPosition.x, opacity: 0, onComplete: removeMinus }, CALCULATION_LABEL)
+    .to(this.mainDigit, { left: centerPosition.x, opacity: 0, onComplete: removeMainDigit }, CALCULATION_LABEL)
+    .from(resultCloneElem, { opacity: 0, onComplete: () => { this.mainDigit = resultCloneElem; } });
 
   this.inAttention = 10 - this.inAttention;
 

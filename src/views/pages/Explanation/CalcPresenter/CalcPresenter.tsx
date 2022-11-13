@@ -2,6 +2,12 @@ import { RefObject } from 'react';
 import { gsap } from 'gsap';
 import * as instructionsOf from './algorithms';
 import * as animationOf from './animations';
+import {LEFT_ZERO, RIGHT_ZERO} from "./animations/const";
+
+interface Point {
+  x: number;
+  y: number;
+}
 
 export default class CalcPresenter {
   private steps: Array<() => void> = [];
@@ -139,9 +145,29 @@ export default class CalcPresenter {
     return clone;
   }
 
+  getRightSibling() {
+    if (this.currentDigitIndex + 1 === this.secondFactor.length) {
+      return this.factorArea.querySelector<HTMLElement>(RIGHT_ZERO.selector)!;
+    } else if (this.currentDigitIndex < 0) {
+      return this.factorArea.querySelector<HTMLElement>('#digit-0')!;
+    } else {
+      return this.factorArea.querySelector<HTMLElement>(`#digit-${this.currentDigitIndex}`)!.nextSibling as HTMLElement;
+    }
+  }
+
+  cloneTo(elem: Element, where: InsertPosition, container: Element, id?: string | undefined) {
+    const clone = elem.cloneNode(true) as Element;
+
+    clone.setAttribute('id', id ? id : clone.getAttribute('id') + '-clone')
+
+    container.insertAdjacentElement(where, clone);
+
+    return clone;
+  }
+
   get _currentDigit() {
     if (this.currentDigitIndex < 0) {
-      return this.factorArea.querySelector('#left') as HTMLElement;
+      return this.factorArea.querySelector(LEFT_ZERO.selector) as HTMLElement;
     }
 
     return this.factorArea.querySelector(`#digit-${this.currentDigitIndex}`) as HTMLElement;
@@ -169,6 +195,13 @@ export default class CalcPresenter {
     return {
       x: aPosition.x - bPosition.x,
       y: aPosition.y - bPosition.y,
+    };
+  }
+
+  getDistanceBetweenPoints(a: Point, b: Point) {
+    return {
+      x: a.x - b.x,
+      y: a.y - b.y,
     };
   }
 

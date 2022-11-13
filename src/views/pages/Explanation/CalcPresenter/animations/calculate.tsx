@@ -86,5 +86,5 @@ export function calculate(this: CalcPresenter, [operator, number]: Array<string>
 
   this.mainDigit = resultCloneElem;
 
-  this.inAttention = result;
+  this.inAttention = +result;
 }

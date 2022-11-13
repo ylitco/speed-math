@@ -21,7 +21,7 @@
   }
 
   .factor {
-    gap: 6px;
+    //gap: 6px;
   }
 
   .doStep {
@@ -30,6 +30,10 @@
 
   .keepInMind {
     gap: em(8);
+  }
+
+  .result {
+    display: flex;
   }
 }
 
@@ -45,7 +49,35 @@
   font-size: 48px;
   line-height: 40px;
   color: #9241E2;
-  border: 1px solid #FFFFFF;
+  user-select: none;
+
+  &:before {
+    content: attr(data-content);
+    position: absolute;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  }
+
+  &:after {
+    content: attr(data-content);
+    position: absolute;
+    color: transparent;
+    text-shadow: 0.05em 0.1em 0.1em rgb(255 255 255 / 25%), 0 0 0 darken(#9241E2, 10%);
+    transition: text-shadow ease-in-out .3s;
+  }
+
+  &.secondary {
+    &:after {
+      text-shadow: 0.05em 0.1em 0.1em rgb(255 255 255 / 25%), 0 0 0 #D9DDEE;
+    }
+  }
+}
+
+.slot {
+  padding: 0 em(3);
+
+  &.zero {
+    opacity: 0;
+  }
 }
 
 .parityLabel {
@@ -83,5 +115,9 @@
 
 .number {
   display: flex;
-  gap: em(6);
+  //gap: em(6);
+}
+
+.digit {
+
 }
