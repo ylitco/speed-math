@@ -3,8 +3,11 @@ import { gsap } from 'gsap';
 import * as instructionsOf from './algorithms';
 import * as animationOf from './animations';
 import {LEFT_ZERO, RIGHT_ZERO} from "./animations/const";
+import styles from '../Explanation.module.scss';
+import {STEP_KEEP_IN_MIND} from "./animations/addSibling";
+import {STEP_RESULT} from "./animations/addInResult";
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
@@ -155,6 +158,14 @@ export default class CalcPresenter {
     }
   }
 
+  get leftSibling() {
+    if (this.currentDigitIndex === 0) {
+      return this.factorArea.querySelector<HTMLElement>(LEFT_ZERO.selector)!;
+    } else {
+      return this.factorArea.querySelector<HTMLElement>(`#digit-${this.currentDigitIndex}`)!.previousSibling as HTMLElement;
+    }
+  }
+
   cloneTo(elem: Element, where: InsertPosition, container: Element, id?: string | undefined) {
     const clone = elem.cloneNode(true) as Element;
 
@@ -203,6 +214,123 @@ export default class CalcPresenter {
       x: a.x - b.x,
       y: a.y - b.y,
     };
+  }
+
+  get leftZero(): [slot: HTMLElement, digit: HTMLElement] {
+    const leftZeroSlotElem = document.getElementById(LEFT_ZERO.id);
+
+    if (!leftZeroSlotElem) throw new Error('Отсутствует ячейка крайнего левого нуля');
+
+    const leftZeroDigitElem = leftZeroSlotElem.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!leftZeroDigitElem) throw new Error('Отсутствует элемент цифры крайнего левого нуля');
+
+    return [
+      leftZeroSlotElem,
+      leftZeroDigitElem,
+    ];
+  }
+
+  get rightZero(): [slot: HTMLElement, digit: HTMLElement] {
+    const rightZeroSlotElem = document.getElementById(RIGHT_ZERO.id);
+
+    if (!rightZeroSlotElem) throw new Error('Отсутствует ячейка крайнего правого нуля');
+
+    const rightZeroDigitElem = rightZeroSlotElem.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!rightZeroDigitElem) throw new Error('Отсутствует элемент цифры крайнего правого нуля');
+
+    return [
+      rightZeroSlotElem,
+      rightZeroDigitElem,
+    ];
+  }
+
+  get isLeftZeroFocused() {
+    return this.currentDigitIndex < 0;
+  }
+
+  get focusedUnit(): [slot: HTMLElement, digit: HTMLElement] {
+    if (this.isLeftZeroFocused) return this.leftZero;
+
+    const [ factorUnitsSlots, factorUnitsDigits ] = this.factorUnits;
+
+    return [
+      factorUnitsSlots[this.currentDigitIndex],
+      factorUnitsDigits[this.currentDigitIndex],
+    ];
+  }
+
+  get factorUnits(): [slots: NodeListOf<HTMLElement>, digits: NodeListOf<HTMLElement>] {
+    const slotsSelector = `#number .${styles.slot}`;
+    const factorUnitsSlots = this.factorArea.querySelectorAll<HTMLElement>(slotsSelector);
+
+    if (!factorUnitsSlots.length) throw new Error('Отсутствуют ячейки цифр множителя');
+
+    const digitsSelector = `#number > .${styles.slot} > .${styles.digit}`;
+    const factorUnitsDigits = this.factorArea.querySelectorAll<HTMLElement>(digitsSelector);
+    console.debug(factorUnitsDigits);
+
+    if (!factorUnitsDigits.length) throw new Error('Отсутствуют элементы цифр множителя')
+
+    return [
+      factorUnitsSlots,
+      factorUnitsDigits,
+    ]
+  }
+
+  getFactorUnit(n: number): [slot: HTMLElement, digit: HTMLElement] {
+    const factorUnitSlot = this.factorUnits[0][n];
+    const factorUnitDigit = this.factorUnits[1][n];
+
+    return [
+      factorUnitSlot,
+      factorUnitDigit,
+    ];
+  }
+
+  get isRightSiblingExist() {
+    return this.currentDigitIndex + 1 < this.secondFactor.length;
+  }
+
+  get rightSibling(): [slot: HTMLElement, digit: HTMLElement] {
+    if (!this.isRightSiblingExist) return this.rightZero;
+
+    if (this.isLeftZeroFocused) return this.getFactorUnit(0);
+
+    return this.getFactorUnit(this.currentDigitIndex + 1);
+  }
+
+  get unitInMind(): [slot: HTMLElement, digit: HTMLElement] {
+    const unitInMindSlot = document.getElementById(STEP_KEEP_IN_MIND);
+
+    if (!unitInMindSlot) throw new Error('Отсутствует ячейка цифры запомненной на предыдущем этапе');
+
+    const unitInMindDigit = unitInMindSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!unitInMindDigit) throw new Error('Отсутствует элемент цифры запоменнной на предыдущем этапе');
+
+    return [unitInMindSlot, unitInMindDigit];
+  }
+
+  get stepResult(): [slot: HTMLElement, digit: HTMLElement] {
+    const stepResultSlot = document.getElementById(STEP_RESULT);
+
+    if (!stepResultSlot) throw new Error('Отсутствует ячейка цифры результата предыдущего вычисления');
+
+    const stepResultDigit = stepResultSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!stepResultDigit) throw new Error('Отсутствует элемент цифры результата предыдущего вычисления');
+
+    return [stepResultSlot, stepResultDigit];
+  }
+
+  get brainIcon(): HTMLElement {
+    const brainIconElem = document.getElementById('brain');
+
+    if (!brainIconElem) throw new Error('Отсутствует иконка цифры в памяти');
+
+    return brainIconElem;
   }
 
   look = this.createStep(animationOf.look);

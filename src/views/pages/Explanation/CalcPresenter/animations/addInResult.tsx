@@ -40,20 +40,12 @@ export function addInResult(this: CalcPresenter) {
         slot.insertAdjacentElement('afterbegin', stepResultElem);
 
         const stepResultEndPosition = this.getElementPosition(stepResultElem);
-
         const { x, y } = this.getDistanceBetweenPoints(stepResultStartPosition, stepResultEndPosition);
 
-        tl.from(stepResultElem, { x, y });
+        tl.from(stepResultElem, { x, y, onComplete: () => stepResultElem.removeAttribute('id') });
       },
     },
   );
-  //
-  // slot.insertAdjacentElement('afterbegin', stepResultElem);
-  //
-  // const stepResultEndPosition = this.getElementPosition(stepResultElem);
-  //
-  // const { x, y } = this.getDistanceBetweenPoints(stepResultStartPosition, stepResultEndPosition);
-  //
-  // tl.from(stepResultElem, { x, y });
+
   this.tl.add(tl);
 }

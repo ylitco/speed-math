@@ -1,7 +1,5 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-import { RIGHT_ZERO } from './const';
-import styles from '../../Explanation.module.scss';
 
 /**
  * Предыдущее состояние:
@@ -13,36 +11,14 @@ import styles from '../../Explanation.module.scss';
  */
 
 export function focusOnSibling(this: CalcPresenter) {
-  const isSiblingExist = this.secondFactor[this.currentDigitIndex + 1] !== undefined;
-
-  if (isSiblingExist) {
-    const rightDigitSlot = this.getRightSibling();
-
-    gsap.to(rightDigitSlot, { opacity: 0.6 });
-    console.log(`Дополнительно фокусируемся на соседе - ${this.sibling}`);
-    return;
-  }
-
-  const rightDigitSlot = this.canvas.querySelector(RIGHT_ZERO.selector) as HTMLElement;
+  const [, rightSiblingDigit] = this.rightSibling;
   const tl = gsap.timeline();
 
-  tl.fromTo(
-    rightDigitSlot,
-    {
-      xPercent: 100,
-      opacity: 0,
-    },
-    {
-      xPercent: 0,
-      opacity: .6,
-      onComplete: () => {
-        const rightDigitElem = rightDigitSlot.querySelector<HTMLElement>(`.${styles.digit}`)!;
-        rightDigitElem.classList.remove(styles.secondary);
-        rightDigitElem.classList.add(styles.sibling);
-      },
-    },
-  );
-  console.log(`Справа представляем ${this.sibling} и фокусируемся на нём`);
+  if (!this.isRightSiblingExist) tl.fromTo(rightSiblingDigit, { xPercent: 100 }, { xPercent: 0 });
+
+  tl.to(rightSiblingDigit, { opacity: .6 }, 0);
+
+  if (!this.isRightSiblingExist) tl.to(rightSiblingDigit, { color: '#7920d0' });
 
   this.tl.add(tl);
 }

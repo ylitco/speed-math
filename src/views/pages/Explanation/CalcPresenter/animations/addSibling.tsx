@@ -1,6 +1,10 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-import { createSlot } from './const';
+import { createSlot, createTwoDigitSlot } from './const';
+import { STEP_RESULT } from './addInResult';
+
+export const STEP_KEEP_IN_MIND = 'step-keep-in-mind';
+export const TENS = 'tens';
 
 export function addSibling(this: CalcPresenter) {
   console.log(`Добавляем соседа: ${this.inAttention} + ${this.sibling} = ${this.inAttention + this.sibling}`);
@@ -31,15 +35,22 @@ export function addSibling(this: CalcPresenter) {
   this.tl.add(tl);
 
   function showResult(this: CalcPresenter) {
-    const slotElem = createSlot({ symbol: this.inAttention, slotId: 'step-result', symbolId: 'step-result-symbol' });
-    // const slotElem = document.createElement('div');
-    // ReactDOM.render(
-    //   <Digit id="step-result" className={digitStyles.focused}>{this.inAttention + this.sibling}</Digit>,
-    //   slotElem,
-    // );
-    focusedDigitElem.remove();
-    this.stepInstructionsArea.insertAdjacentElement('afterbegin', slotElem);
+    const isFromTwoDigits = this.inAttention > 9;
 
-    tl.from(slotElem, { opacity: 0 });
+    if (isFromTwoDigits) {
+      const stepResult = createTwoDigitSlot({ number: this.inAttention, slotId: STEP_RESULT });
+
+      focusedDigitElem.remove();
+
+      this.stepInstructionsArea.insertAdjacentElement('afterbegin', stepResult);
+    } else {
+      const slotElem = createSlot({ symbol: this.inAttention, slotId: STEP_RESULT });
+
+      focusedDigitElem.remove();
+
+      this.stepInstructionsArea.insertAdjacentElement('afterbegin', slotElem);
+    }
+
+    tl.from('#step-result', { opacity: 0 });
   }
 }

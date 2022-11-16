@@ -1,21 +1,18 @@
 import CalcPresenter from '../CalcPresenter';
-import { LEFT_ZERO } from './const';
-import styles from '../../Explanation.module.scss';
 
 export function focusOnDigit(this: CalcPresenter) {
-  const digitElems = this.factorArea.querySelectorAll<HTMLElement>('#number>div');
-  const leftZeroSlot = this.factorArea.querySelector<HTMLElement>(LEFT_ZERO.selector)!;
-  const focusedDigit = this.currentDigitIndex < 0 ? leftZeroSlot : digitElems[this.currentDigitIndex];
+  const [, leftZeroDigit] = this.leftZero;
+  const [, focusedUnitDigit] = this.focusedUnit;
+  const [, factorUnitsDigits] = this.factorUnits;
 
-  if (this.currentDigitIndex < 0) {
-    this.tl.fromTo(leftZeroSlot, { xPercent: -100, opacity: 0 }, { xPercent: 0, opacity: 1 })
-      .to(digitElems, { opacity: .25, onComplete() {
-        const leftZeroDigit = leftZeroSlot.querySelector<HTMLElement>(`.${styles.digit}`)!;
-
-        leftZeroDigit.classList.remove(styles.secondary);
-      }});
+  if (this.isLeftZeroFocused) {
+    this.tl
+      .fromTo(leftZeroDigit, { xPercent: -100, opacity: 0 }, { xPercent: 0, opacity: 1 })
+      .to(factorUnitsDigits, { opacity: .25 })
+      .to(leftZeroDigit, { color: '#7920d0' })
   } else {
-    this.tl.to(digitElems, {opacity: .25})
-      .to(focusedDigit, {opacity: 1})
+    this.tl
+      .to(factorUnitsDigits, { opacity: .25 })
+      .to(focusedUnitDigit, { opacity: 1 })
   }
 }
