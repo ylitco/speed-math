@@ -1,7 +1,8 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import styles from '../../Explanation.module.scss';
-import { createSlot, createTwoDigitSlot, STEP_RESULT } from './const';
+import { createSlot, createTwoDigitSlot } from './const';
+import { showResult } from './showStepResult';
 
 export function subtractFromTen(this: CalcPresenter) {
   console.debug(`Вычитаем ${this.inAttention} из 10: 10 - ${this.inAttention} = ${10 - this.inAttention}`);
@@ -32,28 +33,13 @@ export function subtractFromTen(this: CalcPresenter) {
     onComplete: showResult,
   });
 
-  tl.from(tenElemSlot, { width: 0, opacity: 0, padding: 0, xPercent: -100 })
+  tl.from(tenElemSlot, { width: 0, opacity: 0, padding: 0 })
     .to(focusedTwinSlot, { paddingLeft: 10 }, 0)
-    .from(minusElem, { width: 0, opacity: 0, padding: 0 }, 0)
+    .from(minusElem, { width: 0, opacity: 0, padding: 0, yPercent: -100 })
     .addLabel('1')
     .to(tenElemSlot, { width: 0, opacity: 0, padding: 0, onComplete: () => tenElemSlot.remove() }, '1')
     .to(minusElem, { width: 0, opacity: 0, padding: 0, onComplete: () => minusElem.remove() }, '1')
     .to(focusedTwinSlot, { width: 0, opacity: 0, padding: 0, onComplete: () => focusedTwinSlot.remove() }, '1');
-
-  this.tl.add(tl);
-}
-
-function showResult(this: CalcPresenter) {
-  const isFromTwoDigits = this.inAttention > 9;
-  const stepResult = isFromTwoDigits ?
-    createTwoDigitSlot({ number: this.inAttention, slotId: STEP_RESULT }) :
-    createSlot({ symbol: this.inAttention, slotId: STEP_RESULT });
-
-  this.stepInstructionsArea.insertAdjacentElement('afterbegin', stepResult);
-
-  const tl = gsap.timeline();
-
-  tl.from(`#${STEP_RESULT}`, { opacity: 0 });
 
   this.tl.add(tl);
 }
