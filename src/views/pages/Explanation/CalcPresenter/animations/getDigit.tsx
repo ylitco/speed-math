@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-import { LEFT_ZERO } from './const';
+import {LEFT_ZERO, STEP_RESULT} from './const';
 import styles from '../../Explanation.module.scss';
 
 export function getDigit(this: CalcPresenter) {
@@ -11,7 +11,7 @@ export function getDigit(this: CalcPresenter) {
 
   const slot = document.createElement('div');
   slot.classList.add(styles.slot);
-  slot.setAttribute('id', 'focused-digit');
+  slot.setAttribute('id', STEP_RESULT);
   const digit = document.createElement('div');
   digit.innerHTML = this.digit.toString();
   digit.dataset.content = this.digit.toString();
@@ -19,7 +19,7 @@ export function getDigit(this: CalcPresenter) {
   slot.appendChild(digit);
   this.stepInstructionsArea.insertAdjacentElement('afterbegin', slot);
 
-  const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>('#focused-digit')!;
+  const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>(`#${STEP_RESULT}`)!;
   const distance = this.getDistanceBetweenElements(digitElem, focusedDigitElem);
 
   const tl = gsap.timeline();

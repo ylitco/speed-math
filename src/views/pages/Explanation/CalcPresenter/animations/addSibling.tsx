@@ -9,7 +9,7 @@ export function addSibling(this: CalcPresenter) {
   console.log(`Добавляем соседа: ${this.inAttention} + ${this.sibling} = ${this.inAttention + this.sibling}`);
   this.inAttention += this.sibling;
 
-  const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>('#focused-digit')!;
+  const [focusedDigitElem] = this.stepResult;
   const rightSiblingElem = this.stepInstructionsArea.querySelector<HTMLElement>('#right-sibling')!;
 
   const plusElem = createSlot({ symbol: '+', slotId: 'plus', slotStyles: { padding: '0 10px' } });

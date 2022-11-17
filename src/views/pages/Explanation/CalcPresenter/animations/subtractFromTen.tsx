@@ -8,7 +8,7 @@ export function subtractFromTen(this: CalcPresenter) {
   console.debug(`Вычитаем ${this.inAttention} из 10: 10 - ${this.inAttention} = ${10 - this.inAttention}`);
   this.inAttention = 10 - this.inAttention;
 
-  const [focusedTwinSlot] = this.focusedTwin;
+  const [focusedTwinSlot] = this.stepResult;
   const tenElemSlot = createTwoDigitSlot({
     number: 10,
     slotId: 'ten',

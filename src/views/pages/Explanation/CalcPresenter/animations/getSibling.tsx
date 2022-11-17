@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 export function getSibling(this: CalcPresenter) {
   console.info(`Берём ${this.sibling} во внимание`);
 
-  const focusedDigitElem = this.stepInstructionsArea.querySelector<HTMLElement>('#focused-digit')!;
+  const [focusedDigitElem] = this.stepResult;
   const focusedDigitStartPosition = this.getElementPosition(focusedDigitElem);
 
   const isRightSiblingExist = !!this._currentDigit.nextSibling;
