@@ -2,10 +2,9 @@ import { RefObject } from 'react';
 import { gsap } from 'gsap';
 import * as instructionsOf from './algorithms';
 import * as animationOf from './animations';
-import {LEFT_ZERO, RIGHT_ZERO} from "./animations/const";
+import { LEFT_ZERO, RIGHT_ZERO, STEP_RESULT } from './animations/const';
 import styles from '../Explanation.module.scss';
-import {STEP_KEEP_IN_MIND} from "./animations/addSibling";
-import {STEP_RESULT} from "./animations/addInResult";
+import { STEP_KEEP_IN_MIND } from './animations/addSibling';
 
 export interface Point {
   x: number;
@@ -259,6 +258,18 @@ export default class CalcPresenter {
       factorUnitsSlots[this.currentDigitIndex],
       factorUnitsDigits[this.currentDigitIndex],
     ];
+  }
+
+  get focusedTwin(): [slot: HTMLElement, digit: HTMLElement] {
+    const focusedTwinSlot = document.getElementById('focused-digit');
+
+    if (!focusedTwinSlot) throw new Error('Отсутствует ячейка двойника сфокусированной цифры');
+
+    const focusedTwinDigit = focusedTwinSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!focusedTwinDigit) throw new Error('Отсутствует элемент двойника сфокусированной цифры');
+
+    return [focusedTwinSlot, focusedTwinDigit];
   }
 
   get factorUnits(): [slots: NodeListOf<HTMLElement>, digits: NodeListOf<HTMLElement>] {

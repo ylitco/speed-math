@@ -2,6 +2,8 @@ import CSS from 'csstype';
 import styles from '../../Explanation.module.scss';
 import { TENS } from './addSibling';
 
+export const STEP_RESULT = 'step-result';
+
 export const LEFT_ZERO = {
   id: 'left-zero',
   selector: '#left-zero',
@@ -17,15 +19,17 @@ interface createSlotParams {
   symbolId?: string;
   slotId: string;
   slotStyles?: CSS.Properties;
+  digitClass?: string;
 }
 
-export const createSlot = ({ symbol, symbolId, slotId, slotStyles }: createSlotParams) => {
+export const createSlot = ({ symbol, symbolId, slotId, slotStyles, digitClass }: createSlotParams) => {
   const slot = document.createElement('div');
   slot.classList.add(styles.slot);
   slot.setAttribute('id', slotId);
   Object.assign(slot.style, slotStyles);
   const digit = document.createElement('div');
   symbolId && digit.setAttribute('id', symbolId);
+  digitClass && digit.classList.add(digitClass);
   digit.innerHTML = symbol.toString();
   digit.dataset.content = symbol.toString();
   digit.classList.add(styles.digit)
@@ -36,16 +40,19 @@ export const createSlot = ({ symbol, symbolId, slotId, slotStyles }: createSlotP
 interface createDoubleDigitSlotParams {
   number: number;
   slotId: string;
+  digitClass?: string;
+  slotStyles?: CSS.Properties;
 }
 
-export const createTwoDigitSlot = ({ number, slotId }: createDoubleDigitSlotParams) => {
+export const createTwoDigitSlot = ({ number, slotId, digitClass, slotStyles }: createDoubleDigitSlotParams) => {
   const tens = number.toString()[0];
   const units = number.toString()[1];
-  const tensSlot = createSlot({ symbol: tens, slotId: TENS });
-  const unitsSlot = createSlot({ symbol: units, slotId: 'units' });
+  const tensSlot = createSlot({ symbol: tens, slotId: TENS, digitClass });
+  const unitsSlot = createSlot({ symbol: units, slotId: 'units', digitClass });
 
   const slot = document.createElement('div');
   slot.classList.add(styles.twoDigitNumber);
+  slotStyles && Object.assign(slot.style, slotStyles);
   slot.setAttribute('id', slotId);
   slot.appendChild(tensSlot);
   slot.appendChild(unitsSlot);

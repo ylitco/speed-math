@@ -1,7 +1,6 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-
-export const STEP_RESULT = 'step-result';
+import { STEP_RESULT } from './const';
 
 /**
  * Предыдущее состояние:
