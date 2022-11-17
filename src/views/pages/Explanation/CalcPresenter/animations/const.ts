@@ -19,7 +19,7 @@ interface createSlotParams {
   symbolId?: string;
   slotId: string;
   slotStyles?: CSS.Properties;
-  digitClass?: string;
+  digitClass?: string | Array<string>;
 }
 
 export const createSlot = ({ symbol, symbolId, slotId, slotStyles, digitClass }: createSlotParams) => {
@@ -29,12 +29,16 @@ export const createSlot = ({ symbol, symbolId, slotId, slotStyles, digitClass }:
   Object.assign(slot.style, slotStyles);
   const digit = document.createElement('div');
   symbolId && digit.setAttribute('id', symbolId);
-  digitClass && digit.classList.add(digitClass);
+  digitClass && (isClassArray(digitClass) ? digit.classList.add(...digitClass) : digit.classList.add(digitClass));
   digit.innerHTML = symbol.toString();
   digit.dataset.content = symbol.toString();
   digit.classList.add(styles.digit)
   slot.appendChild(digit);
   return slot;
+}
+
+function isClassArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((v) => typeof v === 'string');
 }
 
 interface createDoubleDigitSlotParams {
@@ -68,4 +72,15 @@ export const createMind = () => {
   mind.classList.add(styles.brain);
 
   return mind;
+}
+
+const PARITY_ID = 'parity-label';
+
+export const createParityLabel = (parity: 'even' | 'odd') => {
+  const parityLabel = document.createElement('div');
+  parityLabel.innerHTML = parity;
+  parityLabel.setAttribute('id', PARITY_ID);
+  parityLabel.classList.add(styles.parityLabel);
+
+  return parityLabel;
 }

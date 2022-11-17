@@ -29,7 +29,7 @@
   }
 
   .keepInMind {
-    gap: em(8);
+    //gap: em(8);
   }
 
   .result {
@@ -108,7 +108,6 @@
 .parityLabel {
   font-size: em(24);
   color: #959595;
-  margin-top: em(4);
 }
 
 .addToResult {
@@ -161,4 +160,10 @@
     color: transparent;
     transition: text-shadow ease-in-out .3s;
   }
+}
+
+.s {
+  font-size: em(36);
+  width: auto;
+  height: auto;
 }
