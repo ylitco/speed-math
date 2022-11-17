@@ -336,6 +336,30 @@ export default class CalcPresenter {
     return [stepResultSlot, stepResultDigit];
   }
 
+  get parityPlus(): [slot: HTMLElement, digit: HTMLElement] {
+    const parityPlusSlot = document.getElementById('parity-plus');
+
+    if (!parityPlusSlot) throw new Error('Отсутствует ячейка плюса нечётной цифры');
+
+    const parityPlusSymbol = parityPlusSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!parityPlusSymbol) throw new Error('Отсутствует элемент плюса нечётной цифры');
+
+    return [parityPlusSlot, parityPlusSymbol];
+  }
+
+  get parityFive(): [slot: HTMLElement, digit: HTMLElement] {
+    const parityFiveSlot = document.getElementById('parity-five');
+
+    if (!parityFiveSlot) throw new Error('Отсутствует ячейка пятёрки нечётной цифры');
+
+    const parityFiveDigit = parityFiveSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!parityFiveDigit) throw new Error('Отсутствует элемент пятёрки нечётной цифры');
+
+    return [parityFiveSlot, parityFiveDigit];
+  }
+
   get brainIcon(): HTMLElement {
     const brainIconElem = document.getElementById('brain');
 
