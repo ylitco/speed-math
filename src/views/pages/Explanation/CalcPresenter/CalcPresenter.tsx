@@ -20,6 +20,7 @@ export default class CalcPresenter {
   answer: Array<number> = [];
   mainDigit?: HTMLElement;
   tl: gsap.core.Timeline = gsap.timeline();
+  siblingCalcRes: number | null = null;
 
   _doAfter: (() => void) | null = null;
 
@@ -272,6 +273,18 @@ export default class CalcPresenter {
     return [focusedTwinSlot, focusedTwinDigit];
   }
 
+  get siblingTwin(): [slot: HTMLElement, digit: HTMLElement] {
+    const siblingTwinSlot = document.getElementById('right-sibling');
+
+    if (!siblingTwinSlot) throw new Error('Отсутствует ячейка копии правого соседа');
+
+    const siblingTwinDigit = siblingTwinSlot.querySelector<HTMLElement>(`.${styles.digit}`);
+
+    if (!siblingTwinDigit) throw new Error('Отсутствует элемент цифры копии правого соседа');
+
+    return [siblingTwinSlot, siblingTwinDigit];
+  }
+
   get factorUnits(): [slots: NodeListOf<HTMLElement>, digits: NodeListOf<HTMLElement>] {
     const slotsSelector = `#number .${styles.slot}`;
     const factorUnitsSlots = this.factorArea.querySelectorAll<HTMLElement>(slotsSelector);
@@ -280,7 +293,6 @@ export default class CalcPresenter {
 
     const digitsSelector = `#number > .${styles.slot} > .${styles.digit}`;
     const factorUnitsDigits = this.factorArea.querySelectorAll<HTMLElement>(digitsSelector);
-    console.debug(factorUnitsDigits);
 
     if (!factorUnitsDigits.length) throw new Error('Отсутствуют элементы цифр множителя')
 

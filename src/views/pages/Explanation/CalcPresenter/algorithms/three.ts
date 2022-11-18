@@ -21,6 +21,8 @@ export const three = (calcPresenter: CalcPresenter) => {
           .checkParity()
           .subtractFromNine()
           .calculate('*', 2)
+          .focusOnSibling()
+          .getSibling()
           .addHalfOfSibling()
           .addFiveIfOdd()
           .addFromMind()
