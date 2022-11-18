@@ -8,7 +8,7 @@ export const TENS = 'tens';
 
 export function addSibling(this: CalcPresenter) {
   console.log(`Добавляем соседа: ${this.inAttention} + ${this.sibling} = ${this.inAttention + this.sibling}`);
-  this.inAttention += this.siblingCalcRes || this.sibling;
+  this.inAttention += this.siblingCalcRes === null ? this.sibling : this.siblingCalcRes;
 
   const [focusedDigitElem] = this.stepResult;
   const rightSiblingElem = this.stepInstructionsArea.querySelector<HTMLElement>('#right-sibling')!;
