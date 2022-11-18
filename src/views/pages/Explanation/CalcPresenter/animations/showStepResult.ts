@@ -1,6 +1,6 @@
-import CalcPresenter from "../CalcPresenter";
-import {createSlot, createTwoDigitSlot, STEP_RESULT} from "./const";
-import {gsap} from "gsap";
+import CalcPresenter from '../CalcPresenter';
+import { createSlot, createTwoDigitSlot, STEP_RESULT } from './const';
+import { gsap } from 'gsap';
 
 export function showResult(this: CalcPresenter) {
   const isFromTwoDigits = this.inAttention > 9;
