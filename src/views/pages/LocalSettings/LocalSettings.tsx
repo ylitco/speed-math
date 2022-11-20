@@ -47,7 +47,9 @@ export const LocalSettings: FC = () => {
     setWorkoutMode(e.value);
   }, [setWorkoutMode]);
   const handleExerciseComplexityChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setExerciseComplexity({ [e.target.name]: e.target.value } as Record<TExercises, TDifficulties>);
+    setExerciseComplexity({
+      [e.target.name]: exercises[e.target.name as TExercises] === e.target.value ? null : e.target.value,
+    } as Record<TExercises, TDifficulties>);
   }, [setExerciseComplexity]);
   const handleWorkoutStart = useStartWorkoutCallback();
 
@@ -69,7 +71,7 @@ export const LocalSettings: FC = () => {
                 </div>
                 <div className={styles.easy}>
                   <input
-                    type='radio'
+                    type='checkbox'
                     name={mode}
                     value="easy"
                     checked={exercises[mode as TExercises] === DIFFICULTIES.EASY}
@@ -78,7 +80,7 @@ export const LocalSettings: FC = () => {
                 </div>
                 <div className={styles.medium}>
                   <input
-                    type='radio'
+                    type='checkbox'
                     name={mode}
                     value="medium"
                     checked={exercises[mode as TExercises] === DIFFICULTIES.MEDIUM}
@@ -87,7 +89,7 @@ export const LocalSettings: FC = () => {
                 </div>
                 <div className={styles.hard}>
                   <input
-                    type='radio'
+                    type='checkbox'
                     name={mode}
                     value="hard"
                     checked={exercises[mode as TExercises] === DIFFICULTIES.HARD}
