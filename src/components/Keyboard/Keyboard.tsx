@@ -18,7 +18,7 @@ export const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, ...props }) => {
     onClick(createEventMetaObject(answer ? +`${answer}${number}` : number));
   }, [answer, onClick]);
   const handleBackspaceClick = useCallback(() => {
-    const result = answer ? +(answer.toString().slice(0, -1)) : null
+    const result = answer !== null && answer > 9 ? +(answer.toString().slice(0, -1)) : null
     onClick(createEventMetaObject(result));
   }, [answer, onClick]);
 
