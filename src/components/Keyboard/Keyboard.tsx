@@ -1,7 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Button } from 'src/components/Button/Button';
 import { createEventMetaObject } from 'src/utils';
-import { DIFFICULTIES } from 'src/state/constants';
 import { IKeyboardProps } from './types';
 import styles from './Keyboard.module.scss';
 import { Check } from './components/Check/Check';
@@ -9,11 +8,7 @@ import { Delete } from './components/Delete/Delete';
 import { Calculator } from './components/Calculator/Calculator';
 import cn from 'classnames';
 
-export const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, ...props }) => {
-  const [ready, setReady] = useState(props.complexity !== DIFFICULTIES.HARD);
-  const handleKeyboardShow = useCallback(() => {
-    setReady(true);
-  }, []);
+export const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, ...props }) => {
   const handleNumberClick = useCallback((number) => {
     onClick(createEventMetaObject(answer ? +`${answer}${number}` : number));
   }, [answer, onClick]);
@@ -22,11 +17,9 @@ export const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, ...props }) => {
     onClick(createEventMetaObject(result));
   }, [answer, onClick]);
 
-  if (props.complexity === DIFFICULTIES.HARD && !ready) {
+  if (!isReady) {
     return (
-      <div className={styles.keyboard}>
-        <Calculator onClick={handleKeyboardShow} className={styles.calculator} />
-      </div>
+      <Calculator onClick={onReady} className={styles.calculator} />
     );
   }
 

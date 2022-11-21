@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
@@ -13,7 +13,7 @@ import { IBaseWorkout } from './types';
 import { TExercises } from 'src/state/types';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 import { getUrl, WorkoutNotStartedError } from 'src/utils';
-import { EXERCISES, INPUT_MODE } from 'src/state/constants';
+import { DIFFICULTIES, EXERCISES, INPUT_MODE } from 'src/state/constants';
 import { VIEW } from 'src/views/constants';
 import styles from './BaseWorkout.module.scss';
 import { Failure } from './components/Failure/Failure';
@@ -31,12 +31,19 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const [answer, setAnswer] = useState<number | null>(null);
   const [result, setResult] = useState<boolean | null>(null);
   const exercise = firstFactor > 12 ? EXERCISES.N : EXERCISES[`${firstFactor}` as TExercises];
+  const [isReady, setIsReady] = useState(complexity !== DIFFICULTIES.HARD);
+  const handleReady = useCallback(() => {
+    setIsReady(true);
+  }, []);
+  useLayoutEffect(() => {
+    setIsReady(complexity !== DIFFICULTIES.HARD);
+  }, [secondFactor, complexity]);
 
   const handleKeyboardClick = useCallback((e: IEventMetaObject<number | null>) => {
     if (e.value && e.value.toString().length > (firstFactor * secondFactor).toString().length) return;
 
     setAnswer(e.value);
-  }, [answer]);
+  }, [firstFactor, secondFactor]);
   const handleCheckClick = useCallback(() => {
     if (onCheckStart) {
       onCheckStart();
@@ -49,7 +56,7 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
     setResult(finalAnswer === firstFactor * secondFactor);
     pushAnswer(finalAnswer === firstFactor * secondFactor);
     setAnswer(null);
-  }, [answer, firstFactor, onCheckStart, pushAnswer, secondFactor]);
+  }, [answer, firstFactor, onCheckStart, pushAnswer, secondFactor, inputMode]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>;
@@ -77,8 +84,8 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
           <div className={styles.progressLine} style={{ width: `${props.progress}%` }} />
         </div>
         <h1 className={styles.firstFactor}>×{firstFactor}</h1>
-        <h1 className={styles.secondFactor} data-content={secondFactor}>{secondFactor}</h1>
-        <Input firstFactor={firstFactor} secondFactor={secondFactor} answer={answer} />
+        {((complexity === DIFFICULTIES.HARD && !isReady) || (complexity !== DIFFICULTIES.HARD)) && <h1 className={styles.secondFactor} data-content={secondFactor}>{secondFactor}</h1>}
+        {isReady && <Input firstFactor={firstFactor} secondFactor={secondFactor} answer={answer} />}
         {result === null ? (
           <Keyboard
             className={styles.keyboard}
@@ -87,6 +94,8 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
             answer={answer}
             onClick={handleKeyboardClick}
             onCheck={handleCheckClick}
+            isReady={isReady}
+            onReady={handleReady}
           />
         ) : (
           <div className={styles.result}>

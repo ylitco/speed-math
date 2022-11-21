@@ -1,5 +1,11 @@
 @import 'src/styles';
 
+.calculator {
+  margin: auto;
+  width: 20vmax;
+  height: 20vmax;
+}
+
 .keyboard {
   width: 100%;
   display: grid;
