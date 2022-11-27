@@ -21,3 +21,5 @@ export const Delete: FC = () => {
     </svg>
   );
 };
+
+export default React.memo(Delete);

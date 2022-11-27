@@ -1,10 +1,11 @@
 import React, { FC, useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react';
+import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
 import { Content } from 'src/components/Content/Content';
 import { Input } from 'src/components/Input/Input';
-import { Keyboard } from 'src/components/Keyboard/Keyboard';
+import Keyboard from 'src/components/Keyboard/Keyboard';
 import { Button } from 'src/components/Button/Button';
 import { InfoIcon } from 'src/icons/Info/Info';
 import { StateContext } from 'src/state';
@@ -55,8 +56,7 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
 
     setResult(finalAnswer === firstFactor * secondFactor);
     pushAnswer(finalAnswer === firstFactor * secondFactor);
-    setAnswer(null);
-  }, [answer, firstFactor, onCheckStart, pushAnswer, secondFactor, inputMode]);
+  }, [firstFactor, onCheckStart, pushAnswer, secondFactor, inputMode]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>;
@@ -67,6 +67,7 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
         }
 
         setResult(null);
+        setAnswer(null);
         nextReps();
       }, 500);
     }
@@ -86,18 +87,18 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
         <h1 className={styles.firstFactor}>×{firstFactor}</h1>
         {((complexity === DIFFICULTIES.HARD && !isReady) || (complexity !== DIFFICULTIES.HARD)) && <h1 className={styles.secondFactor} data-content={secondFactor}>{secondFactor}</h1>}
         {isReady && <Input firstFactor={firstFactor} secondFactor={secondFactor} answer={answer} />}
-        {result === null ? (
-          <Keyboard
-            className={styles.keyboard}
-            key={firstFactor * secondFactor}
-            complexity={complexity}
-            answer={answer}
-            onClick={handleKeyboardClick}
-            onCheck={handleCheckClick}
-            isReady={isReady}
-            onReady={handleReady}
-          />
-        ) : (
+        <Keyboard
+          className={cn(styles.keyboard, result !== null && styles.invisible)}
+          key={firstFactor * secondFactor}
+          result={firstFactor * secondFactor}
+          complexity={complexity}
+          answer={answer}
+          onClick={handleKeyboardClick}
+          onCheck={handleCheckClick}
+          isReady={isReady}
+          onReady={handleReady}
+        />
+        {result !== null && (
           <div className={styles.result}>
             {result ? (
               <Success />

@@ -16,3 +16,5 @@ export const Button: FC<IButtonProps> = (props) => {
     </button>
   );
 };
+
+export default React.memo(Button);
