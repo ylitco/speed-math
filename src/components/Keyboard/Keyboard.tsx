@@ -13,7 +13,7 @@ import { CHECKING_MODE } from '../../state/constants';
 const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, result, ...props }) => {
   const { settings: { global: { checkingMode } } } = useContext(StateContext);
   const handleNumberClick = useCallback((e) => {
-    const number = +e.target.dataset.name;
+    const number = +e.currentTarget.dataset.name;
     onClick(createEventMetaObject(answer ? +`${answer}${number}` : number));
   }, [answer, onClick]);
   const handleBackspaceClick = useCallback(() => {
