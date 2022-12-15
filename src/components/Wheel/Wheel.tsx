@@ -83,7 +83,7 @@ export const Wheel: FC<IWheelProps<any>> = (props) => {
     </div>
   );
 
-  function renderItem([id , title]: [string , string], pos: 'prev' | 'curr' | 'next') {
+  function renderItem([id, title]: [string, string], pos: 'prev' | 'curr' | 'next') {
     return (
       <>
         <Protector size={props.size} />

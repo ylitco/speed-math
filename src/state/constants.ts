@@ -9,9 +9,9 @@ export const INPUT_MODE = {
 } as const;
 
 export const LANG = {
-  RU: 'ru',
-  EN: 'en',
-  HI: 'hi',
+  ru: 'ru',
+  en: 'en',
+  hi: 'hi',
 } as const;
 
 export const GAME_MODE = {
