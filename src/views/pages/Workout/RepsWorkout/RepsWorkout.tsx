@@ -30,6 +30,6 @@ export const RepsWorkout: FC = () => {
   },[reps, totalReps, stopWorkout, navigate]);
 
   return (
-    <BaseWorkout title={`${reps} - ${totalReps}`} onCheckFinish={handleCheckFinish} onExplain={handleExplain} />
+    <BaseWorkout title={`${reps} - ${totalReps}`} onCheckFinish={handleCheckFinish} onExplain={handleExplain} progress={reps / +totalReps * 100} />
   );
 };
