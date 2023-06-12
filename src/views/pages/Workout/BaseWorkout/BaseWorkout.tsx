@@ -29,7 +29,7 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   }
 
   const { firstFactor, secondFactor, complexity } = workout;
-  const [answer, setAnswer] = useState<number | null>(null);
+  const [answer, setAnswer] = useState<string | number | null>(null);
   const [result, setResult] = useState<boolean | null>(null);
   const exercise = firstFactor > 12 ? EXERCISES.N : EXERCISES[`${firstFactor}` as TExercises];
   const [isReady, setIsReady] = useState(complexity !== DIFFICULTIES.HARD);
@@ -40,23 +40,25 @@ export const BaseWorkout: FC<IBaseWorkout> = (props) => {
     setIsReady(complexity !== DIFFICULTIES.HARD);
   }, [secondFactor, complexity]);
 
-  const handleKeyboardClick = useCallback((e: IEventMetaObject<number | null>) => {
+  const handleKeyboardClick = useCallback((e: IEventMetaObject<string | number | null>) => {
     if (e.value && e.value.toString().length > (firstFactor * secondFactor).toString().length) return;
 
     setAnswer(e.value);
   }, [firstFactor, secondFactor]);
   const handleCheckClick = useCallback(() => {
-    if (onCheckStart) {
-      onCheckStart();
-    }
+    onCheckStart?.();
 
     const finalAnswer = inputMode === INPUT_MODE.LTR || answer === null ?
       answer :
-      +answer.toString().split('').reverse().join('');
+      answer.toString().split('').reverse().join('');
 
-    setResult(finalAnswer === firstFactor * secondFactor);
-    pushAnswer(finalAnswer === firstFactor * secondFactor);
-  }, [firstFactor, onCheckStart, pushAnswer, secondFactor, inputMode]);
+    console.debug('>>>', finalAnswer, firstFactor * secondFactor);
+
+    // @ts-expect-error
+    setResult(+finalAnswer === firstFactor * secondFactor);
+    // @ts-expect-error
+    pushAnswer(+finalAnswer === firstFactor * secondFactor);
+  }, [firstFactor, onCheckStart, pushAnswer, secondFactor, inputMode, answer]);
 
   useEffect(() => {
     let _timer: ReturnType<typeof setTimeout>;

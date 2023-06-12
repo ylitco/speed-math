@@ -5,6 +5,6 @@ import { HTMLAttributes } from 'react';
 export interface IKeyboardProps extends Pick<HTMLAttributes<HTMLDivElement>, className> {
   complexity: TDifficulties; // @todo rename
   onCheck: () => void;
-  onClick: (e: IEventMetaObject<number | null>) => void;
-  answer: number | null;
+  onClick: (e: IEventMetaObject<string | number | null>) => void;
+  answer: string | number | null;
 }

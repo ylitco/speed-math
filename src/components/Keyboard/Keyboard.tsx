@@ -14,16 +14,16 @@ const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, resul
   const { settings: { global: { checkingMode } } } = useContext(StateContext);
   const handleNumberClick = useCallback((e) => {
     const number = +e.currentTarget.dataset.name;
-    onClick(createEventMetaObject(answer ? +`${answer}${number}` : number));
+    onClick(createEventMetaObject(answer !== null ? `${answer}${number}` : number));
   }, [answer, onClick]);
   const handleBackspaceClick = useCallback(() => {
-    const result = answer !== null && answer > 9 ? +(answer.toString().slice(0, -1)) : null
+    const result = answer !== null && ('' + answer).length > 1 ? (answer.toString().slice(0, -1)) : null
     onClick(createEventMetaObject(result));
   }, [answer, onClick]);
 
   useEffect(() => {
     if (answer && answer.toString().length === result.toString().length && checkingMode === CHECKING_MODE.AUTO) {
-      console.debug(answer, result, checkingMode);
+      console.debug(answer, typeof answer, result, typeof result, answer === result, checkingMode);
       props.onCheck();
     }
   }, [answer]);
