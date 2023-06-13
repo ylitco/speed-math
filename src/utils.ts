@@ -40,6 +40,10 @@ export function getFirstFactor(exercises: Record<TExercises, TDifficulties>): nu
   const activeExercises = Object.entries(exercises).filter(([, value]) => !!value).map(([key]) => key);
   const index = getRandom(0, activeExercises.length - 1);
 
+  if (!activeExercises[index]) {
+    return getFactor(exercises[EXERCISES.N], true);
+  }
+
   if (activeExercises[index] === EXERCISES.N) {
     return getFactor(exercises[EXERCISES.N], true);
   } else {
@@ -63,9 +67,9 @@ function getFactor (complexity: TDifficulties, isBase: boolean): number {
       return isBase ? getRandom(100, 999) : getRandom(100, 9999);
     case DIFFICULTIES.HARD:
       return isBase ? getRandom(13, 999) : getRandom(13, 9999);
+    default:
+      return isBase ? getRandom(1, 999) : getRandom(1, 9999);
   }
-
-  return error('Unknown complexity');
 }
 
 export function getRandom(min: number, max: number) {
