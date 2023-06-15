@@ -34,9 +34,9 @@ const INITIAL_STATE = {
     global: {
       checkingMode: CHECKING_MODE.AUTO,
       inputMode: INPUT_MODE.RTL,
-      minutes: MINUTES[0],
-      seconds: SECONDS[5],
-      reps: REPS[2],
+      minutes: MINUTES[5],
+      seconds: SECONDS[0],
+      reps: REPS[20],
     },
     local: {
       gameMode: GAME_MODE.TIME,
