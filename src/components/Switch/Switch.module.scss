@@ -41,6 +41,7 @@
       color: #C9CDE1;
       opacity: 0.5;
       border: 1px solid transparent;
+      -webkit-tap-highlight-color: transparent;
 
       &.active {
         background: #EAEDFB;
