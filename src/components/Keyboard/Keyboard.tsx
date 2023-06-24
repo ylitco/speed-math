@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import Button from 'src/components/Button/Button';
 import { createEventMetaObject } from 'src/utils';
 import { IKeyboardProps } from './types';
@@ -7,11 +7,12 @@ import { Check } from './components/Check/Check';
 import Delete from './components/Delete/Delete';
 import { Calculator } from './components/Calculator/Calculator';
 import cn from 'classnames';
-import { StateContext } from '../../state';
 import { CHECKING_MODE } from '../../state/constants';
+import { getCheckMode } from 'src/state/Workout';
+import { useSelector } from 'react-redux';
 
 const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, result, ...props }) => {
-  const { settings: { global: { checkingMode } } } = useContext(StateContext);
+  const checkMode = useSelector(getCheckMode);
   const handleNumberClick = useCallback((e) => {
     const number = +e.currentTarget.dataset.name;
     onClick(createEventMetaObject(answer !== null ? `${answer}${number}` : number));
@@ -22,8 +23,7 @@ const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, resul
   }, [answer, onClick]);
 
   useEffect(() => {
-    if (answer && answer.toString().length === result.toString().length && checkingMode === CHECKING_MODE.AUTO) {
-      console.debug(answer, typeof answer, result, typeof result, answer === result, checkingMode);
+    if (answer && answer.toString().length === result.toString().length && checkMode === CHECKING_MODE.AUTO) {
       props.onCheck();
     }
   }, [answer]);
@@ -45,7 +45,7 @@ const Keyboard: FC<IKeyboardProps> = ({ onClick, answer, isReady, onReady, resul
           </Button>
         );
       })}
-      {checkingMode === CHECKING_MODE.HAND ? <Button onClick={props.onCheck}><Check /></Button> : <div />}
+      {checkMode === CHECKING_MODE.HAND ? <Button onClick={props.onCheck}><Check /></Button> : <div />}
       <Button name="0" onClick={handleNumberClick}><span>0</span></Button>
       <Button onClick={handleBackspaceClick}><Delete /></Button>
     </div>

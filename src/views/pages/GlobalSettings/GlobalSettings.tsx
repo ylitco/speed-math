@@ -19,30 +19,40 @@ import {
   REPS,
   LANG,
 } from 'src/state/constants';
-import {
-  TCheckingMode,
-  TInputMode,
-  TMinutes,
-  TSeconds,
-  TReps,
-  TLang,
-} from 'src/state/types'
+import { TMinutes, TSeconds, TReps, TLang } from 'src/state/types';
 import { IEventMetaObject } from 'src/types';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './GlobalSettings.module.scss';
+import type { CheckMode, InputMode } from 'src/state/Workout';
+import {
+  getCheckMode,
+  getInputMode,
+  setCheckMode,
+  setInputMode,
+} from 'src/state/Workout';
 
 export const GlobalSettings: FC = () => {
   const state = useContext(StateContext);
   const { locale } = useContext(LocaleContext);
   const { t } = useTranslation();
-  const { checkingMode, inputMode, minutes, seconds, reps } = state.settings.global;
-  const { setCheckingMode, setInputMode, setMinutes, setSeconds, setReps } = state;
-  const handleCheckingModeChange = useCallback((e: IEventMetaObject<TCheckingMode>) => {
-    setCheckingMode(e.value);
-  }, [setCheckingMode]);
-  const handleInputModeChange = useCallback((e: IEventMetaObject<TInputMode>) => {
-    setInputMode(e.value);
-  }, [setInputMode]);
+  const { minutes, seconds, reps } = state.settings.global;
+  const { setMinutes, setSeconds, setReps } = state;
+  const dispatch = useDispatch();
+  const checkMode = useSelector(getCheckMode);
+  const handleCheckModeChange = useCallback(
+    (e: IEventMetaObject<CheckMode>) => {
+      dispatch(setCheckMode(e.value));
+    },
+    [dispatch]
+  );
+  const inputMode = useSelector(getInputMode);
+  const handleInputModeChange = useCallback(
+    (e: IEventMetaObject<InputMode>) => {
+      dispatch(setInputMode(e.value));
+    },
+    [dispatch]
+  );
   const handleMinutesChange = useCallback((e: IEventMetaObject<TMinutes>) => {
     setMinutes(e.value);
   }, [setMinutes]);
@@ -76,8 +86,8 @@ export const GlobalSettings: FC = () => {
           className={styles.checkingModeSwitcher}
           label={t('globalSettings.checkingMode.label')}
           options={CHECKING_OPTIONS}
-          value={checkingMode}
-          onChange={handleCheckingModeChange}
+          value={checkMode}
+          onChange={handleCheckModeChange}
         />
         <Switch
           className={styles.inputModeSwitcher}

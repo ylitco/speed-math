@@ -1,7 +1,8 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import styles from './Input.module.scss';
-import { StateContext } from '../../state';
 import { INPUT_MODE } from 'src/state/constants';
+import { useSelector } from 'react-redux';
+import { getInputMode } from 'src/state/Workout';
 
 interface IInputProps {
   answer: string | number | null;
@@ -12,7 +13,7 @@ interface IInputProps {
 export const Input: FC<IInputProps> = ({ firstFactor, secondFactor, answer }) => {
   const result = (firstFactor * secondFactor).toString().split('');
   const _answer = answer !== null ? answer.toString() : '';
-  const { settings: { global: { inputMode } } } = useContext(StateContext);
+  const inputMode = useSelector(getInputMode);
 
   let _view;
 

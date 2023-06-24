@@ -19,10 +19,13 @@ import { VIEW } from 'src/views/constants';
 import styles from './BaseWorkout.module.scss';
 import { Failure } from './components/Failure/Failure';
 import { Success } from './components/Success/Success';
+import { useSelector } from 'react-redux';
+import { getInputMode } from 'src/state/Workout';
 
 export const BaseWorkout: FC<IBaseWorkout> = (props) => {
   const { onCheckStart, onCheckFinish } = props;
-  const { workout, nextReps, pushAnswer, settings: { global: { inputMode } } } = useContext(StateContext);
+  const { workout, nextReps, pushAnswer } = useContext(StateContext);
+  const inputMode = useSelector(getInputMode);
 
   if (workout === null) {
     throw new WorkoutNotStartedError('Open workout page when workout is not started');

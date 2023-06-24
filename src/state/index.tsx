@@ -5,11 +5,9 @@ import {
   IRepsWorkout,
   IState,
   ITimeWorkout,
-  TCheckingMode,
   TDifficulties,
   TExercises,
   TGameMode,
-  TInputMode,
   TMinutes,
   TPausedOnReps,
   TReps,
@@ -19,10 +17,8 @@ import {
 import { copy, getFirstFactor, getSecondFactor, WorkoutNotStartedError } from 'src/utils';
 import { ACTIONS } from './actions';
 import {
-  CHECKING_MODE,
   EXERCISES,
   GAME_MODE,
-  INPUT_MODE,
   MINUTES,
   REPS,
   SECONDS,
@@ -31,8 +27,6 @@ import {
 const INITIAL_STATE = {
   settings: {
     global: {
-      checkingMode: CHECKING_MODE.AUTO,
-      inputMode: INPUT_MODE.RTL,
       minutes: MINUTES[5],
       seconds: SECONDS[0],
       reps: REPS[20],
@@ -48,14 +42,6 @@ const INITIAL_STATE = {
 
 const reducer = (state: IState, action: IAction) => {
   switch (action.type) {
-    case ACTIONS.SET_CHECKING_MODE:
-      state.settings.global.checkingMode = action.data.mode;
-
-      return copy(state);
-    case ACTIONS.SET_INPUT_MODE:
-      state.settings.global.inputMode = action.data.mode;
-
-      return copy(state);
     case ACTIONS.SET_MINUTES:
       state.settings.global.minutes = action.data.minutes;
 
@@ -171,12 +157,6 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
     return {
       settings: state.settings,
       workout: state.workout,
-      setCheckingMode: (mode: TCheckingMode) => {
-        dispatch({ type: ACTIONS.SET_CHECKING_MODE, data: { mode } });
-      },
-      setInputMode: (mode: TInputMode) => {
-        dispatch({ type: ACTIONS.SET_INPUT_MODE, data: { mode } });
-      },
       setMinutes: (minutes: TMinutes) => {
         dispatch({ type: ACTIONS.SET_MINUTES, data: { minutes } });
       },

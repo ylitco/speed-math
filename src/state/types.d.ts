@@ -1,9 +1,7 @@
 import {
-  CHECKING_MODE,
   DIFFICULTIES,
   EXERCISES,
   GAME_MODE,
-  INPUT_MODE,
   LANG,
   MINUTES,
   REPS,
@@ -11,8 +9,6 @@ import {
 } from 'src/state/constants';
 import { ACTIONS } from 'src/state/actions';
 
-export type TCheckingMode = typeof CHECKING_MODE[keyof typeof CHECKING_MODE];
-export type TInputMode = typeof INPUT_MODE[keyof typeof INPUT_MODE];
 export type TMinutes = typeof MINUTES[keyof typeof MINUTES];
 export type TSeconds = typeof SECONDS[keyof typeof SECONDS];
 export type TReps = typeof REPS[keyof typeof REPS];
@@ -52,8 +48,6 @@ export interface IRepsWorkout extends IFreeWorkout {
 export interface IState {
   settings: {
     global: {
-      checkingMode: TCheckingMode;
-      inputMode: TInputMode;
       minutes: TMinutes;
       seconds: TSeconds;
       reps: TReps;
@@ -64,8 +58,6 @@ export interface IState {
     };
   };
   workout: null | IFreeWorkout | IRepsWorkout | ITimeWorkout;
-  setCheckingMode: (mode: TCheckingMode) => void;
-  setInputMode: (mode: TInputMode) => void;
   setMinutes: (minutes: TMinutes) => void;
   setSeconds: (seconds: TSeconds) => void;
   setReps: (reps: TReps) => void;
