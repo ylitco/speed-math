@@ -31,7 +31,6 @@ export const Statistics: FC = () => {
     <>
       <Header renderMinorAction={BackButton}>{t('statistics.title')}</Header>
       <Content className={styles.view}>
-        <h1 className={styles.resultLabel}>{t('statistics.result')}:</h1>
         <h2 className={styles.resultValue}>{printSpeedResult()}</h2>
         <StatisticsIcon
           className={styles.pieChart}
@@ -40,8 +39,12 @@ export const Statistics: FC = () => {
           percentage={getPercentage()}
         />
         <footer className={styles.actions}>
-          <Button onClick={handleWorkoutRestart} type={BUTTON_TYPE.CIRCLE}><Repeat /></Button>
-          <Button onClick={handleWorkoutFinish}><Burger /></Button>
+          <Button onClick={handleWorkoutRestart} type={BUTTON_TYPE.CIRCLE}>
+            <Repeat />
+          </Button>
+          <Button onClick={handleWorkoutFinish}>
+            <Burger />
+          </Button>
         </footer>
       </Content>
     </>
@@ -58,6 +61,6 @@ export const Statistics: FC = () => {
     const duration = new Date(finishAt - startAt).getTime() / 1000;
     const problems = answers.correct * 60 / duration;
 
-    return `${problems.toFixed()} ${t('statistics.pm')}`;
+    return `${problems.toFixed()} ${t('statistics.cru')}`;
   }
 };

@@ -27,8 +27,8 @@
   },
   "statistics": {
     "title": "परिणाम",
-    "result": "आपका परिणाम",
-    "pm": "प्र/स"
+    "cru": "प्र/स",
+    "countingRateUnit": "(प्रति मिनट कार्य)"
   },
   "about": {
     "title": "के बारे में",
