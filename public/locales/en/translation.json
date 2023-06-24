@@ -28,7 +28,7 @@
   "statistics": {
     "title": "Result",
     "cru": "p/m",
-    "countingRateUnit": "(problem per minute)"
+    "countingRateUnit": "problem per minute"
   },
   "about": {
     "title": "About",

@@ -28,7 +28,7 @@
   "statistics": {
     "title": "Результат",
     "cru": "з/м",
-    "countingRateUnit": "(задач в минуту)"
+    "countingRateUnit": "задач в минуту"
   },
   "about": {
     "title": "О методе",
