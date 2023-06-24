@@ -6,10 +6,13 @@ import { IRepsWorkout } from 'src/state/types';
 import { REPS } from 'src/state/constants';
 import { VIEW } from 'src/views/constants';
 import { getUrl } from 'src/utils';
+import { useSelector } from 'react-redux';
+import { getReps } from 'src/state/Workout';
 
 export const RepsWorkout: FC = () => {
   const state = useContext(StateContext);
-  const { workout, pauseWorkout, settings: { global: { reps: totalReps } } } = state;
+  const { workout, pauseWorkout } = state;
+  const totalReps = useSelector(getReps);
   const { pausedOn } = workout as IRepsWorkout;
   const navigate = useNavigate();
   const initReps = pausedOn ? +pausedOn : +REPS[1];

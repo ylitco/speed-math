@@ -23,15 +23,13 @@ import styles from './LocalSettings.module.scss';
 import {Easy} from "./components/Easy/Easy";
 import {Medium} from "./components/Medium/Medium";
 import {Hard} from "./components/Hard/Hard";
+import { useSelector } from 'react-redux';
+import { getReps } from 'src/state/Workout';
 
 const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
-  const { settings: { global: { reps } } } = useContext(StateContext);
+  const reps = useSelector(getReps);
 
-  return (
-    <div className={cn(props.className, styles.fontTest)}>
-      {reps}
-    </div>
-  )
+  return <div className={cn(props.className, styles.fontTest)}>{reps}</div>;
 }
 
 const WORKOUT_MODE_OPTIONS = {

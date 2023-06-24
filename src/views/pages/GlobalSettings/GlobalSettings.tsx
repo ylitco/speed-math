@@ -10,7 +10,6 @@ import { TimerIcon } from 'src/icons/Timer/ComplexTimer';
 import { WorldIcon } from 'src/icons/World/World';
 import { NIcon } from 'src/icons/N/N';
 import LocaleContext from 'src/LocaleContext';
-import { StateContext } from 'src/state';
 import {
   INPUT_MODE,
   CHECKING_MODE,
@@ -28,43 +27,34 @@ import type { CheckMode, InputMode } from 'src/state/Workout';
 import {
   getCheckMode,
   getInputMode,
+  getMinutes,
+  getSeconds,
+  getReps,
   setCheckMode,
   setInputMode,
+  setMinutes,
+  setSeconds,
+  setReps,
 } from 'src/state/Workout';
 
 export const GlobalSettings: FC = () => {
-  const state = useContext(StateContext);
   const { locale } = useContext(LocaleContext);
   const { t } = useTranslation();
-  const { minutes, seconds, reps } = state.settings.global;
-  const { setMinutes, setSeconds, setReps } = state;
-  const dispatch = useDispatch();
-  const checkMode = useSelector(getCheckMode);
-  const handleCheckModeChange = useCallback(
-    (e: IEventMetaObject<CheckMode>) => {
-      dispatch(setCheckMode(e.value));
-    },
-    [dispatch]
-  );
-  const inputMode = useSelector(getInputMode);
-  const handleInputModeChange = useCallback(
-    (e: IEventMetaObject<InputMode>) => {
-      dispatch(setInputMode(e.value));
-    },
-    [dispatch]
-  );
-  const handleMinutesChange = useCallback((e: IEventMetaObject<TMinutes>) => {
-    setMinutes(e.value);
-  }, [setMinutes]);
-  const handleSecondsChange = useCallback((e: IEventMetaObject<TSeconds>) => {
-    setSeconds(e.value);
-  }, [setSeconds]);
-  const handleRepsChange = useCallback((e: IEventMetaObject<TReps>) => {
-    setReps(e.value);
-  }, [setReps]);
+  const {
+    checkMode,
+    handleCheckModeChange,
+    inputMode,
+    handleInputModeChange,
+    minutes,
+    handleMinutesChange,
+    seconds,
+    handleSecondsChange,
+    reps,
+    handleRepsChange,
+  } = useWorkoutSettings();
   const handleLangChange = useCallback((e: IEventMetaObject<TLang>) => {
-    return i18n.changeLanguage(e.value);
-  }, []);
+   return i18n.changeLanguage(e.value);
+ }, []);
   const CHECKING_OPTIONS = useMemo(() => {
     return {
       [CHECKING_MODE.HAND]: t('globalSettings.checkingMode.manual'),
@@ -137,3 +127,55 @@ export const GlobalSettings: FC = () => {
     </>
   );
 };
+
+function useWorkoutSettings() {
+  const dispatch = useDispatch();
+  const checkMode = useSelector(getCheckMode);
+  const handleCheckModeChange = useCallback(
+    (e: IEventMetaObject<CheckMode>) => {
+      dispatch(setCheckMode(e.value));
+    },
+    [dispatch]
+  );
+  const inputMode = useSelector(getInputMode);
+  const handleInputModeChange = useCallback(
+    (e: IEventMetaObject<InputMode>) => {
+      dispatch(setInputMode(e.value));
+    },
+    [dispatch]
+  );
+  const minutes = useSelector(getMinutes);
+  const handleMinutesChange = useCallback(
+    (e: IEventMetaObject<TMinutes>) => {
+      dispatch(setMinutes(+e.value));
+    },
+    [dispatch]
+  );
+  const seconds = useSelector(getSeconds);
+  const handleSecondsChange = useCallback(
+    (e: IEventMetaObject<TSeconds>) => {
+      dispatch(setSeconds(+e.value));
+    },
+    [dispatch]
+  );
+  const reps = useSelector(getReps);
+  const handleRepsChange = useCallback(
+    (e: IEventMetaObject<TReps>) => {
+      dispatch(setReps(+e.value));
+    },
+    [dispatch]
+  );
+
+  return {
+    checkMode,
+    handleCheckModeChange,
+    inputMode,
+    handleInputModeChange,
+    minutes,
+    handleMinutesChange,
+    seconds,
+    handleSecondsChange,
+    reps,
+    handleRepsChange,
+  };
+}
