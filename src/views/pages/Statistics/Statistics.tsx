@@ -15,6 +15,7 @@ import styles from './Statistics.module.scss';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 import { Repeat } from './icons/Repeat';
 import { Burger } from './icons/Burger';
+import { Tooltip } from 'react-tooltip';
 
 export const Statistics: FC = () => {
   const navigate = useNavigate();
@@ -31,7 +32,15 @@ export const Statistics: FC = () => {
     <>
       <Header renderMinorAction={BackButton}>{t('statistics.title')}</Header>
       <Content className={styles.view}>
-        <h2 className={styles.resultValue}>{printSpeedResult()}</h2>
+        <h2 className={styles.resultValue}>
+          <span
+            data-tooltip-id="counting-rate-unit"
+            data-tooltip-content={t('statistics.countingRateUnit')}
+            data-tooltip-place="bottom"
+          >
+            {printSpeedResult()}
+          </span>
+        </h2>
         <StatisticsIcon
           className={styles.pieChart}
           correct={answers.correct}
@@ -46,6 +55,7 @@ export const Statistics: FC = () => {
             <Burger />
           </Button>
         </footer>
+        <Tooltip id="counting-rate-unit" />
       </Content>
     </>
   );

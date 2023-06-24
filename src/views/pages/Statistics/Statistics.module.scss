@@ -11,6 +11,11 @@
   text-align: center;
   color: #959595;
   flex: 1 1 25%;
+
+  span {
+    text-decoration: underline dotted;
+    text-underline-offset: 10%;
+  }
 }
 
 .actions {
