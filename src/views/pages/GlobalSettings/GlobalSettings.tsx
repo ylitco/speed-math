@@ -21,7 +21,6 @@ import {
 import { TMinutes, TSeconds, TReps, TLang } from 'src/state/types';
 import { IEventMetaObject } from 'src/types';
 import { useSelector, useDispatch } from 'react-redux';
-
 import styles from './GlobalSettings.module.scss';
 import type { CheckMode, InputMode } from 'src/state/Workout';
 import {
@@ -38,8 +37,8 @@ import {
 } from 'src/state/Workout';
 
 export const GlobalSettings: FC = () => {
-  const { locale } = useContext(LocaleContext);
   const { t } = useTranslation();
+  const { locale, handleLocaleChange } = useLocale();
   const {
     checkMode,
     handleCheckModeChange,
@@ -52,9 +51,6 @@ export const GlobalSettings: FC = () => {
     reps,
     handleRepsChange,
   } = useWorkoutSettings();
-  const handleLangChange = useCallback((e: IEventMetaObject<TLang>) => {
-   return i18n.changeLanguage(e.value);
- }, []);
   const CHECKING_OPTIONS = useMemo(() => {
     return {
       [CHECKING_MODE.HAND]: t('globalSettings.checkingMode.manual'),
@@ -70,7 +66,9 @@ export const GlobalSettings: FC = () => {
 
   return (
     <>
-      <Header renderMinorAction={BackButton}>{t('globalSettings.title')}</Header>
+      <Header renderMinorAction={BackButton}>
+        {t('globalSettings.title')}
+      </Header>
       <Content className={styles.view}>
         <Switch
           className={styles.checkingModeSwitcher}
@@ -118,7 +116,7 @@ export const GlobalSettings: FC = () => {
             <Wheel
               options={LANG}
               value={locale}
-              onSelect={handleLangChange}
+              onSelect={handleLocaleChange}
               size="M"
             />
           </label>
@@ -127,6 +125,18 @@ export const GlobalSettings: FC = () => {
     </>
   );
 };
+
+function useLocale() {
+  const { locale } = useContext(LocaleContext);
+  const handleLocaleChange = useCallback((e: IEventMetaObject<TLang>) => {
+    return i18n.changeLanguage(e.value);
+  }, []);
+
+  return {
+    locale,
+    handleLocaleChange,
+  };
+}
 
 function useWorkoutSettings() {
   const dispatch = useDispatch();
