@@ -5,11 +5,16 @@ import { ITimeWorkout } from 'src/state/types';
 import { VIEW } from 'src/views/constants';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'src/utils';
+import { useSelector } from 'react-redux';
+import { getMinutes as _getMinutes } from 'src/state/Workout';
+import { getSeconds as _getSeconds } from 'src/state/Workout';
 
 export const TimeWorkout: FC = () => {
   const navigate = useNavigate();
   const state = useContext(StateContext)
-  const { workout, pauseWorkout, settings: { global: { minutes: totalMinutes, seconds: totalSeconds } } } = state;
+  const { workout, pauseWorkout } = state;
+  const totalMinutes = useSelector(_getMinutes);
+  const totalSeconds = useSelector(_getSeconds);
   const { pausedOn } = workout as ITimeWorkout;
   const [timer, setTimer] = useState<{ minutes: number, seconds: number }>({ minutes: getMinutes(), seconds: getSeconds() });
   const [isCheck, setIsCheck] = useState(false);

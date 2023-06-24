@@ -47,20 +47,12 @@ export interface IRepsWorkout extends IFreeWorkout {
 
 export interface IState {
   settings: {
-    global: {
-      minutes: TMinutes;
-      seconds: TSeconds;
-      reps: TReps;
-    };
     local: {
       gameMode: TGameMode;
       exercises: TTrainingPlan;
     };
   };
   workout: null | IFreeWorkout | IRepsWorkout | ITimeWorkout;
-  setMinutes: (minutes: TMinutes) => void;
-  setSeconds: (seconds: TSeconds) => void;
-  setReps: (reps: TReps) => void;
   setGameMode: (mode: TGameMode) => void;
   setExerciseDifficulty: (exerciseDifficulty: Record<TExercises, TDifficulties>) => void;
   startWorkout: () => void;

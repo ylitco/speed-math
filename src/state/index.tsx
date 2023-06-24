@@ -8,10 +8,7 @@ import {
   TDifficulties,
   TExercises,
   TGameMode,
-  TMinutes,
   TPausedOnReps,
-  TReps,
-  TSeconds,
   TTrainingPlan,
 } from 'src/state/types';
 import { copy, getFirstFactor, getSecondFactor, WorkoutNotStartedError } from 'src/utils';
@@ -19,18 +16,10 @@ import { ACTIONS } from './actions';
 import {
   EXERCISES,
   GAME_MODE,
-  MINUTES,
-  REPS,
-  SECONDS,
 } from './constants';
 
 const INITIAL_STATE = {
   settings: {
-    global: {
-      minutes: MINUTES[5],
-      seconds: SECONDS[0],
-      reps: REPS[20],
-    },
     local: {
       gameMode: GAME_MODE.TIME,
       exercises: {
@@ -42,20 +31,6 @@ const INITIAL_STATE = {
 
 const reducer = (state: IState, action: IAction) => {
   switch (action.type) {
-    case ACTIONS.SET_MINUTES:
-      state.settings.global.minutes = action.data.minutes;
-
-      return copy(state);
-    case ACTIONS.SET_SECONDS:
-      state.settings.global.seconds = action.data.seconds;
-
-      return copy(state);
-    case ACTIONS.SET_REPS:
-      const newState = copy(state);
-
-      newState.settings.global.reps = action.data.reps;
-
-      return newState;
     case ACTIONS.SET_GAME_MODE:
       state.settings.local.gameMode = action.data.mode;
 
@@ -157,15 +132,6 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
     return {
       settings: state.settings,
       workout: state.workout,
-      setMinutes: (minutes: TMinutes) => {
-        dispatch({ type: ACTIONS.SET_MINUTES, data: { minutes } });
-      },
-      setSeconds: (seconds: TSeconds) => {
-        dispatch({ type: ACTIONS.SET_SECONDS, data: { seconds } });
-      },
-      setReps: (reps: TReps) => {
-        dispatch({ type: ACTIONS.SET_REPS, data: { reps } });
-      },
       setGameMode: (mode: TGameMode) => {
         dispatch({ type: ACTIONS.SET_GAME_MODE, data: { mode }});
       },
