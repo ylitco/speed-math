@@ -20,7 +20,6 @@ import { copy, getFirstFactor, getSecondFactor, WorkoutNotStartedError } from 's
 import { ACTIONS } from './actions';
 import {
   CHECKING_MODE,
-  DIFFICULTIES,
   EXERCISES,
   GAME_MODE,
   INPUT_MODE,
@@ -41,16 +40,6 @@ const INITIAL_STATE = {
     local: {
       gameMode: GAME_MODE.TIME,
       exercises: {
-        [EXERCISES[3]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[4]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[5]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[6]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[7]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[8]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[9]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[11]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES[12]]: DIFFICULTIES.MEDIUM,
-        [EXERCISES.N]: DIFFICULTIES.MEDIUM,
       },
     },
   },
