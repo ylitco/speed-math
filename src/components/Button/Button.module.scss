@@ -28,4 +28,8 @@
     border-color: transparent;
     box-shadow: none;
   }
+
+  &:active {
+    outline: none;
+  }
 }
