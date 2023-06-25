@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from './store';
+import { GAME_MODE } from './constants';
 
 export type InputMode = 'rtl' | 'ltr';
 export type CheckMode = 'hand' | 'auto';
+export type Type = typeof GAME_MODE[keyof typeof GAME_MODE];
 
 export interface Workout {
   inputMode: InputMode;
@@ -13,6 +15,7 @@ export interface Workout {
     seconds: number;
   },
   reps: number;
+  type: Type;
 };
 
 const initialState: Workout = {
@@ -23,6 +26,7 @@ const initialState: Workout = {
     seconds: 0,
   },
   reps: 20,
+  type: GAME_MODE.REPS,
 };
 
 export const WorkoutSlice = createSlice({
@@ -44,6 +48,9 @@ export const WorkoutSlice = createSlice({
     setReps: (state, { payload: reps }: PayloadAction<number>) => {
       state.reps = reps;
     },
+    setType: (state, { payload: type }: PayloadAction<Type>) => {
+      state.type = type;
+    },
   },
 });
 
@@ -54,7 +61,14 @@ export const getMinutes = (state: AppState) =>
 export const getSeconds = (state: AppState) =>
   state.workout.time.seconds.toString();
 export const getReps = (state: AppState) => state.workout.reps.toString();
+export const getType = (state: AppState) => state.workout.type;
 
-export const { setInputMode, setCheckMode, setMinutes, setSeconds, setReps } =
-  WorkoutSlice.actions;
+export const {
+  setInputMode,
+  setCheckMode,
+  setMinutes,
+  setSeconds,
+  setReps,
+  setType,
+} = WorkoutSlice.actions;
 export default WorkoutSlice.reducer;

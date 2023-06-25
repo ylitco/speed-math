@@ -7,7 +7,6 @@ import {
   ITimeWorkout,
   TDifficulties,
   TExercises,
-  TGameMode,
   TPausedOnReps,
   TTrainingPlan,
 } from 'src/state/types';
@@ -21,7 +20,6 @@ import {
 const INITIAL_STATE = {
   settings: {
     local: {
-      gameMode: GAME_MODE.TIME,
       exercises: {
       },
     },
@@ -31,10 +29,6 @@ const INITIAL_STATE = {
 
 const reducer = (state: IState, action: IAction) => {
   switch (action.type) {
-    case ACTIONS.SET_GAME_MODE:
-      state.settings.local.gameMode = action.data.mode;
-
-      return copy(state);
     case ACTIONS.SET_EXERCISES_DIFFICULTIES:
       state.settings.local.exercises = {
         ...state.settings.local.exercises,
@@ -81,17 +75,18 @@ const reducer = (state: IState, action: IAction) => {
       return newState;
     }
     case ACTIONS.PAUSE_GAME:
-      if (selectWorkoutMode() === GAME_MODE.TIME) {
+      let type;
+      if (type === GAME_MODE.TIME) {
         const workout = state.workout as ITimeWorkout;
 
         workout.pausedOn = action.data.pausedOn;
       }
-      if (selectWorkoutMode() === GAME_MODE.REPS) {
+      if (type === GAME_MODE.REPS) {
         const workout = state.workout as IRepsWorkout;
 
         workout.pausedOn = action.data.pausedOn;
       }
-      if (selectWorkoutMode() === GAME_MODE.FREE) {
+      if (type === GAME_MODE.FREE) {
         // @todo pause free mode
       }
       return copy(state);
@@ -104,10 +99,6 @@ const reducer = (state: IState, action: IAction) => {
     }
     default:
       return state;
-  }
-
-  function selectWorkoutMode(): TGameMode {
-    return state.settings.local.gameMode; // @todo rename -> workoutMode
   }
 };
 
@@ -132,9 +123,6 @@ export const StateProvider: FC<HTMLAttributes<HTMLElement>> = (props) => {
     return {
       settings: state.settings,
       workout: state.workout,
-      setGameMode: (mode: TGameMode) => {
-        dispatch({ type: ACTIONS.SET_GAME_MODE, data: { mode }});
-      },
       setExerciseDifficulty: (exercise: Record<TExercises, TDifficulties>) => {
         dispatch({ type: ACTIONS.SET_EXERCISES_DIFFICULTIES, data: { exercise }});
       },

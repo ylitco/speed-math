@@ -14,7 +14,7 @@ import { InfinityIcon } from 'src/icons/Infinity/Infinity';
 import { PlayIcon } from 'src/icons/Play/Play';
 import { StateContext } from 'src/state'
 import { IEventMetaObject } from 'src/types';
-import { TDifficulties, TExercises, TGameMode } from 'src/state/types';
+import { TDifficulties, TExercises } from 'src/state/types';
 import { EXERCISES, DIFFICULTIES, GAME_MODE } from 'src/state/constants'; // @todo rename
 import { VIEW } from 'src/views/constants';
 import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
@@ -23,8 +23,8 @@ import styles from './LocalSettings.module.scss';
 import {Easy} from "./components/Easy/Easy";
 import {Medium} from "./components/Medium/Medium";
 import {Hard} from "./components/Hard/Hard";
-import { useSelector } from 'react-redux';
-import { getReps } from 'src/state/Workout';
+import { useDispatch, useSelector } from 'react-redux';
+import { Type, getReps, getType, setType } from 'src/state/Workout';
 
 const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getReps);
@@ -39,11 +39,13 @@ const WORKOUT_MODE_OPTIONS = {
 };
 
 export const LocalSettings: FC = () => {
-  const { settings: { local: { gameMode: workoutMode, exercises } }, setExerciseDifficulty: setExerciseComplexity, setGameMode: setWorkoutMode } = useContext(StateContext); // @todo rename
+  const { settings: { local: { exercises } }, setExerciseDifficulty: setExerciseComplexity, setGameMode: setWorkoutMode } = useContext(StateContext); // @todo rename
   const { t } = useTranslation();
-  const handleWorkoutModeChange = useCallback((e: IEventMetaObject<TGameMode>) => {
-    setWorkoutMode(e.value);
-  }, [setWorkoutMode]);
+  const dispatch = useDispatch();
+  const type = useSelector(getType);
+  const handleWorkoutModeChange = useCallback((e: IEventMetaObject<Type>) => {
+    dispatch(setType(e.value));
+  }, [dispatch]);
   const handleExerciseComplexityChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setExerciseComplexity({
       [e.target.name]: exercises[e.target.name as TExercises] === e.target.value ? null : e.target.value,
@@ -105,7 +107,7 @@ export const LocalSettings: FC = () => {
           <Switch
             className={styles.modes}
             options={WORKOUT_MODE_OPTIONS}
-            value={workoutMode}
+            value={type}
             onChange={handleWorkoutModeChange}
           />
           <Button className={styles.play} onClick={handleWorkoutStart}>
