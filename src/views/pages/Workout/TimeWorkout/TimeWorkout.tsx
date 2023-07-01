@@ -10,7 +10,6 @@ export const TimeWorkout: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isCheck, setIsCheck] = useState(false);
-  const [timerOut] = useState(false);
   const isSetTimeOut = useSelector(getSetTimerStatus);
   const handleCheckStart = useCallback(() => {
     setIsCheck(true);
@@ -36,7 +35,7 @@ export const TimeWorkout: FC = () => {
     return () => {
       clearTimeout(_timer);
     }
-  }, [isCheck, timerOut, navigate, isSetTimeOut, dispatch]);
+  }, [isCheck, navigate, isSetTimeOut, dispatch]);
 
   return (
     <BaseWorkout
