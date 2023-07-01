@@ -4,7 +4,7 @@ import { Start } from 'src/views/pages/Start/Start';
 import { Overview } from 'src/views/pages/Overview/Overview';
 import { About } from 'src/views/pages/About';
 import { LocalSettings } from 'src/views/pages/LocalSettings/LocalSettings';
-import { GlobalSettings } from 'src/views/pages/GlobalSettings/GlobalSettings';
+import { GlobalSettings } from 'src/views/pages/GlobalSettings';
 import { Workout } from './pages/Workout/Workout';
 import { TimeWorkout } from 'src/views/pages/Workout/TimeWorkout/TimeWorkout';
 import { RepsWorkout } from './pages/Workout/RepsWorkout/RepsWorkout';

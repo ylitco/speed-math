@@ -9,8 +9,8 @@ import { TimerIcon } from "src/icons/Timer/ComplexTimer";
 import { WorldIcon } from "src/icons/World/World";
 import { NIcon } from "src/icons/N/N";
 import { MINUTES, SECONDS, REPS, LANG } from "src/state/constants";
-import styles from "./GlobalSettings.module.scss";
 import { useWorkoutSettings, useSettingsOptions, useLocale } from "./hooks";
+import styles from "./GlobalSettings.module.scss";
 
 export const GlobalSettings: FC = () => {
   const { t } = useTranslation();
