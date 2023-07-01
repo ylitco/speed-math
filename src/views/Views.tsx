@@ -1,7 +1,7 @@
 import React, { FC, useRef, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Start } from 'src/views/pages/Start/Start';
-import { Overview } from 'src/views/pages/Overview/Overview';
+import { Overview } from 'src/views/pages/Overview';
 import { About } from 'src/views/pages/About';
 import { LocalSettings } from 'src/views/pages/LocalSettings';
 import { GlobalSettings } from 'src/views/pages/GlobalSettings';
