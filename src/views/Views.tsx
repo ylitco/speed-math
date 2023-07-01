@@ -2,7 +2,7 @@ import React, { FC, useRef, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Start } from 'src/views/pages/Start/Start';
 import { Overview } from 'src/views/pages/Overview/Overview';
-import { About } from 'src/views/pages/About/About';
+import { About } from 'src/views/pages/About';
 import { LocalSettings } from 'src/views/pages/LocalSettings/LocalSettings';
 import { GlobalSettings } from 'src/views/pages/GlobalSettings/GlobalSettings';
 import { Workout } from './pages/Workout/Workout';
