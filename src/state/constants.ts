@@ -1,3 +1,5 @@
+import { Plan } from "./Workout";
+
 export const CHECKING_MODE = {
   HAND: 'hand',
   AUTO: 'auto',
@@ -20,7 +22,7 @@ export const GAME_MODE = {
   FREE: 'free',
 } as const;
 
-export const DIFFICULTIES = {
+export const COMPLEXITY = {
   EASY: 'easy',
   MEDIUM: 'medium',
   HARD: 'hard',
@@ -44,3 +46,5 @@ export const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((m, i
 export const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
 
 export const REPS = Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`]));
+
+export const FLEX_WORKOUT_PLAN = {} as Plan;

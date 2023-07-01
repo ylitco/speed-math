@@ -23,6 +23,12 @@
       "label": "इनपुट मोड",
       "ltr": "बाएं से दाएं",
       "rtl": "दाएं से बाएं"
+    },
+    "minutes": {
+      "label": "m"
+    },
+    "seconds": {
+      "label": "s"
     }
   },
   "statistics": {

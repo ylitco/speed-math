@@ -5,7 +5,8 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release-android": "cordova build android --release -- --keystore=\"../../key-store/user.keystore\" --storePassword=65416541 --alias=speedmult --password=65416541"
   },
   "keywords": [
     "ecosystem:cordova"

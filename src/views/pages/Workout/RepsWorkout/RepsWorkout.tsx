@@ -1,38 +1,28 @@
-import React, { FC, useCallback, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BaseWorkout } from 'src/views/pages/Workout/BaseWorkout/BaseWorkout';
-import { StateContext } from 'src/state';
-import { IRepsWorkout } from 'src/state/types';
-import { REPS } from 'src/state/constants';
-import { VIEW } from 'src/views/constants';
-import { getUrl } from 'src/utils';
-import { useSelector } from 'react-redux';
-import { getReps } from 'src/state/Workout';
+import React, { FC, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { BaseWorkout } from "src/views/pages/Workout/BaseWorkout/BaseWorkout";
+import { VIEW } from "src/views/constants";
+import { getUrl } from "src/utils";
+import { useSelector } from "react-redux";
+import {
+  getCurrentRepIndex,
+  getWorkoutReps,
+  stopTimer,
+  useAppDispatch,
+} from "src/state/Workout";
 
 export const RepsWorkout: FC = () => {
-  const state = useContext(StateContext);
-  const { workout, pauseWorkout } = state;
-  const totalReps = useSelector(getReps);
-  const { pausedOn } = workout as IRepsWorkout;
   const navigate = useNavigate();
-  const initReps = pausedOn ? +pausedOn : +REPS[1];
-  const [reps, setReps] = useState<number>(initReps);
-  const stopWorkout = useCallback(state.stopWorkout, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const handleExplain = useCallback(() => {
-    pauseWorkout(reps);
-  }, [pauseWorkout, reps]);
+  const dispatch = useAppDispatch();
+  const repIndex = useSelector(getCurrentRepIndex);
+  const reps = useSelector(getWorkoutReps);
 
   const handleCheckFinish = useCallback(() => {
-    if (reps === +totalReps) {
-      stopWorkout();
+    if (repIndex === reps) {
+      dispatch(stopTimer());
       return navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
     }
-    setReps((prevReps) => {
-      return prevReps + 1;
-    });
-  },[reps, totalReps, stopWorkout, navigate]);
+  }, [repIndex, reps, navigate, dispatch]);
 
-  return (
-    <BaseWorkout title={`${reps} - ${totalReps}`} onCheckFinish={handleCheckFinish} onExplain={handleExplain} progress={reps / +totalReps * 100} />
-  );
+  return <BaseWorkout onCheckFinish={handleCheckFinish} />;
 };

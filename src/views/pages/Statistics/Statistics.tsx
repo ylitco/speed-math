@@ -1,51 +1,63 @@
-import React, { FC, useCallback, useContext } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Header } from 'src/components/Header/Header';
 import { BackButton } from 'src/views/components/BackButton';
 import { Button } from 'src/components/Button/Button';
 import { Content } from 'src/components/Content/Content';
-import { StateContext } from 'src/state';
 import { getUrl } from 'src/utils';
-import { IFreeWorkout } from 'src/state/types';
 import { VIEW } from 'src/views/constants';
 import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
-import { Statistics as StatisticsIcon } from './components/Statistics/Statistics';
+import { Statistics as StatisticsIcon } from "./components/Statistics/Statistics";
 import styles from './Statistics.module.scss';
 import { BUTTON_TYPE } from 'src/components/Button/types';
 import { Repeat } from './icons/Repeat';
 import { Burger } from './icons/Burger';
 import { Tooltip } from 'react-tooltip';
+import { useSelector } from 'react-redux';
+import {
+  finishSet,
+  getCountingRate,
+  getCurrentRepIndex,
+  getRelativeStat,
+  getSetStat,
+  stopTimer,
+  useAppDispatch,
+} from "src/state/Workout";
 
 export const Statistics: FC = () => {
   const navigate = useNavigate();
-  const { workout, finishWorkout } = useContext(StateContext);
+  const dispatch = useAppDispatch();
+  const stat = useSelector(getSetStat);
+  const repIndex = useSelector(getCurrentRepIndex);
+  const percentage = useSelector(getRelativeStat);
+  const countingRate = useSelector(getCountingRate);
   const { t } = useTranslation();
-  const { answers, startAt, finishAt } = workout as IFreeWorkout;
   const handleWorkoutRestart = useStartWorkoutCallback();
   const handleWorkoutFinish = useCallback(() => {
     navigate(getUrl(VIEW.START));
-    finishWorkout();
-  }, [navigate, finishWorkout]);
+    dispatch(finishSet());
+    dispatch(stopTimer());
+  }, [navigate, dispatch]);
 
   return (
     <>
-      <Header renderMinorAction={BackButton}>{t('statistics.title')}</Header>
+      <Header renderMinorAction={BackButton}>{t("statistics.title")}</Header>
       <Content className={styles.view}>
         <h2 className={styles.resultValue}>
           <span
             data-tooltip-id="counting-rate-unit"
-            data-tooltip-content={t('statistics.countingRateUnit')}
+            data-tooltip-content={t("statistics.countingRateUnit")}
             data-tooltip-place="bottom"
           >
-            {printSpeedResult()}
+            {`${countingRate} ${t("statistics.cru")}`}
           </span>
         </h2>
         <StatisticsIcon
           className={styles.pieChart}
-          correct={answers.correct}
-          total={answers.correct + answers.wrong}
-          percentage={getPercentage()}
+          correct={stat.correct}
+          total={repIndex}
+          percentage={percentage}
         />
         <footer className={styles.actions}>
           <Button onClick={handleWorkoutRestart} type={BUTTON_TYPE.CIRCLE}>
@@ -59,18 +71,4 @@ export const Statistics: FC = () => {
       </Content>
     </>
   );
-
-  function getPercentage() {
-    const total = answers.correct + answers.wrong;
-    const percent = total !== 0 ? answers.correct / total * 100 : 0;
-
-    return +percent.toFixed();
-  }
-
-  function printSpeedResult() {
-    const duration = new Date(finishAt - startAt).getTime() / 1000;
-    const problems = answers.correct * 60 / duration;
-
-    return `${problems.toFixed()} ${t('statistics.cru')}`;
-  }
 };

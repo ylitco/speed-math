@@ -23,6 +23,12 @@
       "label": "Input Mode",
       "ltr": "From left to right",
       "rtl": "From right to left"
+    },
+    "minutes": {
+      "label": "m"
+    },
+    "seconds": {
+      "label": "s"
     }
   },
   "statistics": {

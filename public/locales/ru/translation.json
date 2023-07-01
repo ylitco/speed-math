@@ -23,6 +23,12 @@
       "label": "Режим ввода",
       "ltr": "Слева напарво",
       "rtl": "Справа налево"
+    },
+    "minutes": {
+      "label": "м"
+    },
+    "seconds": {
+      "label": "с"
     }
   },
   "statistics": {

@@ -1,6 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { usePrevious } from 'src/hooks';
 import { Start } from 'src/views/pages/Start/Start';
 import { Overview } from 'src/views/pages/Overview/Overview';
 import { About } from 'src/views/pages/About/About';
@@ -10,12 +9,15 @@ import { Workout } from './pages/Workout/Workout';
 import { TimeWorkout } from 'src/views/pages/Workout/TimeWorkout/TimeWorkout';
 import { RepsWorkout } from './pages/Workout/RepsWorkout/RepsWorkout';
 import { FreeWorkout } from './pages/Workout/FreeWorkout/FreeWorkout';
-import { Explanation } from 'src/views/pages/Explanation/Explanation';
+import { Tutorial } from 'src/views/pages/Tutorial/Tutorial';
 import { Statistics } from 'src/views/pages/Statistics/Statistics';
 import { IView } from './types';
 import { VIEW } from './constants';
 
-export const ViewContext = React.createContext<IView>({ current: null, previous: null });
+export const ViewContext = React.createContext<IView>({
+  current: null,
+  previous: null,
+});
 
 export const Views: FC = () => {
   const current = useLocation().pathname.slice(1);
@@ -35,9 +37,24 @@ export const Views: FC = () => {
           <Route path={VIEW.FREE_WORKOUT} element={<FreeWorkout />} />
           <Route path={VIEW.STATISTICS} element={<Statistics />} />
         </Route>
-        <Route path={`${VIEW.EXPLANATION}/:exercise`} element={<Explanation />} />
+        <Route
+          path={`${VIEW.EXPLANATION}/:exercise`}
+          element={<Tutorial />}
+        />
         <Route path="*" element={<Navigate to={VIEW.START} replace />} />
       </Routes>
     </ViewContext.Provider>
   );
 };
+
+function usePrevious (value: any) {
+  const ref = useRef<any>();
+
+  const current = ref.current;
+
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return current;
+}

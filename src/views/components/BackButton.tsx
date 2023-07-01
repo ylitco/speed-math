@@ -1,34 +1,63 @@
-import React, { FC, useCallback, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from 'src/components/Button/Button';
-import { BackIcon } from 'src/icons/Back/Back';
-import { ViewContext } from 'src/views/Views';
-import { VIEW } from 'src/views/constants';
-import { getUrl } from 'src/utils';
-import { StateContext } from 'src/state';
+import { FC, useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "src/components/Button/Button";
+import { BackIcon } from "src/icons/Back/Back";
+import { ViewContext } from "src/views/Views";
+import { VIEW } from "src/views/constants";
+import { getUrl } from "src/utils";
+import {
+  finishSet,
+  finishTutorial,
+  getSetStatus,
+  startTimer,
+  stopTimer,
+  useAppDispatch,
+} from "src/state/Workout";
+import { useSelector } from "react-redux";
 
 export const BackButton: FC = () => {
   const { current, previous } = useContext(ViewContext);
-  const { finishWorkout } = useContext(StateContext);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isDuringWorkout = current && (current === VIEW.STATISTICS || current.startsWith(VIEW.WORKOUT));
-  const isAfterWorkout = current && previous && current === VIEW.LOCAL_SETTINGS && (
-    previous === VIEW.STATISTICS || previous.startsWith(VIEW.WORKOUT) || previous === VIEW.GLOBAL_SETTINGS
-  );
+  const isSetActive = useSelector(getSetStatus);
+  const isDuringWorkout =
+    current &&
+    (current === VIEW.STATISTICS || current.startsWith(VIEW.WORKOUT));
+  const isAfterWorkout =
+    current &&
+    previous &&
+    current === VIEW.LOCAL_SETTINGS &&
+    (previous === VIEW.STATISTICS ||
+      previous.startsWith(VIEW.WORKOUT) ||
+      previous === VIEW.GLOBAL_SETTINGS);
+  const isTutorial = current && current.startsWith(VIEW.EXPLANATION);
   const handleClick = useCallback(() => {
     if (isDuringWorkout) {
-      finishWorkout();
+      dispatch(finishSet());
+      dispatch(stopTimer());
       return navigate(getUrl(VIEW.LOCAL_SETTINGS));
     }
 
     if (isAfterWorkout) return navigate(getUrl(VIEW.START));
 
+    if (isTutorial) {
+      dispatch(finishTutorial());
+      isSetActive && dispatch(startTimer());
+    }
+
     return navigate(-1);
-  }, [navigate, isDuringWorkout, isAfterWorkout, finishWorkout]);
+  }, [
+    navigate,
+    isDuringWorkout,
+    isAfterWorkout,
+    dispatch,
+    isTutorial,
+    isSetActive,
+  ]);
 
   return (
     <Button onClick={handleClick}>
       <BackIcon />
     </Button>
   );
-}
+};
