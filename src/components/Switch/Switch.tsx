@@ -1,4 +1,4 @@
-import React, { FC, useCallback, MouseEvent } from 'react';
+import { memo, FC, useCallback, MouseEvent } from 'react';
 import cn from 'classnames';
 
 import { ISwitchProps } from 'src/components/Switch/types';
@@ -7,7 +7,7 @@ import { createEventMetaObject } from 'src/utils';
 
 import styles from './Switch.module.scss';
 
-export const Switch: FC<ISwitchProps> = (props) => {
+export const Switch: FC<ISwitchProps> = memo(function Switch(props) {
   const { onChange } = props;
   const handleClick = useCallback(_handleClick, [onChange]);
 
@@ -40,4 +40,4 @@ export const Switch: FC<ISwitchProps> = (props) => {
 
     onChange(createEventMetaObject(id));
   }
-};
+});
