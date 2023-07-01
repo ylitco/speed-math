@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactElement } from 'react';
 import { IEventMetaObject } from 'src/types';
 
-export interface IWheelProps<T> extends HTMLAttributes<ReactElement> {
+export interface IWheelProps<T = any> extends HTMLAttributes<ReactElement> {
   options: Record<T, string>;
   value: T;
   onSelect: (e: IEventMetaObject<T>) => void;

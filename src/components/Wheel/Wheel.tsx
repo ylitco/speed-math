@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useCallback, useState } from 'react';
+import { memo, FC, MouseEvent, useCallback, useState } from 'react';
 import type { Touch, TouchEvent, TouchEventHandler } from 'react';
 import cn from 'classnames';
 import { IWheelProps } from 'src/components/Wheel/types';
@@ -12,7 +12,7 @@ interface RelativeTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
   deltaY: number;
 };
 
-export const Wheel: FC<IWheelProps<any>> = (props) => {
+export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
   const { onSelect, options: _options, value, selectType = 'auto' } = props;
   const handleClick = useCallback(_handleClick, [onSelect, value]);
   const [activeValueIndex, setActiveValueIndex] = useState(Object.keys(_options).indexOf(value));
@@ -150,7 +150,7 @@ export const Wheel: FC<IWheelProps<any>> = (props) => {
   function _handleClick(e: MouseEvent<HTMLDivElement>) {
     onSelect(createEventMetaObject(e.currentTarget.dataset['value']))
   }
-};
+});
 
 function copyTouch({ identifier, pageX, pageY }: Touch) {
   return { identifier, pageX, pageY };
