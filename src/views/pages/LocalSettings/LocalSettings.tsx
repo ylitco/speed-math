@@ -1,27 +1,27 @@
-import React, { ChangeEvent, FC, HTMLAttributes, useCallback } from 'react';
-import cn from 'classnames';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Header } from 'src/components/Header/Header';
-import { Content } from 'src/components/Content/Content';
-import { SettingsButton } from 'src/views/components/SettingsButton';
-import { BackButton } from 'src/views/components/BackButton';
-import { Button } from 'src/components/Button/Button';
-import { Switch } from 'src/components/Switch/Switch';
-import { InfoIcon } from 'src/icons/Info/Info';
-import { TimerIcon } from 'src/icons/Timer/Timer';
-import { InfinityIcon } from 'src/icons/Infinity/Infinity';
-import { PlayIcon } from 'src/icons/Play/Play';
-import { IEventMetaObject } from 'src/types';
-import { EXERCISES, COMPLEXITY, GAME_MODE } from 'src/state/constants';
-import { VIEW } from 'src/views/constants';
-import { useStartWorkoutCallback } from 'src/hooks/useStartWorkoutEffect';
-import { getUrl } from 'src/utils';
-import styles from './LocalSettings.module.scss';
-import {Easy} from "./components/Easy/Easy";
-import {Medium} from "./components/Medium/Medium";
-import {Hard} from "./components/Hard/Hard";
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, HTMLAttributes, useCallback } from "react";
+import cn from "classnames";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { Header } from "src/components/Header/Header";
+import { Content } from "src/components/Content/Content";
+import { SettingsButton } from "src/views/components/SettingsButton";
+import { BackButton } from "src/views/components/BackButton";
+import { Button } from "src/components/Button/Button";
+import { Switch } from "src/components/Switch/Switch";
+import { InfoIcon } from "src/icons/Info/Info";
+import { TimerIcon } from "src/icons/Timer/Timer";
+import { InfinityIcon } from "src/icons/Infinity/Infinity";
+import { PlayIcon } from "src/icons/Play/Play";
+import { IEventMetaObject } from "src/types";
+import { EXERCISES, COMPLEXITY, GAME_MODE } from "src/state/constants";
+import { VIEW } from "src/views/constants";
+import { useStartWorkoutCallback } from "src/hooks/useStartWorkoutEffect";
+import { getUrl } from "src/utils";
+import styles from "./LocalSettings.module.scss";
+import { Easy } from "./components/Easy/Easy";
+import { Medium } from "./components/Medium/Medium";
+import { Hard } from "./components/Hard/Hard";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Exercise,
   ExerciseName,
@@ -32,13 +32,13 @@ import {
   getType,
   setType,
 } from "src/state/Workout";
-import { BUTTON_TYPE } from 'src/components/Button/types';
+import { BUTTON_TYPE } from "src/components/Button/types";
 
 const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getWorkoutReps);
 
   return <div className={cn(props.className, styles.fontTest)}>{reps}</div>;
-}
+};
 
 const WORKOUT_MODE_OPTIONS = {
   [GAME_MODE.TIME]: TimerIcon,
@@ -51,9 +51,12 @@ export const LocalSettings: FC = () => {
   const dispatch = useDispatch();
   const type = useSelector(getType);
   const plan = useSelector(getPlan);
-  const handleWorkoutTypeChange = useCallback((e: IEventMetaObject<Type>) => {
-    dispatch(setType(e.value));
-  }, [dispatch]);
+  const handleWorkoutTypeChange = useCallback(
+    (e: IEventMetaObject<Type>) => {
+      dispatch(setType(e.value));
+    },
+    [dispatch]
+  );
   const handleExerciseComplexityChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(

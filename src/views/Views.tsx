@@ -3,7 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Start } from 'src/views/pages/Start/Start';
 import { Overview } from 'src/views/pages/Overview/Overview';
 import { About } from 'src/views/pages/About';
-import { LocalSettings } from 'src/views/pages/LocalSettings/LocalSettings';
+import { LocalSettings } from 'src/views/pages/LocalSettings';
 import { GlobalSettings } from 'src/views/pages/GlobalSettings';
 import { Workout } from './pages/Workout/Workout';
 import { TimeWorkout } from 'src/views/pages/Workout/TimeWorkout/TimeWorkout';
