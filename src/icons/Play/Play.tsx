@@ -1,6 +1,6 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { memo, FC, HTMLAttributes } from 'react';
 
-export const PlayIcon: FC<HTMLAttributes<HTMLElement>> = (props) => {
+export const PlayIcon: FC<HTMLAttributes<HTMLElement>> = memo(function PlayIcon(props) {
   return (
     <svg
       className={props.className}
@@ -27,4 +27,4 @@ export const PlayIcon: FC<HTMLAttributes<HTMLElement>> = (props) => {
       </defs>
     </svg>
   );
-};
+});

@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from "react";
+import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { BaseWorkout } from "src/views/pages/Workout/BaseWorkout/BaseWorkout";
+import BaseWorkout from "src/views/pages/Workout/BaseWorkout";
 import { VIEW } from "src/views/constants";
 import { getUrl } from "src/utils";
 import { useSelector } from "react-redux";

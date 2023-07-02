@@ -1,6 +1,6 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { memo, FC, HTMLAttributes } from 'react';
 
-export const TimerIcon: FC<HTMLAttributes<HTMLElement>> = (props) => {
+export const TimerIcon: FC<HTMLAttributes<HTMLElement>> = memo(function TimerIcon(props) {
   return (
     <svg
       className={props.className}
@@ -42,4 +42,4 @@ export const TimerIcon: FC<HTMLAttributes<HTMLElement>> = (props) => {
       </defs>
     </svg>
   );
-};
+});

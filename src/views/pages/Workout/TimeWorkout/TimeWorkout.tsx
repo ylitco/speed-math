@@ -1,10 +1,14 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
-import { BaseWorkout } from 'src/views/pages/Workout/BaseWorkout/BaseWorkout';
+import { FC, useCallback, useEffect, useState } from 'react';
+import BaseWorkout from 'src/views/pages/Workout/BaseWorkout';
 import { VIEW } from 'src/views/constants';
 import { useNavigate } from 'react-router-dom';
 import { getUrl } from 'src/utils';
 import { useSelector } from 'react-redux';
-import { getSetTimerStatus, stopTimer, useAppDispatch } from 'src/state/Workout';
+import {
+  getSetTimerStatus,
+  stopTimer,
+  useAppDispatch,
+} from "src/state/Workout";
 
 export const TimeWorkout: FC = () => {
   const dispatch = useAppDispatch();

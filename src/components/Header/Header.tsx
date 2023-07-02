@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from "react";
+import { memo, useCallback, FC } from "react";
 import { IHeaderProps } from "./types";
 import styles from "./Header.module.scss";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import { BUTTON_TYPE } from "src/components/Button/types";
 import { VIEW } from "src/views/constants";
 import { EXERCISES } from "src/state/constants";
 
-export const Header: FC<IHeaderProps> = (props) => {
+export const Header: FC<IHeaderProps> = memo(function Header(props) {
   return (
     <header className={styles.header}>
       <div className={styles.action}>
@@ -30,9 +30,9 @@ export const Header: FC<IHeaderProps> = (props) => {
       </div>
     </header>
   );
-};
+});
 
-export const WorkoutHeader: FC = () => {
+export const WorkoutHeader: FC = memo(function WorkoutHeader() {
   const workoutTitle = useSelector(getWorkoutTitle);
 
   return (
@@ -40,7 +40,7 @@ export const WorkoutHeader: FC = () => {
       {workoutTitle}
     </Header>
   );
-};
+});
 
 const TutorialButton: FC = () => {
   const dispatch = useAppDispatch();

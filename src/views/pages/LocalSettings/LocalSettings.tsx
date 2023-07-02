@@ -1,148 +1,19 @@
-import { ChangeEvent, FC, HTMLAttributes, useCallback } from "react";
-import cn from "classnames";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { Header } from "src/components/Header/Header";
-import { Content } from "src/components/Content/Content";
 import { SettingsButton } from "src/views/components/SettingsButton";
 import { BackButton } from "src/views/components/BackButton";
-import { Button } from "src/components/Button/Button";
-import { Switch } from "src/components/Switch/Switch";
-import { InfoIcon } from "src/icons/Info/Info";
-import { TimerIcon } from "src/icons/Timer/Timer";
-import { InfinityIcon } from "src/icons/Infinity/Infinity";
-import { PlayIcon } from "src/icons/Play/Play";
-import { IEventMetaObject } from "src/types";
-import { EXERCISES, COMPLEXITY, GAME_MODE } from "src/state/constants";
-import { VIEW } from "src/views/constants";
-import { useStartWorkoutCallback } from "src/hooks/useStartWorkoutEffect";
-import { getUrl } from "src/utils";
-import styles from "./LocalSettings.module.scss";
-import { Easy } from "./components/Easy/Easy";
-import { Medium } from "./components/Medium/Medium";
-import { Hard } from "./components/Hard/Hard";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Exercise,
-  ExerciseName,
-  Type,
-  changePlan,
-  getPlan,
-  getWorkoutReps,
-  getType,
-  setType,
-} from "src/state/Workout";
-import { BUTTON_TYPE } from "src/components/Button/types";
-
-const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
-  const reps = useSelector(getWorkoutReps);
-
-  return <div className={cn(props.className, styles.fontTest)}>{reps}</div>;
-};
-
-const WORKOUT_MODE_OPTIONS = {
-  [GAME_MODE.TIME]: TimerIcon,
-  [GAME_MODE.REPS]: Quantity,
-  [GAME_MODE.FREE]: InfinityIcon,
-};
+import { LocalSettingsContent } from "./Content";
 
 export const LocalSettings: FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const type = useSelector(getType);
-  const plan = useSelector(getPlan);
-  const handleWorkoutTypeChange = useCallback(
-    (e: IEventMetaObject<Type>) => {
-      dispatch(setType(e.value));
-    },
-    [dispatch]
-  );
-  const handleExerciseComplexityChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch(
-        changePlan({
-          name: e.target.name,
-          complexity: e.target.value,
-        } as Exercise)
-      );
-    },
-    [dispatch]
-  );
-  const handleWorkoutStart = useStartWorkoutCallback();
 
   return (
     <>
       <Header renderMajorAction={SettingsButton} renderMinorAction={BackButton}>
         {t("localSettings.title")}
       </Header>
-      <Content className={styles.view}>
-        <header className={styles.header}>
-          <b className={cn(styles.th, styles.easy)}>
-            <Easy />
-          </b>
-          <b className={cn(styles.th, styles.medium)}>
-            <Medium />
-          </b>
-          <b className={cn(styles.th, styles.hard)}>
-            <Hard />
-          </b>
-        </header>
-        <section className={styles.body}>
-          {Object.keys(EXERCISES).map((mode) => {
-            return (
-              <div className={styles.row} key={mode}>
-                <div className={styles.number}>×{mode}</div>
-                <div className={styles.easy}>
-                  <input
-                    type="checkbox"
-                    name={mode}
-                    value="easy"
-                    checked={plan[mode as ExerciseName] === COMPLEXITY.EASY}
-                    onChange={handleExerciseComplexityChange}
-                  />
-                </div>
-                <div className={styles.medium}>
-                  <input
-                    type="checkbox"
-                    name={mode}
-                    value="medium"
-                    checked={plan[mode as ExerciseName] === COMPLEXITY.MEDIUM}
-                    onChange={handleExerciseComplexityChange}
-                  />
-                </div>
-                <div className={styles.hard}>
-                  <input
-                    type="checkbox"
-                    name={mode}
-                    value="hard"
-                    checked={plan[mode as ExerciseName] === COMPLEXITY.HARD}
-                    onChange={handleExerciseComplexityChange}
-                  />
-                </div>
-                <Link
-                  className={styles.info}
-                  to={getUrl(`${VIEW.EXPLANATION}/${mode}`)}
-                >
-                  <Button type={BUTTON_TYPE.LIMPID} name={mode}>
-                    <InfoIcon color="purple" />
-                  </Button>
-                </Link>
-              </div>
-            );
-          })}
-        </section>
-        <nav className={styles.footer}>
-          <Switch
-            className={styles.modes}
-            options={WORKOUT_MODE_OPTIONS}
-            value={type}
-            onChange={handleWorkoutTypeChange}
-          />
-          <Button className={styles.play} onClick={handleWorkoutStart}>
-            <PlayIcon />
-          </Button>
-        </nav>
-      </Content>
+      <LocalSettingsContent />
     </>
   );
 };

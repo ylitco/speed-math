@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { BaseWorkout } from 'src/views/pages/Workout/BaseWorkout/BaseWorkout';
+import { FC } from 'react';
+import BaseWorkout from 'src/views/pages/Workout/BaseWorkout';
 
 export const FreeWorkout: FC = () => {
   return <BaseWorkout />;

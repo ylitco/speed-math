@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import { memo, FC } from 'react';
 
 const colors = {
   gray: '#999999',
   purple: '#CF94FE',
 };
 
-export const InfoIcon: FC<{ color?: 'gray' | 'purple' }> = ({ color = 'gray' }) => {
+export const InfoIcon: FC<{ color?: 'gray' | 'purple' }> = memo(function InfoIcon({ color = 'gray' }) {
   return (
     <svg width="9" height="20" viewBox="0 0 9 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g opacity="0.6" filter={`url(#${color}_inner_shadow)`}>
@@ -38,4 +38,4 @@ export const InfoIcon: FC<{ color?: 'gray' | 'purple' }> = ({ color = 'gray' }) 
       </defs>
     </svg>
   );
-};
+});

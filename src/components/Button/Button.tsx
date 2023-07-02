@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
+import { memo, FC } from 'react';
 import cn from 'classnames';
 import { IButtonProps, BUTTON_TYPE } from './types';
 import styles from './Button.module.scss';
 
-export const Button: FC<IButtonProps> = (props) => {
+export const Button: FC<IButtonProps> = memo(function Button(props) {
   const { type = BUTTON_TYPE.SQUARE } = props;
 
   return (
@@ -15,6 +15,4 @@ export const Button: FC<IButtonProps> = (props) => {
       {props.children}
     </button>
   );
-};
-
-export default React.memo(Button);
+});

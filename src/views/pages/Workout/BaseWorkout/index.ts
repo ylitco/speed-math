@@ -1,0 +1,1 @@
+export { BaseWorkout as default } from './BaseWorkout';

@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import { memo, FC } from "react";
 
-export const Hard: FC = () => {
+export const Hard: FC = memo(function Hard() {
   return (
     <svg width="35" height="27" viewBox="0 0 35 27" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g opacity="0.5" filter="url(#filter0_i_237_979)">
@@ -20,4 +20,4 @@ export const Hard: FC = () => {
       </defs>
     </svg>
   );
-}
+});
