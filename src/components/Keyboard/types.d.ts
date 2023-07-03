@@ -1,10 +1,7 @@
-import { TDifficulties } from 'src/state/types'; // @todo rename
-import { IEventMetaObject } from 'src/types';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes } from "react";
+import { IEventMetaObject } from "src/types";
 
-export interface IKeyboardProps extends Pick<HTMLAttributes<HTMLDivElement>, className> {
-  complexity: TDifficulties; // @todo rename
-  onCheck: () => void;
-  onClick: (e: IEventMetaObject<string | number | null>) => void;
-  answer: string | number | null;
+export interface IKeyboardProps
+  extends Pick<HTMLAttributes<HTMLDivElement>, className> {
+  onClick: (e: IEventMetaObject<number>) => void;
 }

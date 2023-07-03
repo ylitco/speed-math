@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from "react";
+import { memo, FC, useCallback } from "react";
 import { Button } from "src/components/Button/Button";
 import { createEventMetaObject } from "src/utils";
 import { IKeyboardProps } from "./types";
@@ -11,41 +11,22 @@ import { CHECKING_MODE } from "../../state/constants";
 import { getCheckMode } from "src/state/Workout";
 import { useSelector } from "react-redux";
 
-const Keyboard: FC<IKeyboardProps> = ({
+export const REMOVE_KEY = -1;
+export const VERIFY_KEY = -2;
+
+export const Keyboard: FC<IKeyboardProps> = memo(function Keyboard({
   onClick,
-  answer,
   isReady,
   onReady,
-  result,
   ...props
-}) => {
+}) {
   const checkMode = useSelector(getCheckMode);
-  const handleNumberClick = useCallback(
+  const handleButtonClick = useCallback(
     (e) => {
-      const number = +e.currentTarget.dataset.name;
-      onClick(
-        createEventMetaObject(answer !== null ? `${answer}${number}` : number)
-      );
+      onClick(createEventMetaObject(+e.currentTarget.dataset.name));
     },
-    [answer, onClick]
+    [onClick]
   );
-  const handleBackspaceClick = useCallback(() => {
-    const result =
-      answer !== null && ("" + answer).length > 1
-        ? answer.toString().slice(0, -1)
-        : null;
-    onClick(createEventMetaObject(result));
-  }, [answer, onClick]);
-
-  useEffect(() => {
-    if (
-      answer &&
-      answer.toString().length === result.toString().length &&
-      checkMode === CHECKING_MODE.AUTO
-    ) {
-      props.onCheck();
-    }
-  }, [answer]);
 
   if (!isReady) {
     return <Calculator onClick={onReady} className={styles.calculator} />;
@@ -57,26 +38,24 @@ const Keyboard: FC<IKeyboardProps> = ({
         const number = (index + 1).toString();
 
         return (
-          <Button name={number} onClick={handleNumberClick} key={number}>
+          <Button name={number} onClick={handleButtonClick} key={number}>
             <span>{number}</span>
           </Button>
         );
       })}
       {checkMode === CHECKING_MODE.HAND ? (
-        <Button onClick={props.onCheck}>
+        <Button name={`${VERIFY_KEY}`} onClick={handleButtonClick}>
           <Check />
         </Button>
       ) : (
         <div />
       )}
-      <Button name="0" onClick={handleNumberClick}>
+      <Button name="0" onClick={handleButtonClick}>
         <span>0</span>
       </Button>
-      <Button onClick={handleBackspaceClick}>
+      <Button name={`${REMOVE_KEY}`} onClick={handleButtonClick}>
         <Delete />
       </Button>
     </div>
   );
-};
-
-export default React.memo(Keyboard);
+});

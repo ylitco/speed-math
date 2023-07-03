@@ -6,15 +6,18 @@ import {
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AppState, AppDispatch } from "./store";
 import {
+  CHECKING_MODE,
   COMPLEXITY,
   EXERCISES,
   FLEX_WORKOUT_PLAN,
   GAME_MODE,
+  INPUT_MODE,
   LANG,
   MINUTES,
   SECONDS,
 } from "./constants";
 import { useDispatch } from "react-redux";
+import { REMOVE_KEY, VERIFY_KEY } from "src/components/Keyboard";
 
 export const createAppAsyncThunk =
   createAsyncThunk.withTypes<{
@@ -40,6 +43,7 @@ interface Rep {
   firstFactor: number;
   secondFactor: number;
   complexity: Complexity;
+  isCorrect: boolean | null;
 }
 interface Stat {
   correct: number;
@@ -50,7 +54,7 @@ export interface Set {
   rep: Rep;
   repIndex: number;
   stat: Stat;
-  startedAt: number;
+  userInput: Array<number>;
 }
 interface Tutorial {
   firstFactor: number;
@@ -118,7 +122,7 @@ export const WorkoutSlice = createSlice({
         rep: createRep(state.plan),
         repIndex: 1,
         stat: { correct: 0, wrong: 0, timer: 0 },
-        startedAt: new Date().getTime(),
+        userInput: [],
       };
     },
     finishSet: (state) => {
@@ -130,9 +134,24 @@ export const WorkoutSlice = createSlice({
       state.set.rep = createRep(state.plan);
       state.set.repIndex++;
     },
+    setUserInput: (
+      state,
+      { payload: userInput }: PayloadAction<Array<number>>
+    ) => {
+      if (state.set === null) throw new Error("Set doesn't started");
+
+      state.set.userInput = userInput;
+    },
+    verifyUserInput: (state) => {
+      if (state.set === null) throw new Error("Set doesn't started");
+
+      state.set.rep.isCorrect =
+        state.set.rep.firstFactor * state.set.rep.secondFactor ===
+        +state.set.userInput.join("");
+    },
     pushAnswer: (
       state,
-      { payload: userAnswer }: PayloadAction<string | null>
+      { payload: userAnswer }: PayloadAction<Array<number>>
     ) => {
       if (state.set === null) throw new Error("Set doesn't started");
 
@@ -142,9 +161,8 @@ export const WorkoutSlice = createSlice({
       }
 
       const answer = state.set.rep.firstFactor * state.set.rep.secondFactor;
-      console.debug(parseInt(userAnswer));
 
-      parseInt(userAnswer) === answer
+      parseInt(userAnswer.join("")) === answer
         ? state.set.stat.correct++
         : state.set.stat.wrong++;
     },
@@ -157,7 +175,7 @@ export const WorkoutSlice = createSlice({
       state,
       {
         payload: { firstFactor, secondFactor },
-      }: PayloadAction<{ firstFactor: number, secondFactor: number }>
+      }: PayloadAction<{ firstFactor: number; secondFactor: number }>
     ) => {
       state.tutorial = {
         firstFactor,
@@ -181,7 +199,97 @@ export const startTimer = createAppAsyncThunk(
 
 export const stopTimer = createAppAsyncThunk("workout/stopTimer", () => {
   timer && clearInterval(timer);
+
 });
+
+
+export const inputUserAnswer = createAppAsyncThunk(
+  "set/inputUserAnswer",
+  async (input: number, { dispatch, getState }) => {
+    const { inputMode, checkMode, set } = getWorkout(getState());
+
+    if (!set) throw new Error("Set doesn't started");
+
+    const { rep } = set;
+    const [...userInput] = set.userInput;
+    const answerLength = (rep.firstFactor * rep.secondFactor).toString().length;
+
+    switch (input) {
+      case VERIFY_KEY:
+        return dispatch(applyUserInput(userInput)).unwrap();
+      case REMOVE_KEY:
+        inputMode === INPUT_MODE.LTR ? userInput.pop() : userInput.shift();
+        break;
+      default:
+        inputMode === INPUT_MODE.LTR
+          ? userInput.push(input)
+          : userInput.unshift(input);
+        break;
+    }
+
+    if (userInput.length <= answerLength) {
+      dispatch(setUserInput(userInput));
+    }
+
+    if (
+      userInput.length === answerLength &&
+      checkMode === CHECKING_MODE.AUTO
+    ) {
+      return await dispatch(applyUserInput(userInput)).unwrap();
+    }
+
+    return 'CONTINUE';
+  }
+);
+
+const applyUserInput = createAppAsyncThunk(
+  "set/applyUserInput",
+  async (userInput: Array<number>, { dispatch, getState }) => {
+    const {
+      type,
+      reps,
+      time: { minutes, seconds },
+      set,
+    } = getWorkout(getState());
+
+    if (!set) throw new Error("Set doesn't started");
+
+    const { repIndex } = set;
+
+    const workoutTime = minutes * 60 + seconds;
+
+    dispatch(verifyUserInput());
+
+    return new Promise<"FINISH" | "CONTINUE">((resolve) => {
+      setTimeout(() => {
+        dispatch(pushAnswer(userInput));
+        dispatch(setUserInput([]));
+
+        switch (type) {
+          case GAME_MODE.REPS:
+            if (repIndex >= reps) {
+              dispatch(stopTimer());
+              return resolve("FINISH");
+            }
+            dispatch(nextRep());
+            break;
+          case GAME_MODE.TIME:
+            if (workoutTime <= set.stat.timer) {
+              dispatch(stopTimer());
+              return resolve("FINISH");
+            }
+            dispatch(nextRep());
+            break;
+          case GAME_MODE.FREE:
+            dispatch(nextRep());
+            break;
+        }
+
+        return resolve("CONTINUE");
+      }, 500); 
+    });
+  },
+);
 
 const getWorkout = (state: AppState) => state.workout;
 export const getInputMode = (state: AppState) => state.workout.inputMode;
@@ -239,10 +347,9 @@ export const getWorkoutProgress = createSelector(
   }
 );
 export const getRelativeStat = createSelector(
-  getWorkoutReps,
   getSet,
-  (reps, set) => {
-    return +((set.stat.correct / reps) * 100).toFixed();
+  (set) => {
+    return +((set.stat.correct / set.repIndex) * 100).toFixed();
   }
 );
 export const getCountingRate = createSelector(getSetStat, (setStat) => {
@@ -254,7 +361,23 @@ export const getCurrentRepIndex = createSelector(getSet, (set) => {
 export const getCurrentRep = createSelector(getSet, (set) => {
   return set.rep;
 });
-export const getRepSecondFactor = (state: AppState) => state.workout.set?.rep.secondFactor;
+export const getRepSecondFactor = (state: AppState) =>
+  state.workout.set?.rep.secondFactor;
+const _getUserInput = (state: AppState) =>
+  state.workout.set?.userInput || [];
+export const getUserInput = createSelector(
+  getInputMode,
+  getCurrentRep,
+  _getUserInput,
+  (inputMode, rep, userInput) => {
+    const answer = (rep.firstFactor * rep.secondFactor).toString();
+
+    return inputMode === INPUT_MODE.LTR
+      ? userInput.join('').padEnd(answer.length, " ").split('')
+      : userInput.join('').padStart(answer.length, " ").split('');
+  },
+);
+export const getRepStatus = (state: AppState) => state.workout.set?.rep.isCorrect;
 
 export const {
   setInputMode,
@@ -271,6 +394,8 @@ export const {
   tickTimer,
   startTutorial,
   finishTutorial,
+  setUserInput,
+  verifyUserInput,
 } = WorkoutSlice.actions;
 export default WorkoutSlice.reducer;
 
@@ -284,6 +409,7 @@ function createRep(plan: Plan = FLEX_WORKOUT_PLAN) {
     firstFactor,
     secondFactor,
     complexity,
+    isCorrect: null,
   };
 }
 
