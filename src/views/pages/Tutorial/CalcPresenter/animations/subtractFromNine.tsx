@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import { createSlot } from './const';
 import { showResult } from './showStepResult';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function subtractFromNine(this: CalcPresenter) {
   console.debug(`Вычитаем ${this.inAttention} из 9: 9 - ${this.inAttention} = ${9 - this.inAttention}`);

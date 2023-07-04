@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import * as instructionsOf from './algorithms';
 import * as animationOf from './animations';
 import { LEFT_ZERO, RIGHT_ZERO, STEP_RESULT } from './animations/const';
-import styles from '../Explanation.module.scss';
+import styles from '../Tutorial.module.scss';
 import { STEP_KEEP_IN_MIND } from './animations/addSibling';
 
 export interface Point {

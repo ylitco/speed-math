@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import { addSibling } from './addSibling';
 import { createSlot } from './const';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export async function addHalfOfSibling(this: CalcPresenter) {
     console.log(`Прибавляем половину соседа: ${this.inAttention} + ${Math.floor(this.sibling / 2)} = ${this.inAttention + Math.floor(this.sibling / 2)}`);

@@ -3,12 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "src/components/Header/Header";
 import { Content } from "src/components/Content/Content";
 import { BackButton } from "src/views/components/BackButton";
-import styles from "./Explanation.module.scss";
 import CalcPresenter, {
   createCalcPresenter,
 } from "./CalcPresenter/CalcPresenter";
 import { useSelector } from "react-redux";
-import { ExerciseName, getRandom, getRepSecondFactor, startTutorial, useAppDispatch } from "src/state/Workout";
+import {
+  ExerciseName,
+  getRandom,
+  getRepSecondFactor,
+  startTutorial,
+  useAppDispatch,
+} from "src/state/Workout";
+import styles from "./Tutorial.module.scss";
 
 type TutorialParameters = {
   exercise: ExerciseName;

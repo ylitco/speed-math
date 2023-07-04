@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import { showResult } from './showStepResult';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function addFiveIfOdd(this: CalcPresenter) {
   if (this.parity === 'even') {

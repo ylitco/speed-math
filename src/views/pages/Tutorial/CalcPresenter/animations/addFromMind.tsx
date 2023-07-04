@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 import { createSlot, createTwoDigitSlot, STEP_RESULT } from './const';
 
 export function addFromMind(this: CalcPresenter) {

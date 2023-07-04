@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import {LEFT_ZERO, STEP_RESULT} from './const';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function getDigit(this: CalcPresenter) {
   const digitElemId = this.currentDigitIndex < 0 ? LEFT_ZERO.selector : `#digit-${this.currentDigitIndex}`;

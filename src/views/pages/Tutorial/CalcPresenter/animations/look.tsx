@@ -5,7 +5,7 @@ import cn from 'classnames';
 import CalcPresenter from '../CalcPresenter';
 
 import { LEFT_ZERO, RIGHT_ZERO } from './const';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function look (this: CalcPresenter) {
   ReactDOM.render(

@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 import { TENS } from './addSibling';
 
 export const STEP_RESULT = 'step-result';

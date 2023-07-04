@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import { showResult } from './showStepResult';
 import { createSlot } from './const';
-import styles from '../../Explanation.module.scss'
+import styles from '../../Tutorial.module.scss'
 
 export async function getHalf(this: CalcPresenter) {
   console.log(`Находим половину от ${this.inAttention}: ${Math.floor(this.inAttention / 2)}`)

@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import CalcPresenter from '../CalcPresenter';
 import { STEP_KEEP_IN_MIND, TENS } from './addSibling';
 import {createMind} from "./const";
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function keepInMind(this: CalcPresenter) {
   if (this.inAttention > 9) {

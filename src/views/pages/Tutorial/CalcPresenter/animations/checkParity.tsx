@@ -1,6 +1,6 @@
 import CalcPresenter from '../CalcPresenter';
 import { createParityLabel, createSlot } from './const';
-import styles from '../../Explanation.module.scss';
+import styles from '../../Tutorial.module.scss';
 
 export function checkParity(this: CalcPresenter) {
   const isEven = this.inAttention % 2 === 0;
