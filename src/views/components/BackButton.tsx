@@ -7,13 +7,13 @@ import { VIEW } from "src/views/constants";
 import { getUrl } from "src/utils";
 import {
   finishSet,
-  finishTutorial,
   getSetStatus,
   startTimer,
   stopTimer,
   useAppDispatch,
 } from "src/state/Workout";
 import { useSelector } from "react-redux";
+import { finishTutorial } from "src/state/Tutorial";
 
 export const BackButton: FC = () => {
   const { current, previous } = useContext(ViewContext);

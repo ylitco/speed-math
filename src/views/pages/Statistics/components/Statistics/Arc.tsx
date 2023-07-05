@@ -69,7 +69,8 @@ function getArc(start: { x: number, y: number }, r: number, end: { x: number, y:
 }
 
 export function drawArc(startPoint: { x: number, y: number }, centerPoint: { x: number, y: number }, percent: number, clockwise: boolean = true, r: number, width: number) {
-  const _percent = percent === 100 && 99.999 || percent === 0 && 0.001 || percent;
+  const _percent =
+    (percent === 100 && 99.999) || (percent === 0 && 0.001) || percent;
   const rOuter = r;
   const rInner = r - width;
   const longArc = clockwise ? 0 : 1;

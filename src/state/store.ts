@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import workoutReducer from './Workout';
+import tutorialReducer from './Tutorial';
 
 export const store = configureStore({
   reducer: {
     workout: workoutReducer,
+    tutorial: tutorialReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   preloadedState: {},

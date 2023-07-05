@@ -11,10 +11,10 @@ import {
   ExerciseName,
   getRandom,
   getRepSecondFactor,
-  startTutorial,
   useAppDispatch,
 } from "src/state/Workout";
 import styles from "./Tutorial.module.scss";
+import { startTutorial } from "src/state/Tutorial";
 
 type TutorialParameters = {
   exercise: ExerciseName;

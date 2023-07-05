@@ -1,0 +1,43 @@
+{
+  "start": {
+    "title": "Quick count",
+    "placeholder": "Scroll to select",
+    "workoutSettings": "Take exercise",
+    "about": "About",
+    "overview": "Overview"
+  },
+  "localSettings": {
+    "title": "Practice",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "globalSettings": {
+    "title": "Settings",
+    "checkingMode": {
+      "label": "Checking Mode",
+      "manual": "Manual",
+      "automatic": "Automatic"
+    },
+    "inputMode": {
+      "label": "Input Mode",
+      "ltr": "From left to right",
+      "rtl": "From right to left"
+    },
+    "minutes": {
+      "label": "m"
+    },
+    "seconds": {
+      "label": "s"
+    }
+  },
+  "statistics": {
+    "title": "Result",
+    "cru": "p/m",
+    "countingRateUnit": "problem per minute"
+  },
+  "about": {
+    "title": "About",
+    "description": "About the author\n\nJakow Trachtenbergin (1888-1953) was the Russian Jewish engineer, a mathematician, and a teacher. He was born in the Russian Empire, in Odessa. He became famous for developing a method of rapid mental counting. Although he was also an author of the original method that helped to teach foreign languages, which was widely spread in Germany (where he lived for a long time).\n\nIn total, he spent seven difficult years in the camps. He developed his system in order to keep his mind occupied while being in a Nazi concentration camp.\n\nWith the help of a loving wife he repeatedly tried to escape from the camps. In the mid-40s, he managed to escape successfully to Switzerland. There, in the late 40s, in Zurich, he founded a mathematical Institute that has no analogues up to nowadays. Both adults and children learned to count using the Trachtenbergin method.\n\nAbout the method\n\nThe Trachtenbergin system is a system of rapid mental calculation. The system consists of a number of readily memorized operations that allow one to perform arithmetic computations very quickly.\n\nSome of the algorithms Trachtenbergin developed are ones for general multiplication, division and addition. Also, the Trachtenbergin system includes some specialised methods for multiplying small numbers between 5 and 13.\n\nIn this application, we will learn more about the multiplication system.\n\nAbout the effectiveness of the method\n\nThis method of oral counting is elegant and simple. However, for adults it will be more difficult to get it, because they will have to retrain.\n\nTrachtenbergin proved by his own practice that even \"hard-core humanitarians\", with a certain amount of zeal, \"made\" mathematics!\nChildren who were considered Laggards, thanks to him, began not only to \"click\" meaningful examples orally, smiting the adults; they were drawn into learning in General.\n\nIn some hospitals this very method is used as a Alzheimer's Prevention.\n\nP. S. This method is mentioned in a good movie Gifted.\n"
+  }
+}

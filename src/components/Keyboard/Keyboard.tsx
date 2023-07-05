@@ -22,6 +22,7 @@ export const Keyboard: FC<IKeyboardProps> = memo(function Keyboard({
 }) {
   const checkMode = useSelector(getCheckMode);
   const handleButtonClick = useCallback(
+    // @ts-expect-error
     (e) => {
       onClick(createEventMetaObject(+e.currentTarget.dataset.name));
     },

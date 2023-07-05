@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { IWheelProps } from 'src/components/Wheel/types';
 import { createEventMetaObject } from 'src/utils';
 import styles from './Wheel.module.scss';
-import _ from 'lodash';
 import { Protector } from './components/Protector/Protector';
 
 interface RelativeTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
@@ -14,10 +13,9 @@ interface RelativeTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
 
 export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
   const { onSelect, options: _options, value, selectType = 'auto' } = props;
-  const handleClick = useCallback(_handleClick, [onSelect, value]);
+  const handleClick = useCallback(_handleClick, [onSelect]);
   const [activeValueIndex, setActiveValueIndex] = useState(Object.keys(_options).indexOf(value));
   const [ongoingTouches, setOngoingTouches] = useState<Array<RelativeTouch>>([]);
-  const [touchIndex, setTouchIndex] = useState(0);
   const lastValueIndex = Object.keys(_options).length - 1;
   const options = Object.entries(_options);
   const active = options[activeValueIndex];
@@ -28,19 +26,6 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
   const bottomActualIndex = bottomLogicalIndex > lastValueIndex ? 0 : bottomLogicalIndex;
   const visibleBottom = options[bottomActualIndex];
   const frame = [visibleTop, active, visibleBottom];
-  const handleWheel = useCallback(_.throttle((e: any) => {
-    if (Math.abs(e.deltaY) < 100) return;
-
-    const delta = Math.floor(e.deltaY / 100);
-
-    const newActiveIndex = calcNewActiveIndex(activeValueIndex, delta);
-
-    if (selectType === 'auto') {
-      onSelect(createEventMetaObject(options[newActiveIndex][0]));
-    }
-
-    setActiveValueIndex(newActiveIndex);
-  }, 100), [activeValueIndex, value]);
   const calcNewActiveIndex = useCallback((index: number, delta: number) => {
     let newIndex = index - delta;
 
@@ -52,6 +37,21 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
 
     return newIndex;
   }, [lastValueIndex]);
+  const handleWheel = useCallback((e: any) => {
+    if (Math.abs(e.deltaY) < 100) return;
+
+    const delta = Math.floor(e.deltaY / 100);
+
+    const newActiveIndex = calcNewActiveIndex(activeValueIndex, delta);
+
+    if (selectType === 'auto') {
+      onSelect(createEventMetaObject(options[newActiveIndex][0]));
+    }
+
+    setActiveValueIndex(newActiveIndex);
+  }, [activeValueIndex, calcNewActiveIndex, onSelect, options, selectType]);
+
+  // @ts-expect-error
   const ongoingTouchIndexById = useCallback((idToFind) => {
     for (let i = 0; i < ongoingTouches.length; i++) {
       if (ongoingTouches[i].identifier === idToFind) {
@@ -82,37 +82,50 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
         setOngoingTouches(touches);
       }
     }
-  }, [ongoingTouches]);
+  }, [ongoingTouchIndexById, ongoingTouches]);
   const handleTouchCancel = handleTouchEnd;
-  const handleTouchMove = useCallback<TouchEventHandler<HTMLDivElement>>((e) => {
-    for (let i = 0; i < e.changedTouches.length; i++) {
-      const idx = ongoingTouchIndexById(e.changedTouches[i].identifier);
+  const handleTouchMove = useCallback<TouchEventHandler<HTMLDivElement>>(
+    (e) => {
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        const idx = ongoingTouchIndexById(e.changedTouches[i].identifier);
 
-      if (idx >= 0) {
-        const touches = [...ongoingTouches];
-        const newTouch = copyTouch(e.changedTouches[i]) as RelativeTouch;
+        if (idx >= 0) {
+          const touches = [...ongoingTouches];
+          const newTouch = copyTouch(e.changedTouches[i]) as RelativeTouch;
 
-        newTouch.initialYpoint = touches[idx].initialYpoint;
-        newTouch.deltaY = Math.round((newTouch.initialYpoint - newTouch.pageY) / 75);
+          newTouch.initialYpoint = touches[idx].initialYpoint;
+          newTouch.deltaY = Math.round(
+            (newTouch.initialYpoint - newTouch.pageY) / 75
+          );
 
-        if (touches[idx].deltaY !== newTouch.deltaY) {
-          const delta = touches[idx].deltaY - newTouch.deltaY;
+          if (touches[idx].deltaY !== newTouch.deltaY) {
+            const delta = touches[idx].deltaY - newTouch.deltaY;
 
-          const newActiveIndex = calcNewActiveIndex(activeValueIndex, delta);
+            const newActiveIndex = calcNewActiveIndex(activeValueIndex, delta);
 
-          if (selectType === 'auto') {
-            onSelect(createEventMetaObject(options[newActiveIndex][0]));
+            if (selectType === "auto") {
+              onSelect(createEventMetaObject(options[newActiveIndex][0]));
+            }
+
+            setActiveValueIndex(newActiveIndex);
           }
 
-          setActiveValueIndex(newActiveIndex);
+          touches.splice(idx, 1, newTouch);
+
+          setOngoingTouches(touches);
         }
-
-        touches.splice(idx, 1, newTouch);
-
-        setOngoingTouches(touches);
       }
-    }
-  }, [activeValueIndex, lastValueIndex, onSelect, options, selectType, touchIndex]);
+    },
+    [
+      activeValueIndex,
+      calcNewActiveIndex,
+      onSelect,
+      ongoingTouchIndexById,
+      ongoingTouches,
+      options,
+      selectType,
+    ]
+  );
 
   return (
     <div

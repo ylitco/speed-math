@@ -56,10 +56,6 @@ export interface Set {
   stat: Stat;
   userInput: Array<number>;
 }
-interface Tutorial {
-  firstFactor: number;
-  secondFactor: number;
-}
 export interface Workout {
   inputMode: InputMode;
   checkMode: CheckMode;
@@ -71,7 +67,6 @@ export interface Workout {
   type: Type;
   plan: Plan;
   set: Set | null;
-  tutorial: Tutorial | null;
 }
 
 const initialState: Workout = {
@@ -85,7 +80,6 @@ const initialState: Workout = {
   type: GAME_MODE.REPS,
   plan: FLEX_WORKOUT_PLAN,
   set: null,
-  tutorial: null,
 };
 
 export const WorkoutSlice = createSlice({
@@ -171,20 +165,6 @@ export const WorkoutSlice = createSlice({
 
       state.set.stat.timer++;
     },
-    startTutorial: (
-      state,
-      {
-        payload: { firstFactor, secondFactor },
-      }: PayloadAction<{ firstFactor: number; secondFactor: number }>
-    ) => {
-      state.tutorial = {
-        firstFactor,
-        secondFactor,
-      };
-    },
-    finishTutorial: (state) => {
-      state.tutorial = null;
-    },
   },
 });
 
@@ -201,7 +181,6 @@ export const stopTimer = createAppAsyncThunk("workout/stopTimer", () => {
   timer && clearInterval(timer);
 
 });
-
 
 export const inputUserAnswer = createAppAsyncThunk(
   "set/inputUserAnswer",
@@ -392,8 +371,6 @@ export const {
   nextRep,
   pushAnswer,
   tickTimer,
-  startTutorial,
-  finishTutorial,
   setUserInput,
   verifyUserInput,
 } = WorkoutSlice.actions;
