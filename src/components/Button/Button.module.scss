@@ -30,6 +30,6 @@
   }
 
   &:active {
-    outline: none;
+    box-shadow: inset em(1) em(1) em(5) #CED0EC;
   }
 }

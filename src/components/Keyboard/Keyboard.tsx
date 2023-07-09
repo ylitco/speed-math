@@ -1,5 +1,5 @@
 import { memo, FC, useCallback } from "react";
-import { Button } from "src/components/Button/Button";
+import Button from "src/components/Button";
 import { createEventMetaObject } from "src/utils";
 import { IKeyboardProps } from "./types";
 import styles from "./Keyboard.module.scss";

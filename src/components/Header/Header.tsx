@@ -3,18 +3,16 @@ import { IHeaderProps } from "./types";
 import styles from "./Header.module.scss";
 import { useSelector } from "react-redux";
 import {
-  ExerciseName,
-  getCurrentRep,
+  getRepExerciseName,
   getWorkoutTitle,
   stopTimer,
   useAppDispatch,
 } from "src/state/Workout";
 import { BackButton } from "src/views/components/BackButton";
 import { getUrl } from "src/utils";
-import { Link } from "react-router-dom";
-import { Button } from "src/components/Button/Button";
+import { useNavigate } from "react-router-dom";
+import Button, { BUTTON_TYPE } from "src/components/Button";
 import { InfoIcon } from "src/icons/Info/Info";
-import { BUTTON_TYPE } from "src/components/Button/types";
 import { VIEW } from "src/views/constants";
 import { EXERCISES } from "src/state/constants";
 
@@ -43,24 +41,19 @@ export const WorkoutHeader: FC = memo(function WorkoutHeader() {
 });
 
 const TutorialButton: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const rep = useSelector(getCurrentRep);
-  const exercise =
-    rep.firstFactor > 12
-      ? EXERCISES.N
-      : EXERCISES[`${rep.firstFactor}` as ExerciseName];
-
-  const handleTutorialStart = useCallback(() => {
+  const exerciseName = useSelector(getRepExerciseName);
+  const handleClick = useCallback(() => {
+    navigate(getUrl(`${VIEW.EXPLANATION}/${exerciseName}`));
     dispatch(stopTimer());
-  }, [dispatch]);
+  }, [exerciseName, navigate, dispatch]);
 
-  if (exercise === EXERCISES.N) return null;
+  if (exerciseName === EXERCISES.N) return null;
 
   return (
-    <Link to={getUrl(`${VIEW.EXPLANATION}/${exercise}`)}>
-      <Button type={BUTTON_TYPE.CIRCLE} onClick={handleTutorialStart}>
-        <InfoIcon />
-      </Button>
-    </Link>
+    <Button type={BUTTON_TYPE.CIRCLE} onClick={handleClick}>
+      <InfoIcon />
+    </Button>
   );
 };

@@ -3,7 +3,7 @@ import { ChangeEvent, FC, HTMLAttributes, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styles from "./LocalSettings.module.scss";
 import { Content } from "src/components/Content/Content";
-import { Button } from "src/components/Button/Button";
+import Button from "src/components/Button";
 import { PlayIcon } from "src/icons/Play/Play";
 import { EXERCISES, COMPLEXITY, GAME_MODE } from "src/state/constants";
 import { getUrl } from "src/utils";
@@ -135,12 +135,12 @@ const PlayButton = memo(function PlayButton() {
       <PlayIcon />
     </Button>
   );
-})
+});
 
 const TutorialLink = memo(function TutorialLink({ mode }: { mode: string }) {
   return (
     <Link className={styles.info} to={getUrl(`${VIEW.EXPLANATION}/${mode}`)}>
       <InfoIcon color="purple" />
     </Link>
-  );  
-})
+  );
+});

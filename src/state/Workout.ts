@@ -265,7 +265,7 @@ const applyUserInput = createAppAsyncThunk(
         }
 
         return resolve("CONTINUE");
-      }, 500); 
+      }, 500);
     });
   },
 );
@@ -342,6 +342,8 @@ export const getCurrentRep = createSelector(getSet, (set) => {
 });
 export const getRepSecondFactor = (state: AppState) =>
   state.workout.set?.rep.secondFactor;
+export const getRepExerciseName = (state: AppState) =>
+  state.workout.set?.rep.exerciseName;
 const _getUserInput = (state: AppState) =>
   state.workout.set?.userInput || [];
 export const getUserInput = createSelector(

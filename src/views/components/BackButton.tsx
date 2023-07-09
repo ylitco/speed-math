@@ -1,6 +1,6 @@
 import { FC, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "src/components/Button/Button";
+import Button from "src/components/Button";
 import { BackIcon } from "src/icons/Back/Back";
 import { ViewContext } from "src/views/Views";
 import { VIEW } from "src/views/constants";
