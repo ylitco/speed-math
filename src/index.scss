@@ -6,6 +6,13 @@
   box-sizing: border-box;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+
+  &:active,
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+    outline: none;
+  }
 }
 
 html,
