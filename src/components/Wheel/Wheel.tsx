@@ -2,7 +2,7 @@ import { memo, FC, MouseEvent, useCallback, useState } from 'react';
 import type { Touch, TouchEvent, TouchEventHandler } from 'react';
 import cn from 'classnames';
 import { IWheelProps } from 'src/components/Wheel/types';
-import { createEventMetaObject } from 'src/utils';
+import { copyTouch, createEventMetaObject } from 'src/utils';
 import styles from './Wheel.module.scss';
 import { Protector } from './components/Protector/Protector';
 
@@ -51,15 +51,20 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
     setActiveValueIndex(newActiveIndex);
   }, [activeValueIndex, calcNewActiveIndex, onSelect, options, selectType]);
 
-  // @ts-expect-error
-  const ongoingTouchIndexById = useCallback((idToFind) => {
-    for (let i = 0; i < ongoingTouches.length; i++) {
-      if (ongoingTouches[i].identifier === idToFind) {
-        return i;
+  const ongoingTouchIndexById = useCallback<
+    (id: Touch["identifier"]) => number
+  >(
+    (idToFind) => {
+      for (let i = 0; i < ongoingTouches.length; i++) {
+        if (ongoingTouches[i].identifier === idToFind) {
+          return i;
+        }
       }
-    }
-    return -1;
-  }, [ongoingTouches]);
+
+      return -1;
+    },
+    [ongoingTouches]
+  );
   const handleTouchStart = useCallback((e: TouchEvent) => {
     for (let i = 0; i < e.changedTouches.length; i++) {
       const newTouch = copyTouch(e.changedTouches[i]) as RelativeTouch;
@@ -164,7 +169,3 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
     onSelect(createEventMetaObject(e.currentTarget.dataset['value']))
   }
 });
-
-function copyTouch({ identifier, pageX, pageY }: Touch) {
-  return { identifier, pageX, pageY };
-}

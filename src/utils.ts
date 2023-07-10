@@ -1,3 +1,4 @@
+import { Touch } from 'react';
 import { IEventMetaObject } from 'src/types';
 
 export function createEventMetaObject<T>(
@@ -29,4 +30,8 @@ export function getRandom(min: number, max: number) {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
 
   return Math.round(rand);
+}
+
+export function copyTouch({ identifier, pageX, pageY }: Touch) {
+  return { identifier, pageX, pageY };
 }
