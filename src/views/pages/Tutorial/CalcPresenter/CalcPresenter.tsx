@@ -14,7 +14,7 @@ export interface Point {
 export default class CalcPresenter {
   private steps: Array<() => void> = [];
   private currentStep = 0;
-  currentDigitIndex = this.secondFactor.length - 1;
+  currentDigitIndex: number;
   _inAttention: null | number = null;
   inMind: null | number = null;
   answer: Array<number> = [];
@@ -28,7 +28,12 @@ export default class CalcPresenter {
     private readonly _secondFactor: number,
     private readonly _canvas: RefObject<HTMLDivElement>,
     private readonly handlers: CalcPresenterEventHandlers,
-  ) {}
+  ) {
+    this._secondFactor = _secondFactor;
+    this._canvas = _canvas;
+    this.handlers = handlers;
+    this.currentDigitIndex = this.secondFactor.length - 1;
+  }
 
   get secondFactor() {
     return this._secondFactor.toString().split('').map(n => +n);
