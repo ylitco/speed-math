@@ -174,28 +174,36 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
 
   return (
     <Content className={styles.view}>
-      <header className={styles.header}>
-        <b className={cn(styles.th, styles.easy)}>
-          <Easy />
-        </b>
-        <b className={cn(styles.th, styles.medium)}>
-          <Medium />
-        </b>
-        <b className={cn(styles.th, styles.hard)}>
-          <Hard />
-        </b>
-      </header>
-      <section
-        className={styles.body}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchCancel}
-        onTouchMove={handleTouchMove}
-      >
-        {Object.keys(EXERCISES).map((mode) => {
-          return (
-            <div className={styles.row} key={mode}>
-              <div className={styles.number}>×{mode}</div>
+      <section className={styles.body}>
+        <div className={styles.column}>
+          <div />
+          {Object.keys(EXERCISES).map((mode) => (
+            <div className={styles.number} key={mode}>
+              ×{mode}
+            </div>
+          ))}
+        </div>
+        <div className={styles.column}>
+          <header className={styles.header}>
+            <b className={cn(styles.th, styles.easy)}>
+              <Easy />
+            </b>
+            <b className={cn(styles.th, styles.medium)}>
+              <Medium />
+            </b>
+            <b className={cn(styles.th, styles.hard)}>
+              <Hard />
+            </b>
+          </header>
+          {Object.keys(EXERCISES).map((mode) => (
+            <div
+              key={mode}
+              className={styles.complexities}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchCancel}
+              onTouchMove={handleTouchMove}
+            >
               <div className={styles.easy}>
                 <input
                   type="checkbox"
@@ -223,10 +231,15 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
                   onChange={handleExerciseComplexityChange}
                 />
               </div>
-              <TutorialLink mode={mode} />
             </div>
-          );
-        })}
+          ))}
+        </div>
+        <div className={styles.column}>
+          <div />
+          {Object.keys(EXERCISES).map((mode) => (
+            <TutorialLink key={mode} mode={mode} />
+          ))}
+        </div>
       </section>
       <nav className={styles.footer}>
         <Switch

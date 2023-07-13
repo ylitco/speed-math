@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release-android": "cordova build android --release -- --keystore=\"../../key-store/user.keystore\" --storePassword=65416541 --alias=speedmult --password=65416541"
+    "release-android": "cordova build android --release -- --keystore=\"../../key-store/user.keystore\" --storePassword=65416541 --alias=speedmult --password=65416541",
+    "release-app-gallery": "cordova build android --release -- --keystore=\"../../key-store/speedmath.jks\" --storePassword=65416541 --alias=sm --password=65416541"
   },
   "keywords": [
     "ecosystem:cordova"
