@@ -29,7 +29,9 @@
     box-shadow: none;
   }
 
-  &:active {
+  &:active,
+  &.active {
+    transition: box-shadow ease-in-out 5s;
     box-shadow: inset em(1) em(1) em(5) #CED0EC;
   }
 }
