@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .header {
   display: flex;
@@ -13,7 +13,7 @@
     font-size: em(18);
     line-height: em(40, 18);
     letter-spacing: .15em;
-    color: $TITLE;
+    color: var(--title);
     opacity: .5;
     font-weight: 300;
   }

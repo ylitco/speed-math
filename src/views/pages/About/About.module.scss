@@ -1,10 +1,10 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .description {
   @extend .p-m1;
 
   overflow: hidden;
-  border: em(1) solid $BORDER;
+  border: em(1) solid var(--border);
   box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;
   border-radius: em(30);
 
@@ -15,6 +15,6 @@
     line-height: em(27, 20);
     overflow-y: scroll;
 
-    color: $TEXT;
+    color: var(--text);
   }
 }

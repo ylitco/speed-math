@@ -1,4 +1,12 @@
-@import 'styles';
+@use 'styles' as *;
+
+:root {
+  --main: #EAEDFB;
+  --border: rgba(255, 255, 255, .4);
+  --title: #959595;
+  --text: #515871;
+  --placeholder: #ADAFBD;
+}
 
 * {
   padding: 0;

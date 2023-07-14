@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .button {
   @extend .p-s3;
@@ -6,8 +6,8 @@
   font-size: em(16);
   width: em(48);
   height: em(48);
-  background: $MAIN;
-  border: em(1) solid $BORDER;
+  background: var(--main);
+  border: em(1) solid var(--border);
   box-sizing: border-box;
   box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;
   display: flex;

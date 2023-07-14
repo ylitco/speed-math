@@ -1,4 +1,4 @@
-@import 'styles';
+@use 'styles';
 
 #root {
   @extend .p-m1;
@@ -8,5 +8,5 @@
   height: inherit;
   display: flex;
   flex-direction: column;
-  background: $MAIN;
+  background: var(--main);
 }

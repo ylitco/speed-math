@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as s;
 
 .menu {
   @extend .my-auto;
@@ -8,8 +8,8 @@
   @extend .my-auto;
 
   font-weight: 500;
-  font-size: em(12);
-  line-height: em(40, 12);
+  font-size: s.em(12);
+  line-height: s.em(40, 12);
 
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
   letter-spacing: .15em;
   text-transform: uppercase;
 
-  color: $PLACEHOLDER;
+  color: var(--placeholder);
 
   opacity: .5;
 }

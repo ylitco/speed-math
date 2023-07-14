@@ -1,4 +1,4 @@
-@import 'src/styles';
+@use 'src/styles' as *;
 
 .switch {
   width: 100%;
@@ -14,7 +14,7 @@
     align-items: center;
     justify-content: center;
 
-    color: $TITLE;
+    color: var(--title);
   }
 
   .list {
@@ -41,6 +41,7 @@
       color: #C9CDE1;
       opacity: 0.5;
       border: 1px solid transparent;
+      transition: color ease-out 150ms;
 
       &.active {
         background: #EAEDFB;
@@ -53,3 +54,12 @@
     }
   }
 }
+
+// :global(.active) {
+//   background: #EAEDFB !important;
+//   border: 1px solid rgba(255, 255, 255, 0.2) !important;
+//   border-radius: 12px !important;
+//   color: #959595 !important;
+//   opacity: 1 !important;
+//   box-shadow: 4px 4px 4px #DBDFF0, inset 4px 4px 10px #F1F4FF !important;
+// }

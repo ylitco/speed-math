@@ -1,4 +1,5 @@
-@import "src/styles";
+@use "src/styles" as *;
+
 .view {
   align-items: flex-start;
   gap: em(4);
@@ -52,5 +53,5 @@
   display: flex;
   align-items: center;
   text-align: center;
-  color: $PLACEHOLDER;
+  color: var(--placeholder);
 }
