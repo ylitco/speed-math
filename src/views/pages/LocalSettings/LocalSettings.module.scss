@@ -56,22 +56,16 @@
   }
 }
 
-.fontTest {
-  font-weight: 500;
-  font-size: 24px;
-  opacity: 0.5;
-  color: transparent;
-  text-shadow: em(1, 24) em(2, 24) em(2, 24) rgba(255, 255, 255, 0.5), 0 0 0 #A0A7C3;
-  margin-top: 1px;
-}
 .modeOption {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: text-shadow ease-in-out 150ms;
 }
 
-:global(.sm-active) {
-  &.fontTest {
+
+:global(.active) {
+  .modeOption {
     color: #3B3D47;
+    opacity: 0.5;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
   }
 }

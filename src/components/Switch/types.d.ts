@@ -4,6 +4,7 @@ type TSwitchValue = string;
 type TSwitchTitle = string | ReactElement | FC<HTMLAttributes<HTMLOrSVGElement>>;
 
 export interface ISwitchProps extends HTMLAttributes<ReactElement> {
+  optionClassName?: string;
   options: Record<TSwitchValue, TSwitchTitle>;
   value: TSwitchValue;
   onChange: (TSwitchValue) => void;

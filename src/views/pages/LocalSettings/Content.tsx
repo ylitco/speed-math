@@ -22,8 +22,6 @@ import { Hard } from "./components/Hard/Hard";
 import { VIEW } from "src/views/constants";
 import { Switch } from "src/components/Switch/Switch";
 import { InfoIcon } from "src/icons/Info/Info";
-import { TimerIcon } from "src/icons/Timer/Timer";
-import { InfinityIcon } from "src/icons/Infinity/Infinity";
 import { useSelector } from "react-redux";
 import {
   Complexity,
@@ -43,13 +41,31 @@ import { useStartWorkoutCallback } from "src/hooks/useStartWorkoutEffect";
 const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getWorkoutReps);
 
-  return <div className={cn(props.className, styles.fontTest)}>{reps}</div>;
-};
+  return (
+    <div
+      className={cn(styles.modeOption)}
+      style={{ fontSize: 24, fontWeight: 500 }}
+    >
+      {reps}
+    </div>
+  );
+}
+
 
 const WORKOUT_MODE_OPTIONS = {
-  [GAME_MODE.TIME]: TimerIcon,
+  [GAME_MODE.TIME]: (
+    <i
+      className={cn("icon-timer", styles.modeOption)}
+      style={{ fontSize: 28 }}
+    />
+  ),
   [GAME_MODE.REPS]: Quantity,
-  [GAME_MODE.FREE]: InfinityIcon,
+  [GAME_MODE.FREE]: (
+    <i
+      className={cn("icon-infinity", styles.modeOption)}
+      style={{ fontSize: 40, paddingTop: 5 }}
+    />
+  ),
 };
 
 interface SelectTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
@@ -244,6 +260,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
       <nav className={styles.footer}>
         <Switch
           className={styles.modes}
+          optionClassName={styles.modeOption}
           options={WORKOUT_MODE_OPTIONS}
           value={type}
           onChange={handleWorkoutTypeChange}
