@@ -3,7 +3,7 @@ import type { TouchEventHandler, MouseEventHandler } from "react";
 import cn from "classnames";
 import { gsap } from "gsap";
 
-import { createEventMetaObject } from "src/utils";
+import { copyTouch, createEventMetaObject } from "src/utils";
 
 import styles from "./Switch.module.scss";
 import { ISwitchProps } from "./types";
@@ -15,15 +15,38 @@ class AnimationAbrotError extends Error {
     this.name = "AnimationAbortError";
     this.message = message;
   }
-}
+};
+
+interface SwipeTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
+  offset: number;
+  delta: number;
+};
 
 export const Switch = memo(function Switch(props: ISwitchProps) {
   const { onChange, optionClassName } = props;
-  const [_, setOngoingSwipeTouch] = useState<Touch>();
+  const [ongoingSwipeTouch, setOngoingSwipeTouch] = useState<SwipeTouch>();
+  const [sliderId, setSliderId] = useState<string | null>(null);
+  const [state, setState] = useState<'tapping' | 'swiping' | null>(null);
   const abortController = useRef<AbortController | null>(null);
   const optionWidth = 100 / Object.keys(props.options).length;
+  let position = 0;
+  let index = 1;
+  const anchors = [{ position, index }];
+
+  do {
+    position += optionWidth;
+    index++;
+    anchors.push({ position, index });
+  } while (position < 100);
 
   const handleClick: MouseEventHandler<HTMLLIElement> = async (e) => {
+    /**
+     * 1. Прервать предыдущую анимацию если она была запущена
+     * 2. Создать элемент слайдера
+     * 3. Поместить элемент слайдера в начальную позицию
+     * 4. Вычислить конечную позицию слайдера
+     * 5. Запустить анимацию перемещения слайдера в конечную поизцию
+     */
     abortController.current?.abort();
 
     const { listElem, currActiveItemElem, nextActiveItemElem } = selectElems(
@@ -32,9 +55,15 @@ export const Switch = memo(function Switch(props: ISwitchProps) {
 
     if (nextActiveItemElem === currActiveItemElem) return;
 
+    setState("tapping");
     tapSwipe(currActiveItemElem, nextActiveItemElem, listElem);
   };
   const handleTouchStart: TouchEventHandler<HTMLUListElement> = async (e) => {
+    /**
+     * 1. Прервать предыдущую анимацию если она была запущена
+     * 2. Создать элемент слайдера
+     * 3. Поместить элемент слайдера в начальную позицию
+     */
     abortController.current?.abort();
 
     const { listElem, currActiveItemElem, nextActiveItemElem } = selectElems(
@@ -42,24 +71,110 @@ export const Switch = memo(function Switch(props: ISwitchProps) {
     );
 
     if (nextActiveItemElem === currActiveItemElem) {
-      const newSwipeTouch = { ...e.changedTouches[0] } as Touch;
+      setState("swiping");
+      const newSwipeTouch = copyTouch(e.changedTouches[0]) as SwipeTouch;
+      const listWidth = listElem.getBoundingClientRect().width;
+      newSwipeTouch.delta =
+        newSwipeTouch.pageX -
+        // listElem.offsetLeft -
+        currActiveItemElem.offsetLeft + 1;
+      newSwipeTouch.offset = (listWidth - (listWidth * (optionWidth / 100))) * 100 / listWidth;
 
-      alert("Swipe switch started");
+      const [slider, id] = createSlider(currActiveItemElem, {
+        offset:
+          ((currActiveItemElem.offsetLeft + 1) * 100) /
+          listElem.getBoundingClientRect().width,
+        width: optionWidth,
+      });
+
+      setSliderId(id);
+
+      listElem.insertAdjacentElement("afterbegin", slider);
+
+      currActiveItemElem.classList.remove("active");
 
       setOngoingSwipeTouch(newSwipeTouch);
 
       return;
     }
 
+    setState("tapping");
     tapSwipe(currActiveItemElem, nextActiveItemElem, listElem);
   };
   const handleTouchEnd: TouchEventHandler<HTMLUListElement> = (e) => {
+    /**
+     * 1. Прервать предыдущую анимацию если она была запущена
+     * 2. Вычислить конечную позицию слайдера
+     * 2.
+     */
     e.preventDefault();
-    setOngoingSwipeTouch(undefined);
+
+    if (state === "tapping") {
+      setState(null);
+      return;
+    }
+
+    setState(null);
+
+    const newSwipeTouch = copyTouch(e.changedTouches[0]) as SwipeTouch;
+    newSwipeTouch.delta = ongoingSwipeTouch!.delta;
+    const { listElem } = selectElems(e.changedTouches[0].target);
+    const offset =
+      ((newSwipeTouch.pageX - newSwipeTouch.delta) * 100) /
+      listElem.getBoundingClientRect().width;
+
+    const closestAnchor = {
+      delta: Math.abs(offset - anchors[0].position),
+      left: anchors[0].position,
+      elem: listElem.children[anchors[0].index] as HTMLLIElement,
+    };
+
+    for (let anchor of anchors) {
+      const delta = Math.abs(offset - anchor.position);
+
+      if (delta < closestAnchor.delta) {
+        closestAnchor.delta = delta;
+        closestAnchor.left = anchor.position;
+        closestAnchor.elem = listElem.children[anchor.index] as HTMLLIElement;
+      }
+    }
+
+    gsap.to(`#${sliderId}`, {
+      left: closestAnchor.left + "%",
+      duration: 0.3,
+    }).then(() => {
+      setOngoingSwipeTouch(undefined);
+      setSliderId(null);
+
+      if (props.value === closestAnchor.elem.dataset.id) {
+        closestAnchor.elem.classList.add("active");
+      }
+
+      onChange(createEventMetaObject(closestAnchor.elem.dataset.id));
+      document.getElementById(sliderId as string)?.remove();
+    });
   };
   const handleTouchCancel = handleTouchEnd;
   const handleTouchMove: TouchEventHandler<HTMLUListElement> = (e) => {
-    const newSwipeTouch = { ...e.changedTouches[0] } as Touch;
+    const { listElem } = selectElems(e.changedTouches[0].target);
+    const newSwipeTouch = copyTouch(e.changedTouches[0]) as SwipeTouch;
+    newSwipeTouch.delta = ongoingSwipeTouch!.delta;
+    newSwipeTouch.offset = ongoingSwipeTouch!.offset;
+    const offset =
+      ((newSwipeTouch.pageX - newSwipeTouch.delta) * 100) /
+      listElem.getBoundingClientRect().width;
+
+    const left =
+      offset < 0
+        ? 0
+        : offset > newSwipeTouch.offset
+        ? newSwipeTouch.offset
+        : offset;
+
+    gsap.to(`#${sliderId}`, {
+      left: left + "%",
+      duration: 0.3,
+    });
 
     setOngoingSwipeTouch(newSwipeTouch);
   };
@@ -156,21 +271,10 @@ export const Switch = memo(function Switch(props: ISwitchProps) {
 
       const listBoxWidth = inside.getBoundingClientRect().width;
 
-      const slider: HTMLLIElement = from.cloneNode(true) as HTMLLIElement;
-      const sliderContent = slider.querySelector<HTMLParagraphElement>(
-        `.${styles.optionContent}`
-      );
-
-      if (sliderContent) sliderContent.innerText = "";
-
-      const id = `id-${new Date().getTime().toString()}`;
-
-      slider.setAttribute("id", id);
-      slider.classList.add(styles.optionSlider);
-
-      slider.style.position = "absolute";
-      slider.style.width = `${optionWidth}%`;
-      slider.style.left = `${(from.offsetLeft * 100) / listBoxWidth}%`;
+      const [slider, id] = createSlider(from, {
+        offset: from.offsetLeft * 100 / listBoxWidth,
+        width: optionWidth,
+      });
 
       inside.insertAdjacentElement("afterbegin", slider);
 
@@ -189,3 +293,29 @@ export const Switch = memo(function Switch(props: ISwitchProps) {
     });
   }
 });
+
+function createSlider(
+  activeOptionElem: HTMLLIElement,
+  options: {
+    offset: number;
+    width: number;
+  },
+): [HTMLLIElement, string] {
+  const slider = activeOptionElem.cloneNode(true) as HTMLLIElement;
+  const sliderContent = slider.querySelector<HTMLParagraphElement>(
+    `.${styles.optionContent}`
+  );
+
+  if (sliderContent) sliderContent.innerText = "";
+
+  const id = `id-${new Date().getTime().toString()}`;
+
+  slider.setAttribute("id", id);
+  slider.classList.add(styles.optionSlider);
+
+  slider.style.position = "absolute";
+  slider.style.width = `${options.width}%`;
+  slider.style.left = `${options.offset}%`;
+
+  return [slider, id];
+}

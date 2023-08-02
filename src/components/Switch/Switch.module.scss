@@ -61,6 +61,7 @@
   display: flex;
   flex: 1 1 100%;
   padding: 5px;
+  cursor: pointer;
 
   &Content {
     width: 100%;
@@ -81,6 +82,7 @@
     list-style: none;
     position: absolute;
     opacity: 1;
+    cursor: grabbing;
   }
 }
 
@@ -91,4 +93,5 @@
   color: #959595;
   opacity: 1;
   box-shadow: 4px 4px 4px #DBDFF0, inset 4px 4px 10px #F1F4FF;
+  cursor: grab;
 }

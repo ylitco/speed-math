@@ -42,12 +42,12 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getWorkoutReps);
 
   return (
-    <div
+    <span
       className={cn(styles.modeOption)}
       style={{ fontSize: 24, fontWeight: 500 }}
     >
       {reps}
-    </div>
+    </span>
   );
 }
 
