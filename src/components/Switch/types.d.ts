@@ -1,12 +1,15 @@
-import { HTMLAttributes, ReactElement, FC } from 'react';
+import { HTMLAttributes, ReactElement, FC } from "react";
 
-type TSwitchValue = string;
-type TSwitchTitle = string | ReactElement | FC<HTMLAttributes<HTMLOrSVGElement>>;
+type SwitchValue = string;
+type SwitchTitle =
+  | string
+  | ReactElement
+  | FC<HTMLAttributes<HTMLOrSVGElement>>;
 
-export interface ISwitchProps extends HTMLAttributes<ReactElement> {
+export interface SwitchProps extends HTMLAttributes<ReactElement> {
   optionClassName?: string;
-  options: Record<TSwitchValue, TSwitchTitle>;
-  value: TSwitchValue;
+  options: Record<SwitchValue, SwitchTitle>;
+  value: SwitchValue;
   onChange: (TSwitchValue) => void;
   label?: string;
 }

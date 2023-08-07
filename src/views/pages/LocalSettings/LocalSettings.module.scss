@@ -62,7 +62,7 @@
 }
 
 
-:global(.active) {
+[data-active="true"] {
   .modeOption {
     color: #3B3D47;
     opacity: 0.5;
