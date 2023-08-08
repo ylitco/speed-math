@@ -42,10 +42,7 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getWorkoutReps);
 
   return (
-    <span
-      className={cn(styles.modeOption)}
-      style={{ fontSize: 24, fontWeight: 500 }}
-    >
+    <span className={cn(styles.icon)} style={{ fontSize: 24, fontWeight: 500 }}>
       {reps}
     </span>
   );
@@ -55,14 +52,14 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
 const WORKOUT_MODE_OPTIONS = {
   [GAME_MODE.TIME]: (
     <i
-      className={cn("icon-timer", styles.modeOption)}
+      className={cn("icon-timer", styles.icon)}
       style={{ fontSize: 28 }}
     />
   ),
   [GAME_MODE.REPS]: Quantity,
   [GAME_MODE.FREE]: (
     <i
-      className={cn("icon-infinity", styles.modeOption)}
+      className={cn("icon-infinity", styles.icon)}
       style={{ fontSize: 40, paddingTop: 5 }}
     />
   ),
