@@ -1,0 +1,117 @@
+@use 'src/styles' as *;
+
+main.main {
+  overflow-y: scroll;
+  overflow-x: visible;
+  margin: em(16) em(-16) 0;
+  padding: 0 em(16) em(16) em(16);
+  display: flex;
+  flex-direction: column;
+
+  h1,
+  h2,
+  h3,
+  p,
+  ul {
+    @extend .mb-m1;
+
+    font-weight: 200;
+    color: var(--title);
+  }
+
+  h1,
+  h2 {
+    display: flex-inline;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  ul {
+    padding: revert;
+
+    list-style-type: circle;
+  }
+
+  h3,
+  p,
+  ul {
+    font-weight: 300;
+    color: #2d303e;
+  }
+
+  h1 {
+    font-size: em(32);
+    line-height: em(40, 32);
+  }
+
+  h2,
+  h3 {
+    font-size: em(24);
+    line-height: em(32, 24);
+  }
+
+  p,
+  ul {
+    font-size: em(14);
+    line-height: em(20, 14);
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: em(16);
+    gap: em(32);
+  }
+
+  a {
+    @extend .px-s3;
+    @extend .py-s2;
+
+    flex: 1;
+    font-weight: 300;
+    color: var(--title);
+
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    font-size: em(16);
+    width: fit-content;
+    background: var(--main);
+    border: em(1) solid var(--border);
+    border-radius: em(5);
+    box-sizing: border-box;
+    box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:active,
+    &.active {
+      transition: box-shadow ease-in-out 5s;
+      box-shadow: inset em(1) em(1) em(5) #CED0EC;
+    }
+
+    b {
+      font-size: em(16);
+      line-height: em(20);
+    }
+
+    em {
+      font-size: em(10);
+      line-height: em(20);
+    }
+  }
+}
+
+.supportWheel {
+  margin: em(32) auto;
+}

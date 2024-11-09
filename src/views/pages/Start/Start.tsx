@@ -22,6 +22,7 @@ export const Start: FC = () => {
       [VIEW.LOCAL_SETTINGS]: t('start.workoutSettings'),
       [VIEW.ABOUT]: t('start.about'),
       [VIEW.OVERVIEW]: t('start.overview'),
+      [VIEW.DONATE]: t('start.donate'),
     };
   }, [t]);
 
