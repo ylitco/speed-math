@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, memo, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "src/components/Header/Header";
-import { Content } from "src/components/Content/Content";
-import { BackButton } from "src/views/components/BackButton";
+import { Header } from "~/components/Header/Header";
+import { Content } from "~/components/Content/Content";
+import { BackButton } from "~/views/components/BackButton";
 import CalcPresenter, {
   createCalcPresenter,
 } from "./CalcPresenter/CalcPresenter";
@@ -12,9 +12,9 @@ import {
   getRandom,
   getRepSecondFactor,
   useAppDispatch,
-} from "src/state/Workout";
+} from "~/state/Workout";
 import styles from "./Tutorial.module.scss";
-import { startTutorial } from "src/state/Tutorial";
+import { startTutorial } from "~/state/Tutorial";
 
 type TutorialParameters = {
   exercise: ExerciseName;

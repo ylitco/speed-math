@@ -1,4 +1,5 @@
-@import 'src/styles/utils';
+@use "sass:map";
+@use 'utils' as *;
 
 // Breakpoint viewport sizes and media queries.
 //
@@ -27,7 +28,7 @@
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
+  $min: map.get($breakpoints, $name);
 
   @return if($min != 0, $min, null);
 }
@@ -131,7 +132,7 @@
 
 $spacer: 0.25rem !default;
 $spacers: () !default;
-$spacers: map-merge(
+$spacers: map.merge(
   (
     0: 0,
     s1: ($spacer),
@@ -158,7 +159,7 @@ $grid-breakpoints: (
 ) !default;
 /* stylelint-enable unit-allowed-list */
 
-@each $breakpoint in map-keys($grid-breakpoints) {
+@each $breakpoint in map.keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 

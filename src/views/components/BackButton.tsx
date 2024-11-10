@@ -1,19 +1,19 @@
 import { FC, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "src/components/Button";
-import { BackIcon } from "src/icons/Back/Back";
-import { ViewContext } from "src/views/Views";
-import { VIEW } from "src/views/constants";
-import { getUrl } from "src/utils";
+import Button from "~/components/Button";
+import { BackIcon } from "~/icons/Back/Back";
+import { ViewContext } from "~/views/Views";
+import { VIEW } from "~/views/constants";
+import { getUrl } from "~/utils";
 import {
   finishSet,
   getSetStatus,
   startTimer,
   stopTimer,
   useAppDispatch,
-} from "src/state/Workout";
+} from "~/state/Workout";
 import { useSelector } from "react-redux";
-import { finishTutorial } from "src/state/Tutorial";
+import { finishTutorial } from "~/state/Tutorial";
 
 export const BackButton: FC = () => {
   const { current, previous } = useContext(ViewContext);

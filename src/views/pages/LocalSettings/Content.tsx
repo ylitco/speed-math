@@ -11,17 +11,17 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 import styles from "./LocalSettings.module.scss";
-import { Content } from "src/components/Content/Content";
-import Button from "src/components/Button";
-import { PlayIcon } from "src/icons/Play/Play";
-import { EXERCISES, COMPLEXITY, GAME_MODE } from "src/state/constants";
-import { copyTouch, getUrl } from "src/utils";
+import { Content } from "~/components/Content/Content";
+import Button from "~/components/Button";
+import { PlayIcon } from "~/icons/Play/Play";
+import { EXERCISES, COMPLEXITY, GAME_MODE } from "~/state/constants";
+import { copyTouch, getUrl } from "~/utils";
 import { Easy } from "./components/Easy/Easy";
 import { Medium } from "./components/Medium/Medium";
 import { Hard } from "./components/Hard/Hard";
-import { VIEW } from "src/views/constants";
-import { Switch } from "src/components/Switch/Switch";
-import { InfoIcon } from "src/icons/Info/Info";
+import { VIEW } from "~/views/constants";
+import { Switch } from "~/components/Switch/Switch";
+import { InfoIcon } from "~/icons/Info/Info";
 import { useSelector } from "react-redux";
 import {
   Complexity,
@@ -34,9 +34,9 @@ import {
   getWorkoutReps,
   setType,
   useAppDispatch,
-} from "src/state/Workout";
-import { IEventMetaObject } from "src/types";
-import { useStartWorkoutCallback } from "src/hooks/useStartWorkoutEffect";
+} from "~/state/Workout";
+import { IEventMetaObject } from "~/types";
+import { useStartWorkoutCallback } from "~/hooks/useStartWorkoutEffect";
 
 const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
   const reps = useSelector(getWorkoutReps);

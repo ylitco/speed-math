@@ -1,11 +1,11 @@
 import { memo } from "react";
-import { Content } from "src/components/Content/Content";
-import { Switch } from "src/components/Switch/Switch";
-import { Wheel } from "src/components/Wheel/Wheel";
-import { TimerIcon } from "src/icons/Timer/ComplexTimer";
-import { WorldIcon } from "src/icons/World/World";
-import { NIcon } from "src/icons/N/N";
-import { MINUTES, SECONDS, REPS, LANG } from "src/state/constants";
+import { Content } from "~/components/Content/Content";
+import { Switch } from "~/components/Switch/Switch";
+import { Wheel } from "~/components/Wheel/Wheel";
+import { TimerIcon } from "~/icons/Timer/ComplexTimer";
+import { WorldIcon } from "~/icons/World/World";
+import { NIcon } from "~/icons/N/N";
+import { MINUTES, SECONDS, REPS, LANG } from "~/state/constants";
 
 import styles from "./GlobalSettings.module.scss";
 import { useLocale, useSettingsOptions, useWorkoutSettings } from "./hooks";

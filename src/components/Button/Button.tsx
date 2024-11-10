@@ -1,7 +1,7 @@
 import { memo } from "react";
 import type { FC, PropsWithChildren } from "react";
 import cn from "classnames";
-import { BUTTON_TYPE } from "./";
+import { BUTTON_TYPE } from ".";
 import styles from "./Button.module.scss";
 
 export interface ButtonProps extends PropsWithChildren {

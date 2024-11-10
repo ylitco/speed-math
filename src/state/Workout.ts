@@ -17,7 +17,7 @@ import {
   SECONDS,
 } from "./constants";
 import { useDispatch } from "react-redux";
-import { REMOVE_KEY, VERIFY_KEY } from "src/components/Keyboard";
+import { REMOVE_KEY, VERIFY_KEY } from "~/components/Keyboard";
 
 export const createAppAsyncThunk =
   createAsyncThunk.withTypes<{

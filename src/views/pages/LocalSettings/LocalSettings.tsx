@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Header } from "src/components/Header/Header";
-import { SettingsButton } from "src/views/components/SettingsButton";
-import { BackButton } from "src/views/components/BackButton";
+import { Header } from "~/components/Header/Header";
+import { SettingsButton } from "~/views/components/SettingsButton";
+import { BackButton } from "~/views/components/BackButton";
 import { LocalSettingsContent } from "./Content";
 
 export const LocalSettings: FC = () => {

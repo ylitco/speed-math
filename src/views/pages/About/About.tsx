@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Header } from "src/components/Header/Header";
-import { Content } from "src/components/Content/Content";
-import { SettingsButton } from "src/views/components/SettingsButton";
-import { BackButton } from "src/views/components/BackButton";
+import { Header } from "~/components/Header/Header";
+import { Content } from "~/components/Content/Content";
+import { SettingsButton } from "~/views/components/SettingsButton";
+import { BackButton } from "~/views/components/BackButton";
 import styles from "./About.module.scss";
 
 /**

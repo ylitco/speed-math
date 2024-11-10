@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './App.scss';
 import './i18n';
 import { Views } from './views/Views';
-import { Loader } from 'src/views/components/Loader/Loader';
+import { Loader } from '~/views/components/Loader/Loader';
 
 function App() {
   // Apple ignores the declaration of `user-scalable`, `minimum-scale` and `maximum-scale`

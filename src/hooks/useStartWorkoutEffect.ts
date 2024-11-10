@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getUrl } from 'src/utils';
-import { GAME_MODE } from 'src/state/constants';
-import { VIEW } from 'src/views/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getType, startSet, startTimer } from 'src/state/Workout';
-import { AppDispatch } from 'src/state/store';
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUrl } from "~/utils";
+import { GAME_MODE } from "~/state/constants";
+import { VIEW } from "~/views/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { getType, startSet, startTimer } from "~/state/Workout";
+import { AppDispatch } from "~/state/store";
 
 export const useStartWorkoutCallback = () => {
   const navigate = useNavigate();
@@ -25,4 +25,4 @@ export const useStartWorkoutCallback = () => {
     dispatch(startSet());
     dispatch(startTimer());
   }, [type, navigate, dispatch]);
-}
+};

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import i18n from "src/i18n";
-import { Lang } from "src/state/Workout";
-import { IEventMetaObject } from "src/types";
+import i18n from "~/i18n";
+import { Lang } from "~/state/Workout";
+import { IEventMetaObject } from "~/types";
 
 export function useLocale() {
   const handleLocaleChange = useCallback((e: IEventMetaObject<Lang>) => {

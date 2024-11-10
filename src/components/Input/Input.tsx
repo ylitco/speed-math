@@ -1,7 +1,7 @@
-import { memo, FC } from 'react';
-import { useSelector } from 'react-redux';
-import { getUserInput } from 'src/state/Workout';
-import styles from './Input.module.scss';
+import { memo, FC } from "react";
+import { useSelector } from "react-redux";
+import { getUserInput } from "~/state/Workout";
+import styles from "./Input.module.scss";
 
 export const Input: FC = memo(function Input() {
   const userInput = useSelector(getUserInput);
@@ -15,7 +15,7 @@ export const Input: FC = memo(function Input() {
             <p className={styles.stroke}>{value}</p>
             <p className={styles.innerGradient}>{value}</p>
           </div>
-        )
+        );
       })}
     </div>
   );

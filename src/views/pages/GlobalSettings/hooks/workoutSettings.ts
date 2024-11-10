@@ -16,9 +16,9 @@ import {
   setReps,
   setSeconds,
   useAppDispatch,
-} from "src/state/Workout";
-import { REPS } from "src/state/constants";
-import { IEventMetaObject } from "src/types";
+} from "~/state/Workout";
+import { REPS } from "~/state/constants";
+import { IEventMetaObject } from "~/types";
 
 type RepNames = typeof REPS[keyof typeof REPS];
 type WokroutSettings = [

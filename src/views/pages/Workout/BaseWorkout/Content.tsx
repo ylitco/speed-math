@@ -1,8 +1,8 @@
 import { FC, memo, useCallback, useLayoutEffect, useState } from "react";
 import cn from "classnames";
-import { Content } from "src/components/Content/Content";
-import { Input } from "src/components/Input/Input";
-import { Keyboard } from "src/components/Keyboard/Keyboard";
+import { Content } from "~/components/Content/Content";
+import { Input } from "~/components/Input/Input";
+import { Keyboard } from "~/components/Keyboard/Keyboard";
 import styles from "./BaseWorkout.module.scss";
 import { Failure } from "./components/Failure/Failure";
 import { Success } from "./components/Success/Success";
@@ -13,12 +13,12 @@ import {
   getWorkoutProgress,
   inputUserAnswer,
   useAppDispatch,
-} from "src/state/Workout";
-import { COMPLEXITY } from "src/state/constants";
-import { IEventMetaObject } from "src/types";
+} from "~/state/Workout";
+import { COMPLEXITY } from "~/state/constants";
+import { IEventMetaObject } from "~/types";
 import { useNavigate } from "react-router-dom";
-import { getUrl } from "src/utils";
-import { VIEW } from "src/views/constants";
+import { getUrl } from "~/utils";
+import { VIEW } from "~/views/constants";
 
 export const BaseWorkoutContent: FC = memo(
   function BaseWorkoutContent() {

@@ -3,7 +3,7 @@ import type { TouchEventHandler, MouseEventHandler, Touch } from "react";
 import cn from "classnames";
 import { gsap } from "gsap";
 
-import { createEventMetaObject } from "src/utils";
+import { createEventMetaObject } from "~/utils";
 
 import styles from "./Switch.module.scss";
 

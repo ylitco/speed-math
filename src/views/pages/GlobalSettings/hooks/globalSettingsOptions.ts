@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { CHECKING_MODE, INPUT_MODE } from "src/state/constants";
+import { CHECKING_MODE, INPUT_MODE } from "~/state/constants";
 
 export function useSettingsOptions() {
   const { t } = useTranslation();

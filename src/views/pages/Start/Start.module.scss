@@ -1,4 +1,4 @@
-@use 'src/styles' as s;
+@use '~/styles' as *;
 
 .menu {
   @extend .my-auto;
@@ -8,8 +8,8 @@
   @extend .my-auto;
 
   font-weight: 500;
-  font-size: s.em(12);
-  line-height: s.em(40, 12);
+  font-size: em(12);
+  line-height: em(40, 12);
 
   display: flex;
   align-items: center;

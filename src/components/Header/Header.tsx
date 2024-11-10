@@ -7,14 +7,14 @@ import {
   getWorkoutTitle,
   stopTimer,
   useAppDispatch,
-} from "src/state/Workout";
-import { BackButton } from "src/views/components/BackButton";
-import { getUrl } from "src/utils";
+} from "~/state/Workout";
+import { BackButton } from "~/views/components/BackButton";
+import { getUrl } from "~/utils";
 import { useNavigate } from "react-router-dom";
-import Button, { BUTTON_TYPE } from "src/components/Button";
-import { InfoIcon } from "src/icons/Info/Info";
-import { VIEW } from "src/views/constants";
-import { EXERCISES } from "src/state/constants";
+import Button, { BUTTON_TYPE } from "~/components/Button";
+import { InfoIcon } from "~/icons/Info/Info";
+import { VIEW } from "~/views/constants";
+import { EXERCISES } from "~/state/constants";
 
 export const Header: FC<IHeaderProps> = memo(function Header(props) {
   return (

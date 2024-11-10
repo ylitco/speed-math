@@ -1,4 +1,5 @@
-@use 'src/styles' as *;
+@use "sass:color";
+@use '~/styles' as *;
 
 .explanation {
   position: relative;
@@ -39,7 +40,7 @@
   font-weight: 700;
   font-size: 48px;
   line-height: 40px;
-  color: darken(#9241E2, 10%);
+  color: color.adjust(#9241E2, $lightness: -10%);
   user-select: none;
 
   &:before {

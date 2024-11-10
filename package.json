@@ -1,8 +1,14 @@
 {
-  "name": "speed-math",
-  "description": "Simulator by the Jakow Trachtenberg system of speed math",
-  "version": "0.1.0",
+  "name": "sm-migration",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "classnames": "^2.3.1",
@@ -15,70 +21,23 @@
     "react-i18next": "^13.0.1",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.0",
-    "react-scripts": "^5.0.1",
     "react-tooltip": "^5.15.0",
-    "sass": "^1.49.9",
-    "typescript": "^4.6.2",
+    "sass-embedded": "^1.80.6",
     "web-vitals": "^3.3.2"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.6",
-    "@commitlint/config-conventional": "^17.6.6",
-    "@storybook/addon-actions": "^7.0.25",
-    "@storybook/addon-essentials": "^7.0.25",
-    "@storybook/addon-interactions": "^7.0.25",
-    "@storybook/addon-links": "^7.0.25",
-    "@storybook/builder-webpack5": "^7.0.25",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/node-logger": "^7.0.25",
-    "@storybook/preset-create-react-app": "^7.0.25",
-    "@storybook/react": "^7.0.25",
-    "@storybook/testing-library": "^0.2.0",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.5.2",
+    "@eslint/js": "^9.13.0",
     "@types/node": "^20.3.3",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.3",
-    "husky": "^8.0.3",
-    "webpack": "^5.88.1"
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.11.0",
+    "vite": "^5.4.10"
   }
 }

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Header } from "src/components/Header/Header";
-import { BackButton } from "src/views/components/BackButton";
-import { SettingsButton } from "src/views/components/SettingsButton";
+import { Header } from "~/components/Header/Header";
+import { BackButton } from "~/views/components/BackButton";
+import { SettingsButton } from "~/views/components/SettingsButton";
 import classes from "./Donate.module.scss";
 import { Link } from "react-router-dom";
 

@@ -1,8 +1,8 @@
 import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Content } from "src/components/Content/Content";
-import Button, { BUTTON_TYPE } from "src/components/Button";
-import { CloseIcon } from "src/icons/Close/Close";
+import { Content } from "~/components/Content/Content";
+import Button, { BUTTON_TYPE } from "~/components/Button";
+import { CloseIcon } from "~/icons/Close/Close";
 import styles from "./Overview.module.scss";
 
 export const Overview: FC = () => {
