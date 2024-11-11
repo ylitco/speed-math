@@ -9,6 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "engines": {
+    "npm": "Please use `yarn@1`",
+    "yarn": "1"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "classnames": "^2.3.1",
