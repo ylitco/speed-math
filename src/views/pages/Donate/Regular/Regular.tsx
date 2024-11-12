@@ -4,10 +4,11 @@ import { SettingsButton } from "~/views/components/SettingsButton";
 import classes from "../Donate.module.scss";
 import { Wheel } from "~/components/Wheel/Wheel";
 import { useState } from "react";
+import { Icon } from "@iconify/react";
 
 const SUPPORT_OPTION = {
-  "0.5K": "На чашку кофе в самый трудный день - 500₽/месяц",
-  "1K": "На покрытие расходов на интернет - 1000₽/месяц",
+  "0.5K": <Icon width="2em" height="2em" icon="hugeicons:coffee-02" />,
+  "1K": <Icon width="2em" height="2em" icon="pepicons-pencil:electricity" />,
 };
 
 const DEFAULT_SUPPORT_OPTION = "0.5K";
@@ -32,7 +33,30 @@ const Regular = () => {
           onSelect={(e) => setSupport(e.value)}
           size="L"
         />
-        <ul></ul>
+        <ul>
+          <li>
+            <b>
+              <Icon
+                inline
+                width="2em"
+                height="2em"
+                icon="hugeicons:coffee-02"
+              />
+            </b>
+            <p>Вы вдохновляете нас делать проект лучше каждый день!</p>
+          </li>
+          <li>
+            <b>
+              <Icon
+                inline
+                width="2em"
+                height="2em"
+                icon="pepicons-pencil:electricity"
+              />
+            </b>
+            <p>Ваша поддержка дает нам возможность развиваться.</p>
+          </li>
+        </ul>
       </main>
     </>
   );
