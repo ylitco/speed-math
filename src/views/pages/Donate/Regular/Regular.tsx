@@ -23,16 +23,17 @@ const Regular = () => {
       </Header>
       <main className={classes.main}>
         <h1>Поддерживаю</h1>
-        <p>
-          Помогите сайту расти и работать без рекламы и внесите свой вклад в
-          создание новых генераторов.
-        </p>
         <Wheel
+          className={classes.supportWheel}
           options={SUPPORT_OPTION}
           value={support}
           onSelect={(e) => setSupport(e.value)}
           size="L"
         />
+        <p>
+          Помогите сайту расти и работать без рекламы и внесите свой вклад в
+          создание новых тренажёров.
+        </p>
         <ul>
           <li>
             <b>
@@ -43,7 +44,7 @@ const Regular = () => {
                 icon="hugeicons:coffee-02"
               />
             </b>
-            <p>Вы вдохновляете нас делать проект лучше каждый день!</p>
+            <p>Оплатить чашку крепкого кофе.</p>
           </li>
           <li>
             <b>
@@ -54,7 +55,7 @@ const Regular = () => {
                 icon="pepicons-pencil:electricity"
               />
             </b>
-            <p>Ваша поддержка дает нам возможность развиваться.</p>
+            <p>Оплатить часть месячных расходов на электричество.</p>
           </li>
         </ul>
       </main>
