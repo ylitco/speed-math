@@ -12,6 +12,7 @@ interface RelativeTouch extends Pick<Touch, "identifier" | "pageX" | "pageY"> {
 }
 
 export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
+  const [mark, setMark] = useState(0);
   const { onSelect, options: _options, value, selectType = "auto" } = props;
   const handleClick = useCallback(_handleClick, [onSelect]);
   const [activeValueIndex, setActiveValueIndex] = useState(
@@ -45,13 +46,20 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
     },
     [lastValueIndex]
   );
-  const handleWheel = useCallback(
-    (e: any) => {
-      if (Math.abs(e.deltaY) < 100) return;
+  const handleWheel = useCallback<WheelEventHandler>(
+    (e) => {
+      const totalMark = (options.length - 1) * 100;
+      let newMark = mark + e.deltaY;
 
-      const delta = Math.floor(e.deltaY / 100);
+      if (newMark > totalMark) {
+        newMark = newMark - totalMark;
+      } else if (newMark < 0) {
+        newMark = totalMark + newMark;
+      }
 
-      const newActiveIndex = calcNewActiveIndex(activeValueIndex, delta);
+      setMark(newMark);
+
+      const newActiveIndex = Math.round(newMark / 100);
 
       if (selectType === "auto") {
         onSelect(createEventMetaObject(options[newActiveIndex][0]));
@@ -59,7 +67,7 @@ export const Wheel: FC<IWheelProps<any>> = memo(function Wheel(props) {
 
       setActiveValueIndex(newActiveIndex);
     },
-    [activeValueIndex, calcNewActiveIndex, onSelect, options, selectType]
+    [onSelect, options, selectType]
   );
 
   const ongoingTouchIndexById = useCallback<
