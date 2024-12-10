@@ -1,9 +1,8 @@
-import { Touch } from 'react';
-import { IEventMetaObject } from 'src/types';
+import type { IEventMetaObject } from "~/types";
 
 export function createEventMetaObject<T>(
   value: T,
-  params?: Omit<IEventMetaObject<T>, 'value'>,
+  params?: Omit<IEventMetaObject<T>, "value">
 ): IEventMetaObject<T> {
   const { name, index, errors, meta } = params || {};
   const mixName = name ? { name } : {};
@@ -32,6 +31,6 @@ export function getRandom(min: number, max: number) {
   return Math.round(rand);
 }
 
-export function copyTouch({ identifier, pageX, pageY }: Touch) {
-  return { identifier, pageX, pageY };
+export function copyTouch({ pointerId, pageX, pageY }: PointerEvent) {
+  return { identifier: pointerId, pageX, pageY };
 }
