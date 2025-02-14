@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, memo } from 'react';
 
 export const Delete: FC = () => {
   return (
@@ -22,4 +22,4 @@ export const Delete: FC = () => {
   );
 };
 
-export default React.memo(Delete);
+export default memo(Delete);

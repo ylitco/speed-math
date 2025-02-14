@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 export const Arc: FC<{ percent: number, cx: number, cy: number, r: number, width: number }> = ({ percent, cx, cy, r, width }) => {
   const centerPoint = {
@@ -57,7 +57,7 @@ function getY(cy: number, r: number, rad: number) {
   return cy + r * Math.sin(rad);
 }
 
-function getArc(start: { x: number, y: number }, r: number, end: { x: number, y: number }, percent: number, clockwise: boolean = true, longArc: number) {
+function getArc(_start: { x: number, y: number }, r: number, end: { x: number, y: number }, percent: number, clockwise: boolean = true, longArc: number) {
   let _longArc;
   if (longArc === 0) {
     _longArc = percent > 50 ? 1 : 0;

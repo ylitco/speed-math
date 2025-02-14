@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Mind } from '~/icons/World/Mind';
 import styles from './Loader.module.scss';
 

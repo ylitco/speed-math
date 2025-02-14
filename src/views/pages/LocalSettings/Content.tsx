@@ -15,7 +15,7 @@ import { Content } from "~/components/Content/Content";
 import Button from "~/components/Button";
 import { PlayIcon } from "~/icons/Play/Play";
 import { EXERCISES, COMPLEXITY, GAME_MODE } from "~/state/constants";
-import { copyTouch, getUrl } from "~/utils";
+import { getUrl } from "~/utils";
 import { Easy } from "./components/Easy/Easy";
 import { Medium } from "./components/Medium/Medium";
 import { Hard } from "./components/Hard/Hard";
@@ -38,7 +38,11 @@ import {
 import { IEventMetaObject } from "~/types";
 import { useStartWorkoutCallback } from "~/hooks/useStartWorkoutEffect";
 
-const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = (props) => {
+export function copyTouch({ identifier, pageX, pageY }: Touch) {
+  return { identifier, pageX, pageY };
+}
+
+const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = () => {
   const reps = useSelector(getWorkoutReps);
 
   return (

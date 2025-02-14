@@ -1,4 +1,4 @@
-import React, { FC, useRef, useEffect } from 'react';
+import { FC, useRef, useEffect, createContext } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Start } from '~/views/pages/Start/Start';
 import { Overview } from '~/views/pages/Overview';
@@ -17,7 +17,7 @@ import Donate from './pages/Donate';
 import Onetime from './pages/Donate/Onetime/Onetime';
 import Regular from './pages/Donate/Regular/Regular';
 
-export const ViewContext = React.createContext<IView>({
+export const ViewContext = createContext<IView>({
   current: null,
   previous: null,
 });

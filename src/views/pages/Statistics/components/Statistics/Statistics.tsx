@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import { Arc, drawArc } from './Arc';
 import styles from './Statistics.module.scss';
 

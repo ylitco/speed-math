@@ -41,10 +41,10 @@ export const EXERCISES = {
   'N': 'N',
 } as const;
 
-export const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
+export const MINUTES = Object.fromEntries(Array.from(Array(61).keys()).map((_m, i) => [i, `${i}`]));
 
-export const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((m, i) => [i, `${i}`]));
+export const SECONDS = Object.fromEntries(Array.from(Array(61).keys()).map((_m, i) => [i, `${i}`]));
 
-export const REPS = Object.fromEntries(Array.from(Array(20).keys()).map((m, i) => [i + 1, `${i + 1}`]));
+export const REPS = Object.fromEntries(Array.from(Array(20).keys()).map((_m, i) => [i + 1, `${i + 1}`]));
 
 export const FLEX_WORKOUT_PLAN = {} as Plan;

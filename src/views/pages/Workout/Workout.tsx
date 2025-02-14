@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { VIEW } from "~/views/constants";
 import { getUrl } from "~/utils";
