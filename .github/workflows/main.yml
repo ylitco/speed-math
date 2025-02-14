@@ -26,5 +26,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: speed-math.ru/public_html/
+          server-dir: speed-math/public_html/
+          dangerous-clean-slate: true
       
