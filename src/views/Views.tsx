@@ -13,7 +13,6 @@ import { Tutorial } from '~/views/pages/Tutorial/Tutorial';
 import { Statistics } from '~/views/pages/Statistics/Statistics';
 import { IView } from './types';
 import { VIEW } from './constants';
-import Donate from './pages/Donate';
 import Onetime from './pages/Donate/Onetime/Onetime';
 import Regular from './pages/Donate/Regular/Regular';
 
@@ -33,7 +32,6 @@ export const Views: FC = () => {
         <Route path={VIEW.OVERVIEW} element={<Overview />} />
         <Route path={VIEW.GLOBAL_SETTINGS} element={<GlobalSettings />} />
         <Route path={VIEW.ABOUT} element={<About />} />
-        <Route path={VIEW.DONATE} element={<Donate />} />
         <Route path={VIEW.DONATE_ONETIME} element={<Onetime />} />
         <Route path={VIEW.DONATE_REGULAR} element={<Regular />} />
         <Route path={VIEW.LOCAL_SETTINGS} element={<LocalSettings />} />
