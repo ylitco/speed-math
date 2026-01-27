@@ -1,4 +1,4 @@
-name: Deply to Hosting
+name: Deploy to Hosting
 on:
   push:
       branches:
@@ -11,14 +11,17 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/jod'
+          cache: 'pnpm'
       - name: Install Dependencies
-        run: yarn
+        run: pnpm i
       - name: Build Static
-        run: yarn build
+        run: pnpm build
       - name: Deploy to Hosting
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
@@ -28,4 +31,4 @@ jobs:
           local-dir: ./dist/
           server-dir: speed-math/public_html/
           dangerous-clean-slate: true
-      
+
