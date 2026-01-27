@@ -4,8 +4,6 @@
   width: 100%;
 
   .label {
-    @extend .mb-m1;
-
     font-weight: 200;
     font-size: em(18);
     line-height: em(40, 18);

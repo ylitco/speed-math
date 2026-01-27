@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { memo, useCallback, FC } from "react";
 import { IHeaderProps } from "./types";
 import styles from "./Header.module.scss";
@@ -22,7 +23,7 @@ export const Header: FC<IHeaderProps> = memo(function Header(props) {
       <div className={styles.action}>
         {props.renderMinorAction && props.renderMinorAction()}
       </div>
-      <h1 className={styles.title}>{props.children}</h1>
+      <h1 className={cn(styles.title, 'mx-auto')}>{props.children}</h1>
       <div className={styles.action}>
         {props.renderMajorAction && props.renderMajorAction()}
       </div>

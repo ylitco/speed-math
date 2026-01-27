@@ -16,7 +16,7 @@ const Button: FC<ButtonProps> = (props) => {
 
   return (
     <button
-      className={cn(props.className, styles.button, styles[type])}
+      className={cn(props.className, styles.button, styles[type], 'p-3')}
       data-name={props.name}
       onClick={() => onClick?.(name)}
       onTouchStart={e => e.currentTarget.classList.add(styles.active)}

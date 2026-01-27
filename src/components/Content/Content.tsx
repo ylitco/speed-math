@@ -4,7 +4,7 @@ import styles from './Content.module.scss';
 
 export const Content: FC<HTMLAttributes<HTMLElement>> = memo(function Content(props) {
   return (
-    <main className={cn(styles.content, props.className)}>
+    <main className={cn(styles.content, props.className, 'mt-4')}>
       {props.children}
     </main>
   );

@@ -7,8 +7,6 @@
   flex: 0 0 auto;
 
   .title {
-    @extend .mx-auto;
-
     font-style: normal;
     font-size: em(18);
     line-height: em(40, 18);

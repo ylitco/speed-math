@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Header } from "~/components/Header/Header";
@@ -18,7 +19,7 @@ export const About: FC = () => {
       <Header renderMajorAction={SettingsButton} renderMinorAction={BackButton}>
         {t("about.title")}
       </Header>
-      <Content className={styles.description}>
+      <Content className={cn(styles.description, 'p-4')}>
         <div className={styles.content}>{t("about.description")}</div>
       </Content>
     </>

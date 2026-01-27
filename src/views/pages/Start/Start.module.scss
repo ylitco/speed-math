@@ -1,12 +1,6 @@
 @use '~/styles' as *;
 
-.menu {
-  @extend .my-auto;
-}
-
 .hint {
-  @extend .my-auto;
-
   font-weight: 500;
   font-size: em(12);
   line-height: em(40, 12);

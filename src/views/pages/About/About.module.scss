@@ -1,8 +1,6 @@
 @use '~/styles' as *;
 
 .description {
-  @extend .p-m1;
-
   overflow: hidden;
   border: em(1) solid var(--border);
   box-shadow: em(-5) em(-5) em(10) #FCFCFF, em(5) em(5) em(10) #CFCFEC;

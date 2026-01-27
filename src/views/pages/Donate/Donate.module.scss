@@ -13,7 +13,7 @@ main.main {
   h3,
   p,
   ul {
-    @extend .mb-m1;
+    margin-bottom: 1rem;
 
     font-weight: 200;
     color: var(--title);
@@ -72,8 +72,7 @@ main.main {
   }
 
   a {
-    @extend .px-s3;
-    @extend .py-s2;
+    padding: 0.5rem 0.75rem;
 
     flex: 1;
     font-weight: 300;

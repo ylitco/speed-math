@@ -261,7 +261,7 @@ export const Switch = memo(function Switch(props: SwitchProps) {
 
   return (
     <div className={cn(props.className, styles.switch)}>
-      {props.label && <label className={styles.label}>{props.label}</label>}
+      {props.label && <label className={cn(styles.label, 'mb-4')}>{props.label}</label>}
       <ul
         ref={listRef}
         className={styles.list}
