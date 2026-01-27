@@ -10,7 +10,7 @@ import { VIEW } from "~/views/constants";
 import { IEventMetaObject } from "~/types";
 import localStyles from "./Start.module.scss";
 
-const DEFAULT_OPTION = VIEW.OVERVIEW;
+const DEFAULT_OPTION = VIEW.ABOUT;
 
 export const Start: FC = () => {
   const { t } = useTranslation();
@@ -25,7 +25,6 @@ export const Start: FC = () => {
     return {
       [VIEW.LOCAL_SETTINGS]: t("start.workoutSettings"),
       [VIEW.ABOUT]: t("start.about"),
-      [VIEW.OVERVIEW]: t("start.overview"),
     };
   }, [t]);
 

@@ -1,7 +1,6 @@
 import { FC, useRef, useEffect, createContext } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Start } from '~/views/pages/Start/Start';
-import { Overview } from '~/views/pages/Overview';
 import { About } from '~/views/pages/About';
 import { LocalSettings } from '~/views/pages/LocalSettings';
 import { GlobalSettings } from '~/views/pages/GlobalSettings';
@@ -29,7 +28,6 @@ export const Views: FC = () => {
     <ViewContext.Provider value={{ current, previous }}>
       <Routes>
         <Route path={VIEW.START} element={<Start />} />
-        <Route path={VIEW.OVERVIEW} element={<Overview />} />
         <Route path={VIEW.GLOBAL_SETTINGS} element={<GlobalSettings />} />
         <Route path={VIEW.ABOUT} element={<About />} />
         <Route path={VIEW.DONATE_ONETIME} element={<Onetime />} />
