@@ -11,6 +11,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       devOptions: { enabled: true },
       workbox: { globPatterns: ["**/*.{js,css,html,ico,png,svg,mp4,json}"] },
+      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.png"],
       manifest: {
         name: "Speed Math: Trachtenberg system",
         short_name: "Speed Math",
