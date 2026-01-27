@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss';
+import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './state/store';
