@@ -32,7 +32,7 @@
     "react-tooltip": "^5.15.0",
     "sass-embedded": "^1.80.6",
     "tailwindcss": "^4.1.18",
-    "web-vitals": "^3.3.2"
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
