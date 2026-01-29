@@ -1,4 +1,4 @@
-import CSS from 'csstype';
+import type { CSSProperties } from 'react';
 import styles from '../../Tutorial.module.scss';
 import { TENS } from './addSibling';
 
@@ -18,7 +18,7 @@ interface createSlotParams {
   symbol: number | string;
   symbolId?: string;
   slotId: string;
-  slotStyles?: CSS.Properties;
+  slotStyles?: CSSProperties;
   digitClass?: string | Array<string>;
 }
 
@@ -45,7 +45,7 @@ interface createDoubleDigitSlotParams {
   number: number;
   slotId: string;
   digitClass?: string;
-  slotStyles?: CSS.Properties;
+  slotStyles?: CSSProperties;
 }
 
 export const createTwoDigitSlot = ({ number, slotId, digitClass, slotStyles }: createDoubleDigitSlotParams) => {

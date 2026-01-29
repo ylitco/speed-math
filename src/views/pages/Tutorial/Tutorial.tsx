@@ -27,7 +27,7 @@ export const Tutorial: FC = memo(function TutorialPage() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const canvas = useRef<HTMLDivElement>(null);
+  const canvas = useRef<HTMLDivElement | null>(null);
   const explanation = useRef<CalcPresenter | null>(null);
 
   const firstFactor = isNaN(parseInt(exerciseName))

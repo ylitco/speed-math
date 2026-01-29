@@ -50,7 +50,7 @@ export const Views: FC = () => {
 };
 
 function usePrevious (value: any) {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
 
   const current = ref.current;
 

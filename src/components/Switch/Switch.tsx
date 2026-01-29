@@ -289,7 +289,7 @@ export const Switch = memo(function Switch(props: SwitchProps) {
               onClick={handleClick}
             >
               <p className={styles.optionContent}>
-                {typeof title === "function" ? title({}) : title}
+                {title}
               </p>
             </li>
           );

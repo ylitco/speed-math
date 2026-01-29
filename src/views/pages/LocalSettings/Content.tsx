@@ -60,7 +60,7 @@ const WORKOUT_MODE_OPTIONS = {
       style={{ fontSize: 28 }}
     />
   ),
-  [GAME_MODE.REPS]: Quantity,
+  [GAME_MODE.REPS]: <Quantity />,
   [GAME_MODE.FREE]: (
     <i
       className={cn("icon-infinity", styles.icon)}

@@ -1,10 +1,7 @@
-import { HTMLAttributes, ReactElement, FC } from "react";
+import { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 type SwitchValue = string;
-type SwitchTitle =
-  | string
-  | ReactElement
-  | FC<HTMLAttributes<HTMLOrSVGElement>>;
+type SwitchTitle = ReactNode;
 
 export interface SwitchProps extends HTMLAttributes<ReactElement> {
   optionClassName?: string;

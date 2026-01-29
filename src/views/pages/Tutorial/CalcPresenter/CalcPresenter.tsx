@@ -26,7 +26,7 @@ export default class CalcPresenter {
 
   constructor(
     private readonly _secondFactor: number,
-    private readonly _canvas: RefObject<HTMLDivElement>,
+    private readonly _canvas: RefObject<HTMLDivElement | null>,
     private readonly handlers: CalcPresenterEventHandlers,
   ) {
     this._secondFactor = _secondFactor;
@@ -431,7 +431,7 @@ interface CalcPresenterEventHandlers {
 }
 
 export function createCalcPresenter (
-  firstFactor: number, secondFactor: number, canvas: RefObject<HTMLDivElement>, handlers: CalcPresenterEventHandlers,
+  firstFactor: number, secondFactor: number, canvas: RefObject<HTMLDivElement | null>, handlers: CalcPresenterEventHandlers,
 ) {
   const calcPresenter = new CalcPresenter(secondFactor, canvas, handlers);
 
