@@ -5,16 +5,22 @@
     "className": "speed-math-back",
     "unicode": "&#59905;"
   },
-  "settings": {
+  "n": {
     "encodedCode": "\\ea02",
     "prefix": "speed-math",
-    "className": "speed-math-settings",
+    "className": "speed-math-n",
     "unicode": "&#59906;"
   },
-  "world": {
+  "settings": {
     "encodedCode": "\\ea03",
     "prefix": "speed-math",
-    "className": "speed-math-world",
+    "className": "speed-math-settings",
     "unicode": "&#59907;"
+  },
+  "world": {
+    "encodedCode": "\\ea04",
+    "prefix": "speed-math",
+    "className": "speed-math-world",
+    "unicode": "&#59908;"
   }
 }

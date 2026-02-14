@@ -57,7 +57,7 @@ export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
           <p className={styles.units}>{t('globalSettings.seconds.label')}</p>
         </label>
         <label className={styles.reps}>
-          <NIcon />
+          <i className="speed-math-n text-icon-n inner-shadow-light text-center opacity-50" />
           <Wheel
             options={REPS}
             value={reps}
