@@ -2,9 +2,6 @@ import { memo } from 'react';
 import { Content } from '~/components/Content/Content';
 import { Switch } from '~/components/Switch/Switch';
 import { Wheel } from '~/components/Wheel/Wheel';
-import { TimerIcon } from '~/icons/Timer/ComplexTimer';
-import { WorldIcon } from '~/icons/World/World';
-import { NIcon } from '~/icons/N/N';
 import { MINUTES, SECONDS, REPS, LANG } from '~/state/constants';
 
 import styles from './GlobalSettings.module.scss';
@@ -40,7 +37,11 @@ export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
       />
       <div className={styles.wheels}>
         <label className={styles.time}>
-          <TimerIcon className={styles.label} />
+          <div className="col-span-2 flex items-end gap-1.5">
+            <i className="speed-math-minutes-sholder text-icon-xs inner-shadow-light inline-block text-center opacity-50" />
+            <i className="speed-math-timer text-icon-timer inner-shadow-light mb-0.5 inline-block text-center opacity-50" />
+            <i className="speed-math-seconds-sholder text-icon-xs inner-shadow-light inline-block text-center opacity-50" />
+          </div>
           <Wheel
             options={MINUTES}
             value={minutes}
