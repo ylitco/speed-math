@@ -1,3 +1,4 @@
+// @TODO: replace with clx
 import cn from 'classnames';
 import {
   Touch,
@@ -41,7 +42,10 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = () => {
   const reps = useSelector(getWorkoutReps);
 
   return (
-    <span className={cn(styles.icon)} style={{ fontSize: 24, fontWeight: 500 }}>
+    <span
+      className={cn(styles.quantity, 'inner-shadow-light opacity-50')}
+      style={{ fontSize: 24, fontWeight: 500 }}
+    >
       {reps}
     </span>
   );
@@ -49,14 +53,11 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = () => {
 
 const WORKOUT_MODE_OPTIONS = {
   [GAME_MODE.TIME]: (
-    <i className={cn('icon-timer', styles.icon)} style={{ fontSize: 28 }} />
+    <i className="speed-math-timer text-icon-timer inner-shadow-light opacity-50" />
   ),
   [GAME_MODE.REPS]: <Quantity />,
   [GAME_MODE.FREE]: (
-    <i
-      className={cn('icon-infinity', styles.icon)}
-      style={{ fontSize: 40, paddingTop: 5 }}
-    />
+    <i className="speed-math-infinity text-icon-infinity inner-shadow-light opacity-50" />
   ),
 };
 
