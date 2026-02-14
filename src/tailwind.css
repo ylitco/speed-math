@@ -36,6 +36,11 @@
     line-height: 1;
   }
 
+  .text-icon-info {
+    font-size: round(calc(18.46 / 16) * 1rem, 0.125rem);
+    line-height: 1;
+  }
+
   .text-icon-n {
     font-size: round(calc(17.14 / 16) * 1rem, 0.125rem);
     line-height: 1;

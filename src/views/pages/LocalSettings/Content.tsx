@@ -17,7 +17,6 @@ import { EXERCISES, COMPLEXITY, GAME_MODE } from '~/state/constants';
 import { getUrl } from '~/utils';
 import { VIEW } from '~/views/constants';
 import { Switch } from '~/components/Switch/Switch';
-import { InfoIcon } from '~/icons/Info/Info';
 import { useSelector } from 'react-redux';
 import {
   Complexity,
@@ -277,7 +276,7 @@ const PlayButton = memo(function PlayButton() {
 const TutorialLink = memo(function TutorialLink({ mode }: { mode: string }) {
   return (
     <Link className={styles.info} to={getUrl(`${VIEW.EXPLANATION}/${mode}`)}>
-      <InfoIcon color="purple" />
+      <i className="speed-math-info text-icon-info inner-shadow-purple opacity-50" />
     </Link>
   );
 });
