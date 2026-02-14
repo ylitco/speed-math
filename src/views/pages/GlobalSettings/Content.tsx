@@ -66,7 +66,7 @@ export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
           />
         </label>
         <label className={styles.lang}>
-          <WorldIcon />
+          <i className="speed-math-world text-icon-world inner-shadow-light text-center opacity-50" />
           <Wheel
             options={LANG}
             value={locale}
