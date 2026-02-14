@@ -34,7 +34,7 @@ import {
 import { IEventMetaObject } from '~/types';
 import { useStartWorkoutCallback } from '~/hooks/useStartWorkoutEffect';
 
-export function copyTouch({ identifier, pageX, pageY }: Touch) {
+function copyTouch({ identifier, pageX, pageY }: Touch) {
   return { identifier, pageX, pageY };
 }
 
@@ -128,7 +128,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
     (e) => {
       e.preventDefault();
       for (let i = 0; i < e.changedTouches.length; i++) {
-        let idx = ongoingTouchIndexById(e.changedTouches[i].identifier);
+        const idx = ongoingTouchIndexById(e.changedTouches[i].identifier);
 
         if (idx >= 0) {
           const touches = [...ongoingTouches];
@@ -187,8 +187,11 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
         <div className={styles.column}>
           <div className="mb-[0.5em] min-h-[26.02px]" />
           {Object.keys(EXERCISES).map((mode) => (
-            <div className={styles.number} key={mode}>
-              ×{mode}
+            <div
+              className={cn(styles.number, 'inner-shadow-purple opacity-50')}
+              key={mode}
+            >
+              &times;{mode}
             </div>
           ))}
         </div>
