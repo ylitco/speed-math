@@ -10,8 +10,6 @@ import { VIEW } from '~/views/constants';
 import { useStartWorkoutCallback } from '~/hooks/useStartWorkoutEffect';
 import { Statistics as StatisticsIcon } from './components/Statistics/Statistics';
 import styles from './Statistics.module.scss';
-import { Repeat } from './icons/Repeat';
-import { Burger } from './icons/Burger';
 import { Tooltip } from 'react-tooltip';
 import { useSelector } from 'react-redux';
 import {
@@ -60,10 +58,10 @@ export const Statistics: FC = () => {
         />
         <footer className={styles.actions}>
           <Button onClick={handleWorkoutRestart} type={BUTTON_TYPE.CIRCLE}>
-            <Repeat />
+            <i className="speed-math-repeat text-icon-repeat inner-shadow-dark" />
           </Button>
           <Button onClick={handleWorkoutFinish}>
-            <Burger />
+            <i className="speed-math-menu text-icon-menu inner-shadow-dark" />
           </Button>
         </footer>
         <Tooltip id="counting-rate-unit" />

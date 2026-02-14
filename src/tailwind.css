@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer utilities {
   /* Icon sizes (height-normalized, 0.125rem grid, leading-none) */
@@ -46,8 +46,18 @@
     line-height: 1;
   }
 
+  .text-icon-menu {
+    font-size: round(calc(23 / 16) * 1rem, 0.125rem);
+    line-height: 1;
+  }
+
   .text-icon-n {
     font-size: round(calc(17.14 / 16) * 1rem, 0.125rem);
+    line-height: 1;
+  }
+
+  .text-icon-repeat {
+    font-size: round(calc(25.33 / 16) * 1rem, 0.125rem);
     line-height: 1;
   }
 
