@@ -5,40 +5,58 @@
     "className": "speed-math-back",
     "unicode": "&#59905;"
   },
-  "minutes-sholder": {
+  "easy": {
     "encodedCode": "\\ea02",
     "prefix": "speed-math",
-    "className": "speed-math-minutes-sholder",
+    "className": "speed-math-easy",
     "unicode": "&#59906;"
   },
-  "n": {
+  "hard": {
     "encodedCode": "\\ea03",
     "prefix": "speed-math",
-    "className": "speed-math-n",
+    "className": "speed-math-hard",
     "unicode": "&#59907;"
   },
-  "seconds-sholder": {
+  "medium": {
     "encodedCode": "\\ea04",
     "prefix": "speed-math",
-    "className": "speed-math-seconds-sholder",
+    "className": "speed-math-medium",
     "unicode": "&#59908;"
   },
-  "settings": {
+  "minutes-sholder": {
     "encodedCode": "\\ea05",
     "prefix": "speed-math",
-    "className": "speed-math-settings",
+    "className": "speed-math-minutes-sholder",
     "unicode": "&#59909;"
   },
-  "timer": {
+  "n": {
     "encodedCode": "\\ea06",
     "prefix": "speed-math",
-    "className": "speed-math-timer",
+    "className": "speed-math-n",
     "unicode": "&#59910;"
   },
-  "world": {
+  "seconds-sholder": {
     "encodedCode": "\\ea07",
     "prefix": "speed-math",
-    "className": "speed-math-world",
+    "className": "speed-math-seconds-sholder",
     "unicode": "&#59911;"
+  },
+  "settings": {
+    "encodedCode": "\\ea08",
+    "prefix": "speed-math",
+    "className": "speed-math-settings",
+    "unicode": "&#59912;"
+  },
+  "timer": {
+    "encodedCode": "\\ea09",
+    "prefix": "speed-math",
+    "className": "speed-math-timer",
+    "unicode": "&#59913;"
+  },
+  "world": {
+    "encodedCode": "\\ea0a",
+    "prefix": "speed-math",
+    "className": "speed-math-world",
+    "unicode": "&#59914;"
   }
 }
