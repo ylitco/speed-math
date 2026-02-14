@@ -1,4 +1,4 @@
-import cn from "classnames";
+import cn from 'classnames';
 import {
   Touch,
   FC,
@@ -8,21 +8,21 @@ import {
   useCallback,
   useState,
   ChangeEvent,
-} from "react";
-import { Link } from "react-router-dom";
-import styles from "./LocalSettings.module.scss";
-import { Content } from "~/components/Content/Content";
-import Button from "~/components/Button";
-import { PlayIcon } from "~/icons/Play/Play";
-import { EXERCISES, COMPLEXITY, GAME_MODE } from "~/state/constants";
-import { getUrl } from "~/utils";
-import { Easy } from "./components/Easy/Easy";
-import { Medium } from "./components/Medium/Medium";
-import { Hard } from "./components/Hard/Hard";
-import { VIEW } from "~/views/constants";
-import { Switch } from "~/components/Switch/Switch";
-import { InfoIcon } from "~/icons/Info/Info";
-import { useSelector } from "react-redux";
+} from 'react';
+import { Link } from 'react-router-dom';
+import styles from './LocalSettings.module.scss';
+import { Content } from '~/components/Content/Content';
+import Button from '~/components/Button';
+import { PlayIcon } from '~/icons/Play/Play';
+import { EXERCISES, COMPLEXITY, GAME_MODE } from '~/state/constants';
+import { getUrl } from '~/utils';
+import { Easy } from './components/Easy/Easy';
+import { Medium } from './components/Medium/Medium';
+import { Hard } from './components/Hard/Hard';
+import { VIEW } from '~/views/constants';
+import { Switch } from '~/components/Switch/Switch';
+import { InfoIcon } from '~/icons/Info/Info';
+import { useSelector } from 'react-redux';
 import {
   Complexity,
   Exercise,
@@ -34,9 +34,9 @@ import {
   getWorkoutReps,
   setType,
   useAppDispatch,
-} from "~/state/Workout";
-import { IEventMetaObject } from "~/types";
-import { useStartWorkoutCallback } from "~/hooks/useStartWorkoutEffect";
+} from '~/state/Workout';
+import { IEventMetaObject } from '~/types';
+import { useStartWorkoutCallback } from '~/hooks/useStartWorkoutEffect';
 
 export function copyTouch({ identifier, pageX, pageY }: Touch) {
   return { identifier, pageX, pageY };
@@ -50,29 +50,25 @@ const Quantity: FC<HTMLAttributes<HTMLOrSVGElement>> = () => {
       {reps}
     </span>
   );
-}
-
+};
 
 const WORKOUT_MODE_OPTIONS = {
   [GAME_MODE.TIME]: (
-    <i
-      className={cn("icon-timer", styles.icon)}
-      style={{ fontSize: 28 }}
-    />
+    <i className={cn('icon-timer', styles.icon)} style={{ fontSize: 28 }} />
   ),
   [GAME_MODE.REPS]: <Quantity />,
   [GAME_MODE.FREE]: (
     <i
-      className={cn("icon-infinity", styles.icon)}
+      className={cn('icon-infinity', styles.icon)}
       style={{ fontSize: 40, paddingTop: 5 }}
     />
   ),
 };
 
 interface SelectTouch extends Pick<Touch, 'identifier' | 'pageX' | 'pageY'> {
-  exerciseName: ExerciseName,
-  complexity: Complexity,
-};
+  exerciseName: ExerciseName;
+  complexity: Complexity;
+}
 
 export const LocalSettingsContent = memo(function LocalSettingsContent() {
   const [ongoingTouches, setOngoingTouches] = useState<Array<SelectTouch>>([]);
@@ -83,7 +79,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
     (e: IEventMetaObject<Type>) => {
       dispatch(setType(e.value));
     },
-    [dispatch]
+    [dispatch],
   );
   const handleExerciseComplexityChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,13 +87,13 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
         changePlan({
           name: e.target.name,
           complexity: e.target.value,
-        } as Exercise)
+        } as Exercise),
       );
     },
-    [dispatch]
+    [dispatch],
   );
   const ongoingTouchIndexById = useCallback<
-    (id: Touch["identifier"]) => number
+    (id: Touch['identifier']) => number
   >(
     (idToFind) => {
       for (let i = 0; i < ongoingTouches.length; i++) {
@@ -107,7 +103,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
       }
       return -1;
     },
-    [ongoingTouches]
+    [ongoingTouches],
   );
   const handleTouchStart = useCallback<TouchEventHandler<HTMLDivElement>>(
     (e) => {
@@ -123,14 +119,14 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
             changePlan({
               name: newTouch.exerciseName,
               complexity: newTouch.complexity,
-            })
+            }),
           );
         }
 
         setOngoingTouches([...ongoingTouches, newTouch]);
       }
     },
-    [dispatch, ongoingTouches]
+    [dispatch, ongoingTouches],
   );
   const handleTouchEnd = useCallback<TouchEventHandler<HTMLDivElement>>(
     (e) => {
@@ -147,7 +143,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
         }
       }
     },
-    [ongoingTouchIndexById, ongoingTouches]
+    [ongoingTouchIndexById, ongoingTouches],
   );
   const handleTouchCancel = handleTouchEnd;
   const handleTouchMove = useCallback<TouchEventHandler<HTMLDivElement>>(
@@ -160,7 +156,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
           const newTouch = copyTouch(e.changedTouches[i]) as SelectTouch;
           const elem = document.elementFromPoint(
             newTouch.pageX,
-            newTouch.pageY
+            newTouch.pageY,
           );
 
           if (elem instanceof HTMLInputElement) {
@@ -175,7 +171,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
                 changePlan({
                   name: newTouch.exerciseName,
                   complexity: newTouch.complexity,
-                })
+                }),
               );
             }
           }
@@ -186,7 +182,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
         }
       }
     },
-    [dispatch, ongoingTouchIndexById, ongoingTouches]
+    [dispatch, ongoingTouchIndexById, ongoingTouches],
   );
 
   return (
