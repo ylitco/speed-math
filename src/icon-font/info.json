@@ -1,8 +1,14 @@
 {
-  "settings": {
+  "back": {
     "encodedCode": "\\ea01",
     "prefix": "speed-math",
-    "className": "speed-math-settings",
+    "className": "speed-math-back",
     "unicode": "&#59905;"
+  },
+  "settings": {
+    "encodedCode": "\\ea02",
+    "prefix": "speed-math",
+    "className": "speed-math-settings",
+    "unicode": "&#59906;"
   }
 }

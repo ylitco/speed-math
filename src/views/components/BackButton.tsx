@@ -1,7 +1,6 @@
 import { FC, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
-import { BackIcon } from '~/icons/Back/Back.tsx';
 import { ViewContext } from '~/views/Views';
 import { VIEW } from '~/views/constants';
 import { getUrl } from '~/utils';
@@ -42,7 +41,7 @@ export const BackButton: FC = () => {
 
     if (isTutorial) {
       dispatch(finishTutorial());
-      isSetActive && dispatch(startTimer());
+      if (isSetActive) dispatch(startTimer());
     }
 
     return navigate(-1);
@@ -57,7 +56,7 @@ export const BackButton: FC = () => {
 
   return (
     <Button onClick={handleClick}>
-      <BackIcon />
+      <i className="speed-math-back text-icon-xs inner-shadow-dark" />
     </Button>
   );
 };
