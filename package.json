@@ -10,7 +10,10 @@
   },
   "scripts": {
     "build:icon-set": "tsx src/icon-set/build.ts",
+    "build:icon-font": "tsx src/icon-font/build.ts",
+    "predev": "pnpm pnpm build:icon-font",
     "dev": "vite",
+    "prebuild": "pnpm pnpm build:icon-font",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -51,6 +54,7 @@
     "globals": "^17.2.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "svgtofont": "^6.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.11.0",

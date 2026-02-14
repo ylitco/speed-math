@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "speed-math";
+  src: url('speed-math.eot?t=1771057650228'); /* IE9*/
+  src: url('speed-math.eot?t=1771057650228#iefix') format('embedded-opentype') /* IE6-IE8 */,
+  url('speed-math.woff2?t=1771057650228') format('woff2'),
+  url('speed-math.woff?t=1771057650228') format('woff'),
+  url('speed-math.ttf?t=1771057650228') format('truetype'),
+  url('speed-math.svg?t=1771057650228') format('svg');
+}
+
+[class^="speed-math-"], [class*=" speed-math-"] {
+  font-family: 'speed-math' !important;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.speed-math-settings::before { content: "\ea01"; }
+
+
