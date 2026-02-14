@@ -14,6 +14,8 @@
   <path d="M3.05263 3H29V0H0V24H3.05263V3Z" fill="currentColor"></path>
 </symbol><symbol viewBox="0 0 19 24" id="speed-math-n">
   <path d="M19 24H15.4753L2.65195 4.06723H2.51767C2.54005 4.47059 2.56243 4.91877 2.58481 5.41176C2.62957 5.90476 2.66314 6.44258 2.68552 7.02521C2.70789 7.58543 2.73027 8.16807 2.75265 8.77311C2.77503 9.37815 2.78622 9.98319 2.78622 10.5882V24H0V0H3.49117L16.2809 19.8655H16.4152C16.3928 19.5966 16.3704 19.2269 16.3481 18.7563C16.3257 18.2633 16.3033 17.7255 16.2809 17.1429C16.2585 16.5378 16.2362 15.9216 16.2138 15.2941C16.1914 14.6667 16.1802 14.084 16.1802 13.5462V0H19V24Z" fill="currentColor"></path>
+</symbol><symbol viewBox="0 0 21 24" id="speed-math-play">
+  <path d="M21 12L0 24L1.05994e-06 0L21 12Z" fill="currentColor"></path>
 </symbol><symbol viewBox="0 0 29 24" id="speed-math-seconds-sholder">
   <path d="M25.9474 3H0V0H29V24H25.9474V3Z" fill="currentColor"></path>
 </symbol><symbol viewBox="0 0 24 24" id="speed-math-settings">

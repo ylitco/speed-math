@@ -1,11 +1,11 @@
 @font-face {
   font-family: "speed-math";
-  src: url('speed-math.eot?t=1771060535013'); /* IE9*/
-  src: url('speed-math.eot?t=1771060535013#iefix') format('embedded-opentype') /* IE6-IE8 */,
-  url('speed-math.woff2?t=1771060535013') format('woff2'),
-  url('speed-math.woff?t=1771060535013') format('woff'),
-  url('speed-math.ttf?t=1771060535013') format('truetype'),
-  url('speed-math.svg?t=1771060535013') format('svg');
+  src: url('speed-math.eot?t=1771060800712'); /* IE9*/
+  src: url('speed-math.eot?t=1771060800712#iefix') format('embedded-opentype') /* IE6-IE8 */,
+  url('speed-math.woff2?t=1771060800712') format('woff2'),
+  url('speed-math.woff?t=1771060800712') format('woff'),
+  url('speed-math.ttf?t=1771060800712') format('truetype'),
+  url('speed-math.svg?t=1771060800712') format('svg');
 }
 
 [class^="speed-math-"], [class*=" speed-math-"] {
@@ -22,10 +22,11 @@
 .speed-math-medium::before { content: "\ea04"; }
 .speed-math-minutes-sholder::before { content: "\ea05"; }
 .speed-math-n::before { content: "\ea06"; }
-.speed-math-seconds-sholder::before { content: "\ea07"; }
-.speed-math-settings::before { content: "\ea08"; }
-.speed-math-timer::before { content: "\ea09"; }
-.speed-math-world::before { content: "\ea0a"; }
+.speed-math-play::before { content: "\ea07"; }
+.speed-math-seconds-sholder::before { content: "\ea08"; }
+.speed-math-settings::before { content: "\ea09"; }
+.speed-math-timer::before { content: "\ea0a"; }
+.speed-math-world::before { content: "\ea0b"; }
 
 
 $speed-math-back: '\ea01';
@@ -34,7 +35,8 @@ $speed-math-hard: '\ea03';
 $speed-math-medium: '\ea04';
 $speed-math-minutes-sholder: '\ea05';
 $speed-math-n: '\ea06';
-$speed-math-seconds-sholder: '\ea07';
-$speed-math-settings: '\ea08';
-$speed-math-timer: '\ea09';
-$speed-math-world: '\ea0a';
+$speed-math-play: '\ea07';
+$speed-math-seconds-sholder: '\ea08';
+$speed-math-settings: '\ea09';
+$speed-math-timer: '\ea0a';
+$speed-math-world: '\ea0b';
