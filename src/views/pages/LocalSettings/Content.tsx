@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 import styles from './LocalSettings.module.scss';
 import { Content } from '~/components/Content/Content';
 import Button from '~/components/Button';
-import { PlayIcon } from '~/icons/Play/Play';
 import { EXERCISES, COMPLEXITY, GAME_MODE } from '~/state/constants';
 import { getUrl } from '~/utils';
 import { VIEW } from '~/views/constants';
@@ -270,7 +269,7 @@ const PlayButton = memo(function PlayButton() {
 
   return (
     <Button className={styles.play} onClick={handleWorkoutStart}>
-      <PlayIcon />
+      <i className="speed-math-play text-icon-base inner-shadow-light ml-1.25 opacity-50" />
     </Button>
   );
 });
