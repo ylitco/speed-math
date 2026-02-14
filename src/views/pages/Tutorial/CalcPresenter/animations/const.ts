@@ -34,9 +34,9 @@ export const createSlot = ({
   slot.setAttribute('id', slotId);
   Object.assign(slot.style, slotStyles);
   const digit = document.createElement('div');
-  symbolId && digit.setAttribute('id', symbolId);
-  digitClass &&
-    (isClassArray(digitClass)
+  if (symbolId) digit.setAttribute('id', symbolId);
+  if (digitClass)
+    void (isClassArray(digitClass)
       ? digit.classList.add(...digitClass)
       : digit.classList.add(digitClass));
   digit.innerHTML = symbol.toString();
@@ -70,7 +70,7 @@ export const createTwoDigitSlot = ({
 
   const slot = document.createElement('div');
   slot.classList.add(styles.twoDigitNumber);
-  slotStyles && Object.assign(slot.style, slotStyles);
+  if (slotStyles) Object.assign(slot.style, slotStyles);
   slot.setAttribute('id', slotId);
   slot.appendChild(tensSlot);
   slot.appendChild(unitsSlot);
@@ -83,6 +83,9 @@ export const createMind = () => {
 
   mind.setAttribute('id', 'brain');
   mind.classList.add('icon-brain');
+  mind.classList.add('speed-math-easy');
+  mind.classList.add('text-icon-difficulty');
+  mind.classList.add('inner-shadow-light-2');
   mind.classList.add(styles.brain);
 
   return mind;
