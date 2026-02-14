@@ -1,9 +1,9 @@
-import { FC, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "~/components/Button";
-import { SettingsIcon } from "~/icons/Settings/Settings";
-import { VIEW } from "~/views/constants";
-import { getUrl } from "~/utils";
+import { FC, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '~/components/Button';
+import { SettingsIcon } from '~/icons/Settings/Settings';
+import { VIEW } from '~/views/constants';
+import { getUrl } from '~/utils';
 
 export const SettingsButton: FC = () => {
   const navigate = useNavigate();
