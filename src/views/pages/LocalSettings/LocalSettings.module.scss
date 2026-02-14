@@ -8,9 +8,10 @@
   grid-template-columns: 1fr 10fr 1fr;
 }
 
+// @TODO: Refactor grid system with subgrid
 .column {
   display: grid;
-  grid-template-rows: repeat(11, 1fr);
+  grid-template-rows: auto repeat(10, 1fr);
   gap: em(4);
 }
 
@@ -39,6 +40,7 @@
 
   input:after {
     position: absolute;
+    top: 0;
     content: ' ';
     display: flex;
     width: 100%;

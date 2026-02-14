@@ -16,9 +16,6 @@ import Button from '~/components/Button';
 import { PlayIcon } from '~/icons/Play/Play';
 import { EXERCISES, COMPLEXITY, GAME_MODE } from '~/state/constants';
 import { getUrl } from '~/utils';
-import { Easy } from './components/Easy/Easy';
-import { Medium } from './components/Medium/Medium';
-import { Hard } from './components/Hard/Hard';
 import { VIEW } from '~/views/constants';
 import { Switch } from '~/components/Switch/Switch';
 import { InfoIcon } from '~/icons/Info/Info';
@@ -189,7 +186,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
     <Content className={styles.view}>
       <section className={styles.body}>
         <div className={styles.column}>
-          <div />
+          <div className="mb-[0.5em] min-h-[26.02px]" />
           {Object.keys(EXERCISES).map((mode) => (
             <div className={styles.number} key={mode}>
               ×{mode}
@@ -199,13 +196,13 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
         <div className={styles.column}>
           <header className={styles.header}>
             <b className={cn(styles.th, styles.easy)}>
-              <Easy />
+              <i className="speed-math-easy text-icon-difficulty inner-shadow-purple opacity-50" />
             </b>
             <b className={cn(styles.th, styles.medium)}>
-              <Medium />
+              <i className="speed-math-medium text-icon-difficulty inner-shadow-purple opacity-50" />
             </b>
             <b className={cn(styles.th, styles.hard)}>
-              <Hard />
+              <i className="speed-math-hard text-icon-difficulty inner-shadow-purple opacity-50" />
             </b>
           </header>
           {Object.keys(EXERCISES).map((mode) => (
@@ -248,7 +245,7 @@ export const LocalSettingsContent = memo(function LocalSettingsContent() {
           ))}
         </div>
         <div className={styles.column}>
-          <div />
+          <div className="mb-[0.5em] min-h-[26.02px]" />
           {Object.keys(EXERCISES).map((mode) => (
             <TutorialLink key={mode} mode={mode} />
           ))}
