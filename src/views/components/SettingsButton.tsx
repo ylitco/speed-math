@@ -1,7 +1,6 @@
 import { FC, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
-import { SettingsIcon } from '~/icons/Settings/Settings';
 import { VIEW } from '~/views/constants';
 import { getUrl } from '~/utils';
 
@@ -13,7 +12,7 @@ export const SettingsButton: FC = () => {
 
   return (
     <Button onClick={handleClick}>
-      <SettingsIcon />
+      <i className="speed-math-settings text-icon-base inner-shadow-dark" />
     </Button>
   );
 };
