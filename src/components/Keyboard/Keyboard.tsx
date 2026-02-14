@@ -1,15 +1,15 @@
-import { memo, FC, useCallback } from "react";
-import Button from "~/components/Button";
-import { createEventMetaObject } from "~/utils";
-import { IKeyboardProps } from "./types";
-import styles from "./Keyboard.module.scss";
-import { Check } from "./components/Check/Check";
-import Delete from "./components/Delete/Delete";
-import { Calculator } from "./components/Calculator/Calculator";
-import cn from "classnames";
-import { CHECKING_MODE } from "../../state/constants";
-import { getCheckMode } from "~/state/Workout";
-import { useSelector } from "react-redux";
+import { memo, FC, useCallback } from 'react';
+import Button from '~/components/Button';
+import { createEventMetaObject } from '~/utils';
+import { IKeyboardProps } from './types';
+import styles from './Keyboard.module.scss';
+import { Check } from './components/Check/Check';
+import Delete from './components/Delete/Delete';
+import { Calculator } from './components/Calculator/Calculator';
+import cn from 'classnames';
+import { CHECKING_MODE } from '../../state/constants';
+import { getCheckMode } from '~/state/Workout';
+import { useSelector } from 'react-redux';
 
 export const REMOVE_KEY = -1;
 export const VERIFY_KEY = -2;
@@ -25,7 +25,7 @@ export const Keyboard: FC<IKeyboardProps> = memo(function Keyboard({
     (name: string | void) => {
       name !== undefined && onClick(createEventMetaObject(+name));
     },
-    [onClick]
+    [onClick],
   );
 
   if (!isReady) {
