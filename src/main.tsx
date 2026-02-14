@@ -1,4 +1,5 @@
 import React from 'react';
+import './icon-font/speed-math.css';
 import './index.scss';
 import './tailwind.css';
 import App from './App';
