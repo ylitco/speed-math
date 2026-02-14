@@ -1,15 +1,15 @@
-import { memo } from "react";
-import { Content } from "~/components/Content/Content";
-import { Switch } from "~/components/Switch/Switch";
-import { Wheel } from "~/components/Wheel/Wheel";
-import { TimerIcon } from "~/icons/Timer/ComplexTimer";
-import { WorldIcon } from "~/icons/World/World";
-import { NIcon } from "~/icons/N/N";
-import { MINUTES, SECONDS, REPS, LANG } from "~/state/constants";
+import { memo } from 'react';
+import { Content } from '~/components/Content/Content';
+import { Switch } from '~/components/Switch/Switch';
+import { Wheel } from '~/components/Wheel/Wheel';
+import { TimerIcon } from '~/icons/Timer/ComplexTimer';
+import { WorldIcon } from '~/icons/World/World';
+import { NIcon } from '~/icons/N/N';
+import { MINUTES, SECONDS, REPS, LANG } from '~/state/constants';
 
-import styles from "./GlobalSettings.module.scss";
-import { useLocale, useSettingsOptions, useWorkoutSettings } from "./hooks";
-import { t } from "i18next";
+import styles from './GlobalSettings.module.scss';
+import { useLocale, useSettingsOptions, useWorkoutSettings } from './hooks';
+import { t } from 'i18next';
 
 export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
   const { locale, handleLocaleChange } = useLocale();
@@ -26,14 +26,14 @@ export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
     <Content className={styles.view}>
       <Switch
         className={styles.checkingModeSwitcher}
-        label={t("globalSettings.checkingMode.label")}
+        label={t('globalSettings.checkingMode.label')}
         options={CHECK_OPTIONS}
         value={checkMode}
         onChange={handleCheckModeChange}
       />
       <Switch
         className={styles.inputModeSwitcher}
-        label={t("globalSettings.inputMode.label")}
+        label={t('globalSettings.inputMode.label')}
         options={INPUT_OPTIONS}
         value={inputMode}
         onChange={handleInputModeChange}
@@ -53,8 +53,8 @@ export const GlobalSettingsContent = memo(function GlobalSettingsContent() {
             onSelect={handleSecondsChange}
             size="M"
           />
-          <p className={styles.units}>{t("globalSettings.minutes.label")}</p>
-          <p className={styles.units}>{t("globalSettings.seconds.label")}</p>
+          <p className={styles.units}>{t('globalSettings.minutes.label')}</p>
+          <p className={styles.units}>{t('globalSettings.seconds.label')}</p>
         </label>
         <label className={styles.reps}>
           <NIcon />
