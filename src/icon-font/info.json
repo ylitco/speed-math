@@ -10,5 +10,11 @@
     "prefix": "speed-math",
     "className": "speed-math-settings",
     "unicode": "&#59906;"
+  },
+  "world": {
+    "encodedCode": "\\ea03",
+    "prefix": "speed-math",
+    "className": "speed-math-world",
+    "unicode": "&#59907;"
   }
 }

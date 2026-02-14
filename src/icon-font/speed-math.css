@@ -1,11 +1,11 @@
 @font-face {
   font-family: "speed-math";
-  src: url('speed-math.eot?t=1771058622872'); /* IE9*/
-  src: url('speed-math.eot?t=1771058622872#iefix') format('embedded-opentype') /* IE6-IE8 */,
-  url('speed-math.woff2?t=1771058622872') format('woff2'),
-  url('speed-math.woff?t=1771058622872') format('woff'),
-  url('speed-math.ttf?t=1771058622872') format('truetype'),
-  url('speed-math.svg?t=1771058622872') format('svg');
+  src: url('speed-math.eot?t=1771059114202'); /* IE9*/
+  src: url('speed-math.eot?t=1771059114202#iefix') format('embedded-opentype') /* IE6-IE8 */,
+  url('speed-math.woff2?t=1771059114202') format('woff2'),
+  url('speed-math.woff?t=1771059114202') format('woff'),
+  url('speed-math.ttf?t=1771059114202') format('truetype'),
+  url('speed-math.svg?t=1771059114202') format('svg');
 }
 
 [class^="speed-math-"], [class*=" speed-math-"] {
@@ -18,5 +18,6 @@
 
 .speed-math-back::before { content: "\ea01"; }
 .speed-math-settings::before { content: "\ea02"; }
+.speed-math-world::before { content: "\ea03"; }
 
 
