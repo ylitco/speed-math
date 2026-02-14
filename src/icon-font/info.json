@@ -5,22 +5,40 @@
     "className": "speed-math-back",
     "unicode": "&#59905;"
   },
-  "n": {
+  "minutes-sholder": {
     "encodedCode": "\\ea02",
     "prefix": "speed-math",
-    "className": "speed-math-n",
+    "className": "speed-math-minutes-sholder",
     "unicode": "&#59906;"
   },
-  "settings": {
+  "n": {
     "encodedCode": "\\ea03",
     "prefix": "speed-math",
-    "className": "speed-math-settings",
+    "className": "speed-math-n",
     "unicode": "&#59907;"
   },
-  "world": {
+  "seconds-sholder": {
     "encodedCode": "\\ea04",
     "prefix": "speed-math",
-    "className": "speed-math-world",
+    "className": "speed-math-seconds-sholder",
     "unicode": "&#59908;"
+  },
+  "settings": {
+    "encodedCode": "\\ea05",
+    "prefix": "speed-math",
+    "className": "speed-math-settings",
+    "unicode": "&#59909;"
+  },
+  "timer": {
+    "encodedCode": "\\ea06",
+    "prefix": "speed-math",
+    "className": "speed-math-timer",
+    "unicode": "&#59910;"
+  },
+  "world": {
+    "encodedCode": "\\ea07",
+    "prefix": "speed-math",
+    "className": "speed-math-world",
+    "unicode": "&#59911;"
   }
 }
