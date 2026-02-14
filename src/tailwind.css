@@ -1,1 +1,49 @@
 @import "tailwindcss";
+
+@layer utilities {
+  /* Icon sizes (height-normalized, 0.125rem grid, leading-none) */
+  .text-icon-xs {
+    font-size: 1rem; /* 16px */
+    line-height: 1;
+  }
+  .text-icon-sm {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1;
+  }
+  .text-icon-base {
+    font-size: 1.5rem; /* 24px (baseline) */
+    line-height: 1;
+  }
+  .text-icon-md {
+    font-size: 1.75rem; /* 28px */
+    line-height: 1;
+  }
+  .text-icon-lg {
+    font-size: 2rem; /* 32px */
+    line-height: 1;
+  }
+  .text-icon-xl {
+    font-size: 2.5rem; /* 40px */
+    line-height: 1;
+  }
+  .text-icon-2xl {
+    font-size: 3rem; /* 48px */
+    line-height: 1;
+  }
+}
+
+@layer components {
+  :root {
+    --icon-design-size: 24;
+  }
+
+  .inner-shadow-dark {
+    color: transparent;
+    text-shadow:
+      calc(1em / var(--icon-design-size)) /* 1px at 24px */
+        calc(2em / var(--icon-design-size)) /* 2px at 24px */
+        calc(2em / var(--icon-design-size)) /* 2px at 24px */
+        rgba(255, 255, 255, 0.5),
+      0 0 0 #666;
+  }
+}
