@@ -13,7 +13,6 @@ import { BackButton } from '~/views/components/BackButton';
 import { getUrl } from '~/utils';
 import { useNavigate } from 'react-router-dom';
 import Button, { BUTTON_TYPE } from '~/components/Button';
-import { InfoIcon } from '~/icons/Info/Info';
 import { VIEW } from '~/views/constants';
 import { EXERCISES } from '~/state/constants';
 
@@ -54,7 +53,7 @@ const TutorialButton: FC = () => {
 
   return (
     <Button type={BUTTON_TYPE.CIRCLE} onClick={handleClick}>
-      <InfoIcon />
+      <i className="speed-math-info text-icon-info inner-shadow-dark" />
     </Button>
   );
 };
