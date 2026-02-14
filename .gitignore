@@ -24,3 +24,7 @@ dev-dist
 *.sln
 *.sw?
 Todos.md
+
+# Generated icon font
+src/icon-font/speed-math.*
+src/icon-font/info.json
