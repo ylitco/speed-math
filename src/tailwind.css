@@ -102,6 +102,16 @@
       0 0 0 #a0a7c3;
   }
 
+  .inner-shadow-light-2 {
+    color: transparent;
+    text-shadow:
+      calc(1em / var(--icon-design-size)) /* 1px at 24px */
+        calc(2em / var(--icon-design-size)) /* 2px at 24px */
+        calc(2em / var(--icon-design-size)) /* 2px at 24px */
+        rgba(255, 255, 255, 0.5),
+      0 0 0 #c5cadf;
+  }
+
   .inner-shadow-purple {
     color: transparent;
     text-shadow:
