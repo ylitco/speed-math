@@ -22,20 +22,29 @@ interface createSlotParams {
   digitClass?: string | Array<string>;
 }
 
-export const createSlot = ({ symbol, symbolId, slotId, slotStyles, digitClass }: createSlotParams) => {
+export const createSlot = ({
+  symbol,
+  symbolId,
+  slotId,
+  slotStyles,
+  digitClass,
+}: createSlotParams) => {
   const slot = document.createElement('div');
   slot.classList.add(styles.slot);
   slot.setAttribute('id', slotId);
   Object.assign(slot.style, slotStyles);
   const digit = document.createElement('div');
   symbolId && digit.setAttribute('id', symbolId);
-  digitClass && (isClassArray(digitClass) ? digit.classList.add(...digitClass) : digit.classList.add(digitClass));
+  digitClass &&
+    (isClassArray(digitClass)
+      ? digit.classList.add(...digitClass)
+      : digit.classList.add(digitClass));
   digit.innerHTML = symbol.toString();
   digit.dataset.content = symbol.toString();
-  digit.classList.add(styles.digit)
+  digit.classList.add(styles.digit);
   slot.appendChild(digit);
   return slot;
-}
+};
 
 function isClassArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((v) => typeof v === 'string');
@@ -48,7 +57,12 @@ interface createDoubleDigitSlotParams {
   slotStyles?: CSSProperties;
 }
 
-export const createTwoDigitSlot = ({ number, slotId, digitClass, slotStyles }: createDoubleDigitSlotParams) => {
+export const createTwoDigitSlot = ({
+  number,
+  slotId,
+  digitClass,
+  slotStyles,
+}: createDoubleDigitSlotParams) => {
   const tens = number.toString()[0];
   const units = number.toString()[1];
   const tensSlot = createSlot({ symbol: tens, slotId: TENS, digitClass });
@@ -62,7 +76,7 @@ export const createTwoDigitSlot = ({ number, slotId, digitClass, slotStyles }: c
   slot.appendChild(unitsSlot);
 
   return slot;
-}
+};
 
 export const createMind = () => {
   const mind = document.createElement('div');
@@ -72,7 +86,7 @@ export const createMind = () => {
   mind.classList.add(styles.brain);
 
   return mind;
-}
+};
 
 const PARITY_ID = 'parity-label';
 
@@ -83,4 +97,4 @@ export const createParityLabel = (parity: 'even' | 'odd') => {
   parityLabel.classList.add(styles.parityLabel);
 
   return parityLabel;
-}
+};
