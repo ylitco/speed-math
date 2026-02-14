@@ -4,7 +4,6 @@ import { createEventMetaObject } from '~/utils';
 import { IKeyboardProps } from './types';
 import styles from './Keyboard.module.scss';
 import { Check } from './components/Check/Check';
-import Delete from './components/Delete/Delete';
 import { Calculator } from './components/Calculator/Calculator';
 import cn from 'classnames';
 import { CHECKING_MODE } from '../../state/constants';
@@ -23,7 +22,7 @@ export const Keyboard: FC<IKeyboardProps> = memo(function Keyboard({
   const checkMode = useSelector(getCheckMode);
   const handleButtonClick = useCallback(
     (name: string | void) => {
-      name !== undefined && onClick(createEventMetaObject(+name));
+      if (name !== undefined) onClick(createEventMetaObject(+name));
     },
     [onClick],
   );
@@ -54,7 +53,7 @@ export const Keyboard: FC<IKeyboardProps> = memo(function Keyboard({
         <span>0</span>
       </Button>
       <Button name={`${REMOVE_KEY}`} onClick={handleButtonClick}>
-        <Delete />
+        <i className="speed-math-delete text-icon-delete inner-shadow-dark" />
       </Button>
     </div>
   );
