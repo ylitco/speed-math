@@ -302,6 +302,10 @@ export const getWorkoutTitle = createSelector(
     }
   },
 );
+/**
+ * Calculate the progress according to the workout type
+ * Free is a default mode, we return null as we do not have a goal but only the path
+ */
 export const getWorkoutProgress = createSelector(
   getWorkout,
   getSet,
@@ -316,7 +320,7 @@ export const getWorkoutProgress = createSelector(
           100
         );
       default:
-        return 0;
+        return null;
     }
   },
 );

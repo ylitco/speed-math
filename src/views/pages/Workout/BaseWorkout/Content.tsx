@@ -49,12 +49,14 @@ export const BaseWorkoutContent: FC = memo(function BaseWorkoutContent() {
 
   return (
     <Content className={styles.view}>
-      <div className="bg-surface-inset border-surface-raised shadow-inset mb-8 box-border h-2 w-full rounded-full border">
-        <div
-          className="bg-accent shadow-accent-glow h-1.5 rounded-full"
-          style={{ width: `${progress || 0}%` }}
-        />
-      </div>
+      {progress !== null && (
+        <div className="bg-surface-inset border-surface-raised shadow-inset mb-8 box-border h-2 w-full rounded-full border">
+          <div
+            className="bg-accent shadow-accent-glow h-1.5 rounded-full"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      )}
       <h1 className={styles.firstFactor}>×{rep.firstFactor}</h1>
       {((rep.complexity === COMPLEXITY.HARD && !isReady) ||
         rep.complexity !== COMPLEXITY.HARD) && (
