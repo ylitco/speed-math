@@ -49,9 +49,9 @@ export const BaseWorkoutContent: FC = memo(function BaseWorkoutContent() {
 
   return (
     <Content className={styles.view}>
-      <div className={styles.progressbar}>
+      <div className="bg-surface-inset border-surface-raised shadow-inset mb-8 box-border h-2 w-full rounded-full border">
         <div
-          className={styles.progressLine}
+          className="bg-accent shadow-accent-glow h-1.5 rounded-full"
           style={{ width: `${progress || 0}%` }}
         />
       </div>
