@@ -1,82 +1,82 @@
-import { FC, memo, useCallback, useLayoutEffect, useState } from "react";
-import cn from "classnames";
-import { Content } from "~/components/Content/Content";
-import { Input } from "~/components/Input/Input";
-import { Keyboard } from "~/components/Keyboard/Keyboard";
-import styles from "./BaseWorkout.module.scss";
-import { Failure } from "./components/Failure/Failure";
-import { Success } from "./components/Success/Success";
-import { useSelector } from "react-redux";
+import { FC, memo, useCallback, useLayoutEffect, useState } from 'react';
+import cn from 'classnames';
+import { Content } from '~/components/Content/Content';
+import { Input } from '~/components/Input/Input';
+import { Keyboard } from '~/components/Keyboard/Keyboard';
+import styles from './BaseWorkout.module.scss';
+import { Failure } from './components/Failure/Failure';
+import { Success } from './components/Success/Success';
+import { useSelector } from 'react-redux';
 import {
   getCurrentRep,
   getRepStatus,
   getWorkoutProgress,
   inputUserAnswer,
   useAppDispatch,
-} from "~/state/Workout";
-import { COMPLEXITY } from "~/state/constants";
-import { IEventMetaObject } from "~/types";
-import { useNavigate } from "react-router-dom";
-import { getUrl } from "~/utils";
-import { VIEW } from "~/views/constants";
+} from '~/state/Workout';
+import { COMPLEXITY } from '~/state/constants';
+import { IEventMetaObject } from '~/types';
+import { useNavigate } from 'react-router-dom';
+import { getUrl } from '~/utils';
+import { VIEW } from '~/views/constants';
 
-export const BaseWorkoutContent: FC = memo(
-  function BaseWorkoutContent() {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const rep = useSelector(getCurrentRep);
-    const result = useSelector(getRepStatus);
+export const BaseWorkoutContent: FC = memo(function BaseWorkoutContent() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const rep = useSelector(getCurrentRep);
+  const result = useSelector(getRepStatus);
 
-    const progress = useSelector(getWorkoutProgress);
-    const [isReady, setIsReady] = useState(rep.complexity !== COMPLEXITY.HARD);
-    const handleReady = useCallback(() => {
-      setIsReady(true);
-    }, []);
-    useLayoutEffect(() => {
-      setIsReady(rep.complexity !== COMPLEXITY.HARD);
-    }, [rep.secondFactor, rep.complexity]);
+  const progress = useSelector(getWorkoutProgress);
+  const [isReady, setIsReady] = useState(rep.complexity !== COMPLEXITY.HARD);
+  const handleReady = useCallback(() => {
+    setIsReady(true);
+  }, []);
+  useLayoutEffect(() => {
+    setIsReady(rep.complexity !== COMPLEXITY.HARD);
+  }, [rep.secondFactor, rep.complexity]);
 
-    const handleKeyboardClick = useCallback(
-      async (e: IEventMetaObject<number>) => {
-        const result = await dispatch(inputUserAnswer(e.value)).unwrap();
+  const handleKeyboardClick = useCallback(
+    async (e: IEventMetaObject<number>) => {
+      const result = await dispatch(inputUserAnswer(e.value)).unwrap();
 
-        console.debug(result);
-        if (result === 'FINISH') {
-          navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
-        }
-      },
-      [dispatch, navigate],
-    );
+      console.debug(result);
+      if (result === 'FINISH') {
+        navigate(getUrl(`${VIEW.WORKOUT}/${VIEW.STATISTICS}`));
+      }
+    },
+    [dispatch, navigate],
+  );
 
-    return (
-      <Content className={styles.view}>
-        <div className={styles.progressbar}>
+  return (
+    <Content className={styles.view}>
+      {progress !== null && (
+        <div className="bg-surface-inset border-surface-raised shadow-inset mb-8 box-border h-2 w-full rounded-full border">
           <div
-            className={styles.progressLine}
-            style={{ width: `${progress || 0}%` }}
+            className="bg-accent shadow-accent-glow h-1.5 rounded-full"
+            style={{ width: `${progress}%` }}
           />
         </div>
-        <h1 className={styles.firstFactor}>×{rep.firstFactor}</h1>
-        {((rep.complexity === COMPLEXITY.HARD && !isReady) ||
-          rep.complexity !== COMPLEXITY.HARD) && (
-          <h1 className={styles.secondFactor} data-content={rep.secondFactor}>
-            {rep.secondFactor}
-          </h1>
-        )}
-        {isReady && <Input />}
-        <Keyboard
-          className={cn(styles.keyboard, result !== null && styles.invisible)}
-          key={rep.firstFactor * rep.secondFactor}
-          onClick={handleKeyboardClick}
-          isReady={isReady}
-          onReady={handleReady}
-        />
-        {result !== null && (
-          <div className={styles.result}>
-            {result ? <Success /> : <Failure />}
-          </div>
-        )}
-      </Content>
-    );
-  }
-);
+      )}
+      <h1 className={styles.firstFactor}>×{rep.firstFactor}</h1>
+      {((rep.complexity === COMPLEXITY.HARD && !isReady) ||
+        rep.complexity !== COMPLEXITY.HARD) && (
+        <h1 className={styles.secondFactor} data-content={rep.secondFactor}>
+          {rep.secondFactor}
+        </h1>
+      )}
+      {isReady && <Input />}
+      <Keyboard
+        className={cn(styles.keyboard, result !== null && styles.invisible)}
+        key={rep.firstFactor * rep.secondFactor}
+        onClick={handleKeyboardClick}
+        isReady={isReady}
+        onReady={handleReady}
+      />
+      {result !== null && (
+        <div className={styles.result}>
+          {result ? <Success /> : <Failure />}
+        </div>
+      )}
+    </Content>
+  );
+});
