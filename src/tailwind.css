@@ -1,5 +1,39 @@
 @import 'tailwindcss';
 
+@theme {
+  /* Surfaces */
+  --color-surface: #EAEDFB;
+  --color-surface-raised: #F5F7FF;
+  --color-surface-inset: #DFE4F7;
+  --color-surface-input: #E7EBFE;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.4);
+  --color-border-light: #F2F9FF;
+
+  /* Text */
+  --color-text: #515871;
+  --color-text-heading: #2D303E;
+  --color-text-muted: #959595;
+  --color-text-placeholder: #ADAFBD;
+  --color-text-disabled: #C9CDE1;
+
+  /* Accent */
+  --color-accent: #9241E2;
+  --color-accent-light: #CF94FE;
+  --color-accent-muted: #d9ddee;
+
+  /* Feedback */
+  --color-success: #41E2C5;
+  --color-success-end: #42EC95;
+  --color-failure: #FF7898;
+  --color-failure-end: #FF85BF;
+
+  /* Shadows */
+  --shadow-inset: inset -5px -5px 10px #EFF2FF, inset 5px 5px 10px #BEAEE1;
+  --shadow-accent-glow: 0 0 4px var(--color-accent);
+}
+
 @layer utilities {
   /* Icon sizes (height-normalized, 0.125rem grid, leading-none) */
   .text-icon-xs {
